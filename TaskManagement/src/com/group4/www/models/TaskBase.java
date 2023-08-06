@@ -4,7 +4,7 @@ import com.group4.www.models.contracts.Comments;
 import com.group4.www.models.contracts.EventLog;
 import com.group4.www.models.contracts.Members;
 import com.group4.www.models.contracts.Task;
-import com.group4.www.utils.ValidationHelpers;
+import com.group4.www.models.utils.ValidationHelpers;
 
 import java.util.ArrayList;
 import java.util.List;

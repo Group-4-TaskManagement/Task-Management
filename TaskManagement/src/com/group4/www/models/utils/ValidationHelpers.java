@@ -1,4 +1,4 @@
-package com.group4.www.utils;
+package com.group4.www.models.utils;
 
 import java.util.List;
 import java.util.regex.Matcher;

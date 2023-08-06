@@ -3,7 +3,7 @@ package com.group4.www.models;
 import com.group4.www.models.contracts.Board;
 import com.group4.www.models.contracts.Members;
 import com.group4.www.models.contracts.Teams;
-import com.group4.www.utils.ValidationHelpers;
+import com.group4.www.models.utils.ValidationHelpers;
 
 import java.util.ArrayList;
 import java.util.List;
