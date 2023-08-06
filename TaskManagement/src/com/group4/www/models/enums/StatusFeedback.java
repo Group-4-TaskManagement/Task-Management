@@ -5,4 +5,6 @@ public enum StatusFeedback {
     UNSCHEDULED,
     SCHEDULED,
     DONE;
+
+    //TODO Override to string!
 }

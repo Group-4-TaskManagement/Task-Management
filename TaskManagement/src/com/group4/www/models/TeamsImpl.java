@@ -28,7 +28,7 @@ public class TeamsImpl implements Teams {
         this.boards = new ArrayList<>();
     }
 
-    public void setName(String name) {
+    private void setName(String name) {
         ValidationHelpers.validateIntRange(name.length(),
                 TEAM_NAME_MIN_LENGTH,
                 TEAM_NAME_MAX_LENGTH,
