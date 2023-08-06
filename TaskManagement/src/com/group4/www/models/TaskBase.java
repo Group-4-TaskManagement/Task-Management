@@ -1,6 +1,7 @@
 package com.group4.www.models;
 
 import com.group4.www.models.contracts.Comments;
+import com.group4.www.models.contracts.EventLog;
 import com.group4.www.models.contracts.Members;
 import com.group4.www.models.contracts.Task;
 import com.group4.www.utils.ValidationHelpers;
