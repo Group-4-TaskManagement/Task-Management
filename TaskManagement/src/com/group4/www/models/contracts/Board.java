@@ -1,8 +1,7 @@
 package com.group4.www.models.contracts;
 
-import com.group4.www.models.EventLogImpl;
+import com.group4.www.models.tasks.contracts.Task;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public interface Board {

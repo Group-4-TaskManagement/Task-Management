@@ -1,12 +1,13 @@
-package com.group4.www.models.contracts;
+package com.group4.www.models.tasks.contracts;
 
 import com.group4.www.models.enums.Priority;
 import com.group4.www.models.enums.SeverityBug;
 import com.group4.www.models.enums.StatusBug;
+import com.group4.www.models.tasks.contracts.Task;
 
 import java.util.List;
 
-public interface Bug extends Task{
+public interface Bug extends Task {
     //TODO is it necessary for Bug Interface to extend Task interface???
     public Priority getPriority();
 

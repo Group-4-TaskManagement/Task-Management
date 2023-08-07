@@ -4,7 +4,7 @@ import com.group4.www.models.contracts.*;
 import com.group4.www.models.enums.Priority;
 import com.group4.www.models.enums.SizeStory;
 import com.group4.www.models.enums.StatusStory;
-import com.group4.www.models.tasks.TaskBase;
+import com.group4.www.models.tasks.contracts.Story;
 
 public class StoryImpl extends TaskBase implements Story {
 

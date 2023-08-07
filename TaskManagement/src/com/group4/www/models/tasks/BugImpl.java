@@ -1,11 +1,10 @@
 package com.group4.www.models.tasks;
 
-import com.group4.www.models.contracts.Bug;
+import com.group4.www.models.tasks.contracts.Bug;
 import com.group4.www.models.contracts.Member;
 import com.group4.www.models.enums.Priority;
 import com.group4.www.models.enums.SeverityBug;
 import com.group4.www.models.enums.StatusBug;
-import com.group4.www.models.tasks.TaskBase;
 
 import java.util.ArrayList;
 import java.util.Arrays;

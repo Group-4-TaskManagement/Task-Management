@@ -1,7 +1,9 @@
-package com.group4.www.models.contracts;
+package com.group4.www.models.tasks.contracts;
 
 
+import com.group4.www.models.contracts.Comment;
 import com.group4.www.models.enums.StatusStory;
+import com.group4.www.models.tasks.contracts.Task;
 
 public interface Story extends Task {
 

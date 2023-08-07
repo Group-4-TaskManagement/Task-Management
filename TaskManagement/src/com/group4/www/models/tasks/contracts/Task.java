@@ -1,4 +1,8 @@
-package com.group4.www.models.contracts;
+package com.group4.www.models.tasks.contracts;
+
+import com.group4.www.models.contracts.Comment;
+import com.group4.www.models.contracts.Identifiable;
+import com.group4.www.models.contracts.Member;
 
 public interface Task extends Identifiable {
     String getTitle();
