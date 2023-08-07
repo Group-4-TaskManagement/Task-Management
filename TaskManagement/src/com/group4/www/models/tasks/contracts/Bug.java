@@ -3,7 +3,6 @@ package com.group4.www.models.tasks.contracts;
 import com.group4.www.models.enums.Priority;
 import com.group4.www.models.enums.SeverityBug;
 import com.group4.www.models.enums.StatusBug;
-import com.group4.www.models.tasks.contracts.Task;
 
 import java.util.List;
 

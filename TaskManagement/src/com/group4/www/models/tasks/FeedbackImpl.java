@@ -24,7 +24,7 @@ public class FeedbackImpl extends TaskBase implements Feedback {
     }
 
     public void setRating(int rating) {
-        //todo rating min and max 1 TO 10
+        //todo rating min and max 1 TO 10 also add change rating method
         this.rating = rating;
     }
 

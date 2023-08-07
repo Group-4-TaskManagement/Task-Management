@@ -6,6 +6,11 @@ import com.group4.www.models.enums.Priority;
 import com.group4.www.models.enums.SeverityBug;
 import com.group4.www.models.enums.SizeStory;
 import com.group4.www.models.enums.StatusStory;
+import com.group4.www.models.tasks.contracts.Task;
+import com.group4.www.models.contracts.Board;
+import com.group4.www.models.tasks.contracts.Bug;
+import com.group4.www.models.tasks.contracts.Feedback;
+import com.group4.www.models.tasks.contracts.Story;
 
 import java.util.List;
 
