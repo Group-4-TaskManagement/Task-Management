@@ -1,12 +1,10 @@
-package com.group4.www.models;
+package com.group4.www.models.tasks;
 
 import com.group4.www.models.contracts.*;
 import com.group4.www.models.enums.Priority;
 import com.group4.www.models.enums.SizeStory;
 import com.group4.www.models.enums.StatusStory;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.group4.www.models.tasks.TaskBase;
 
 public class StoryImpl extends TaskBase implements Story {
 

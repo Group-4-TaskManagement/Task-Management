@@ -1,12 +1,13 @@
-package com.group4.www.models;
+package com.group4.www.models.tasks;
 
+import com.group4.www.models.EventLogImpl;
 import com.group4.www.models.contracts.*;
 import com.group4.www.models.utils.ValidationHelpers;
 
 import java.util.ArrayList;
 import java.util.List;
 
-abstract class TaskBase implements Task { //maybe delete id
+abstract class TaskBase implements Task {
     public static final int TITLE_MIN_LENGTH = 10;
     public static final int TITLE_MAX_LENGTH = 50;
     public static final String TITLE_LENGTH_ERROR =

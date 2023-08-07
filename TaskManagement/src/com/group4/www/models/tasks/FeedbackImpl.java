@@ -1,9 +1,9 @@
-package com.group4.www.models;
+package com.group4.www.models.tasks;
 
 import com.group4.www.models.contracts.Feedback;
 import com.group4.www.models.contracts.Member;
 import com.group4.www.models.enums.StatusFeedback;
-import com.group4.www.models.enums.StatusStory;
+import com.group4.www.models.tasks.TaskBase;
 
 public class FeedbackImpl extends TaskBase implements Feedback {
     public static final String STATUS_CHANGE =
