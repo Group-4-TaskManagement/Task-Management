@@ -1,8 +1,8 @@
 package com.group4.www.models;
 
-import com.group4.www.models.contracts.Comments;
+import com.group4.www.models.contracts.Comment;
 import com.group4.www.models.contracts.EventLog;
-import com.group4.www.models.contracts.Members;
+import com.group4.www.models.contracts.Member;
 import com.group4.www.models.contracts.Task;
 import com.group4.www.models.utils.ValidationHelpers;
 
@@ -19,11 +19,11 @@ abstract class TaskBase implements Task {
     public static final String DESCR_LENGTH_ERROR = String.format("Description must be between %d and %d symbols", DESCR_MIN_LENGTH, DESCR_MAX_LENGTH);
     private String title;
     private String description;
-    private Members assignee;
-    private final List<Comments> comments;
+    private Member assignee;
+    private final List<Comment> comments;
     private final List<EventLog> logChanges;
 
-    public TaskBase(String title, String description, Members assignee) {
+    public TaskBase(String title, String description, Member assignee) {
         setTitle(title);
         setDescription(description);
         this.assignee = assignee;
@@ -52,7 +52,7 @@ abstract class TaskBase implements Task {
     }
 
     @Override
-    public Members getAssignee() {
+    public Member getAssignee() {
         return assignee;
     }
 }

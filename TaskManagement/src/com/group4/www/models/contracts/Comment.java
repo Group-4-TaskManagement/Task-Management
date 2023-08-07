@@ -1,4 +1,4 @@
 package com.group4.www.models.contracts;
 
-public interface Comments {
+public interface Comment {
 }

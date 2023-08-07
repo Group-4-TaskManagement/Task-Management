@@ -5,6 +5,6 @@ public interface Task {
 
     public String getDescription();
 
-    public Members getAssignee();
+    public Member getAssignee();
 
 }

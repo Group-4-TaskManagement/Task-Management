@@ -2,10 +2,10 @@ package com.group4.www.models.contracts;
 
 import java.util.List;
 
-public interface Teams {
+public interface Team {
     public String getName();
 
-    public List<Members> getMembers();
+    public List<Member> getMembers();
 
     public List<Board> showBoards();
 

@@ -1,14 +1,14 @@
 package com.group4.www.models;
 
 import com.group4.www.models.contracts.Board;
-import com.group4.www.models.contracts.Members;
-import com.group4.www.models.contracts.Teams;
+import com.group4.www.models.contracts.Member;
+import com.group4.www.models.contracts.Team;
 import com.group4.www.models.utils.ValidationHelpers;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TeamsImpl implements Teams {
+public class TeamsImpl implements Team {
     public static final int TEAM_NAME_MIN_LENGTH = 5;
     public static final int TEAM_NAME_MAX_LENGTH = 15;
     public static final String TEAM_NAME_LENGTH_ERROR =
@@ -19,8 +19,9 @@ public class TeamsImpl implements Teams {
     public static final String BOARD_NOT_ASSIGNED_IN_TEAM_ERROR = "There is no such board assigned to this team.";
 
     private String name;
-    private final List<Members> members;
+    private final List<Member> members;
     private final List<Board> boards;
+
 
     public TeamsImpl(String name) {
         setName(name);
@@ -42,7 +43,7 @@ public class TeamsImpl implements Teams {
     }
 
     @Override
-    public List<Members> getMembers() {
+    public List<Member> getMembers() {
         return new ArrayList<>(members);
     }
 
@@ -51,7 +52,7 @@ public class TeamsImpl implements Teams {
         return new ArrayList<>(boards);
     }
 
-    public void addMember(Members member){
+    public void addMember(Member member){
         if(members.contains(member)){
             throw new IllegalArgumentException
                     (String.format(MEMBER_ALREADY_IN_TEAM_MSG, member, this.name));
@@ -59,7 +60,7 @@ public class TeamsImpl implements Teams {
         members.add(member);
     }
 
-    public void removeMember(Members member){
+    public void removeMember(Member member){
         if(!members.contains(member)){
             throw new IllegalArgumentException
                     (String.format(MEMBER_NOT_PART_OF_TEAM_ERROR, member));

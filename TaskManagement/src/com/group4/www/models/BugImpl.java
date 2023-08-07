@@ -1,7 +1,7 @@
 package com.group4.www.models;
 
 import com.group4.www.models.contracts.Bug;
-import com.group4.www.models.contracts.Members;
+import com.group4.www.models.contracts.Member;
 import com.group4.www.models.enums.PriorityBug;
 import com.group4.www.models.enums.SeverityBug;
 import com.group4.www.models.enums.StatusBug;
@@ -47,7 +47,7 @@ public class BugImpl extends TaskBase implements Bug {
     private StatusBug status;
 
 
-    public BugImpl(String title, String description, PriorityBug priority, SeverityBug severity, Members assignee) {
+    public BugImpl(String title, String description, PriorityBug priority, SeverityBug severity, Member assignee) {
         super(title, description, assignee);
         this.priority = priority;
         this.severity = severity;
