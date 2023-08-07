@@ -1,6 +1,6 @@
 package com.group4.www.models.enums;
 
-public enum PriorityBug {
+public enum Priority {
     HIGH,
     MEDIUM,
     LOW;

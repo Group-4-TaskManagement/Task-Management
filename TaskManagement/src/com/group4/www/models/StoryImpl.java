@@ -3,7 +3,7 @@ package com.group4.www.models;
 import com.group4.www.models.contracts.Comment;
 import com.group4.www.models.contracts.EventLog;
 import com.group4.www.models.contracts.Member;
-import com.group4.www.models.enums.PriorityBug;
+import com.group4.www.models.enums.Priority;
 import com.group4.www.models.enums.SizeStory;
 import com.group4.www.models.enums.StatusStory;
 
@@ -12,7 +12,7 @@ import java.util.List;
 
 public class StoryImpl extends TaskBase implements com.group4.www.models.contracts.Story {
 
-    private PriorityBug priority;
+    private Priority priority;
 
     private SizeStory size;
 

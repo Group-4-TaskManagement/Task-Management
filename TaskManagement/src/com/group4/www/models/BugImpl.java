@@ -2,7 +2,7 @@ package com.group4.www.models;
 
 import com.group4.www.models.contracts.Bug;
 import com.group4.www.models.contracts.Member;
-import com.group4.www.models.enums.PriorityBug;
+import com.group4.www.models.enums.Priority;
 import com.group4.www.models.enums.SeverityBug;
 import com.group4.www.models.enums.StatusBug;
 
@@ -42,12 +42,12 @@ public class BugImpl extends TaskBase implements Bug {
             "The severity of the bug can not be changed, it is already at Minor!";
 
     private List<String> steps;
-    private PriorityBug priority;
+    private Priority priority;
     private SeverityBug severity;
     private StatusBug status;
 
 
-    public BugImpl(String title, String description, PriorityBug priority, SeverityBug severity, Member assignee) {
+    public BugImpl(String title, String description, Priority priority, SeverityBug severity, Member assignee) {
         super(title, description, assignee);
         this.priority = priority;
         this.severity = severity;
@@ -57,7 +57,7 @@ public class BugImpl extends TaskBase implements Bug {
 
 
     @Override
-    public PriorityBug getPriority() {
+    public Priority getPriority() {
         return priority;
     }
 
@@ -106,24 +106,24 @@ public class BugImpl extends TaskBase implements Bug {
 
     @Override
     public void advancePriority() {
-        if(getPriority()==PriorityBug.LOW){
-            this.priority=PriorityBug.MEDIUM;
+        if(getPriority()== Priority.LOW){
+            this.priority= Priority.MEDIUM;
             System.out.println(PRIORITY_ADVANCE_LOW_MED);
         }
-        if(getPriority()==PriorityBug.MEDIUM){
-            this.priority=PriorityBug.HIGH;
+        if(getPriority()== Priority.MEDIUM){
+            this.priority= Priority.HIGH;
             System.out.println(PRIORITY_ADVANCE_MED_HIGH);
         }else System.out.println(PRIORITY_ADVANCE_ERROR);
     }
 
     @Override
     public void revertPriority() {
-        if(getPriority()==PriorityBug.HIGH){
-            this.priority=PriorityBug.MEDIUM;
+        if(getPriority()== Priority.HIGH){
+            this.priority= Priority.MEDIUM;
             System.out.println(PRIORITY_REV_HIGH_MED);
         }
-        if(getPriority()==PriorityBug.MEDIUM){
-            this.priority=PriorityBug.LOW;
+        if(getPriority()== Priority.MEDIUM){
+            this.priority= Priority.LOW;
             System.out.println(PRIORITY_REV_MED_LOW);
         }else System.out.println(PRIORITY_REV_ERROR);
     }

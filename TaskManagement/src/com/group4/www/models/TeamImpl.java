@@ -8,7 +8,7 @@ import com.group4.www.models.utils.ValidationHelpers;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TeamsImpl implements Team {
+public class TeamImpl implements Team {
     public static final int TEAM_NAME_MIN_LENGTH = 5;
     public static final int TEAM_NAME_MAX_LENGTH = 15;
     public static final String TEAM_NAME_LENGTH_ERROR =
@@ -20,10 +20,10 @@ public class TeamsImpl implements Team {
 
     private String name;
     private final List<Member> members;
-    private final List<Board> boards;
+    private List<Board> boards;
 
 
-    public TeamsImpl(String name) {
+    public TeamImpl(String name) {
         setName(name);
         this.members = new ArrayList<>();
         this.boards = new ArrayList<>();
