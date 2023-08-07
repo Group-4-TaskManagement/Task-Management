@@ -9,7 +9,7 @@ import com.group4.www.models.utils.ValidationHelpers;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MemberImpl implements Member, Identifiable {
+public class MemberImpl implements Member {
     public static final int NAME_MIN_LENGTH = 5;
     public static final int NAME_MAX_LENGTH = 15;
     public static final String DESCR_LENGTH_ERROR = String.format(
@@ -17,16 +17,19 @@ public class MemberImpl implements Member, Identifiable {
 
     public static final String TASK_EXIST = "The Task really exist";
     public static final String TASK_NOT_EXIST = "The Task does not exist";
-    public static final String HISTORY_NOT_EXIST = "Activity history does not exist";
 
-    private  int id;
+    private static final String TASK_ADD = "The task was added";
+    private static final String TASK_REMOVE = "The task was removed";
+
+
+
+
     private String name;
     private List<Task> tasks;
     private List<EventLog> activityHistory;
 
 
-    public MemberImpl(int id,String name) {
-        this.id = id;
+    public MemberImpl(String name) {
         setName(name);
         this.tasks = new ArrayList<>();
         this.activityHistory = new ArrayList<>();
@@ -47,6 +50,8 @@ public class MemberImpl implements Member, Identifiable {
 
         }
         tasks.add(task);
+        addActivityHistory(TASK_ADD);
+
 
     }
 
@@ -56,6 +61,7 @@ public class MemberImpl implements Member, Identifiable {
             if (title.equals(task1.getTitle())) {
                 tasks.remove(task1);
                 isRemove =  true;
+                addActivityHistory(TASK_REMOVE);
             }
         }
         if(!isRemove){
@@ -89,9 +95,6 @@ public class MemberImpl implements Member, Identifiable {
         return new ArrayList<>(activityHistory);
     }
 
-    @Override
-    public int getId() {
-        return id;
-    }
+
 }
 
