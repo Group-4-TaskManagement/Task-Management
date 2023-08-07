@@ -11,7 +11,7 @@ public interface Task {
 
     void removeComment(Comment comment);
 
-    void addLogChanges(String massage);
+    void addLogChanges(String message);
 
 
 

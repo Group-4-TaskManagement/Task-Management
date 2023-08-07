@@ -17,7 +17,9 @@ abstract class TaskBase implements Task, Identifiable {
             String.format("Description must be between %d and %d symbols", DESCR_MIN_LENGTH, DESCR_MAX_LENGTH);
 
     private static final String COMMENT_NOT_EXIST = "Comment does not exist";
-    public static final String HISTORY_NOT_EXIST = "Activity history does not exist";
+    private static final String COMMENT_ADD = "The comment was added";
+    private static final String COMMENT_REMOVE = "The comment was removed";
+
 
 
     private int id;
@@ -49,12 +51,14 @@ abstract class TaskBase implements Task, Identifiable {
 
     public void addComment(Comment comment){
         comments.add(comment);
+        addLogChanges(COMMENT_ADD);
     }
 
 
     public void  removeComment(Comment comment){
         if(comments.contains(comment)){
             comments.remove(comment);
+            addLogChanges(COMMENT_REMOVE);
         }
         else {
 

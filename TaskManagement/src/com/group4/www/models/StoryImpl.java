@@ -43,37 +43,26 @@ public class StoryImpl extends TaskBase implements Story {
 
     @Override
     public void revertPriority() {
-
-        switch (priority.toString()) {
-
-            case "High":
-                this.priority = Priority.MEDIUM;
-                addLogChanges(String.format(PRIORITY_CHANGE, Priority.HIGH.toString(), Priority.MEDIUM.toString()));
-                break;
-
-            case "Medium":
-                this.priority = Priority.HIGH;
-                addLogChanges(String.format(PRIORITY_CHANGE, Priority.MEDIUM.toString(), Priority.HIGH.toString()));
-                break;
-
-            case "Low":
-                addLogChanges(String.format(PRIORITY_ERROR,Priority.LOW));
-
-
+        if (getPriority() != Priority.LOW) {
+            String currentPriority = getPriority().toString();
+            status = (StatusStory.values()[getPriority().ordinal() - 1]);
+            addLogChanges(String.format(PRIORITY_CHANGE,currentPriority,getPriority()));
+        } else {
+            addLogChanges(String.format(PRIORITY_ERROR, getPriority()));
         }
     }
 
+
     @Override
     public void advancePriority() {
-        if(priority == Priority.LOW){
-            this.priority= Priority.MEDIUM;
-            addLogChanges(String.format(PRIORITY_CHANGE,Priority.LOW.toString(),Priority.MEDIUM.toString()));
+        if (getPriority() != Priority.HIGH) {
+            String currentPriority = getPriority().toString();
+            status = (StatusStory.values()[getPriority().ordinal() + 1]);
+            addLogChanges(String.format(PRIORITY_CHANGE,currentPriority,getPriority()));
+        } else {
+            addLogChanges(String.format(PRIORITY_ERROR, getPriority()));
         }
-        else if (priority== Priority.MEDIUM){
-            this.priority= Priority.HIGH;
-            addLogChanges(String.format(PRIORITY_CHANGE,Priority.MEDIUM,Priority.HIGH));
-        }
-        else addLogChanges(String.format(PRIORITY_ERROR,Priority.HIGH));
+
     }
 
 
@@ -98,7 +87,7 @@ public class StoryImpl extends TaskBase implements Story {
     }
 
     public  void revertSize(){
-        if(getSize() != SizeStory.LARGE){
+        if(getSize() != SizeStory.SMALL){
             String currentSize = getSize().toString();
             size = (SizeStory.values()[getSize().ordinal() -1]);
             addLogChanges(String.format(SIZE_CHANGE,currentSize,getSize()));
@@ -109,7 +98,7 @@ public class StoryImpl extends TaskBase implements Story {
 
     }
     public void advanceSize(){
-        if(getSize() != SizeStory.SMALL){
+        if(getSize() != SizeStory.LARGE){
             String currentSize = getSize().toString();
             size = (SizeStory.values()[getSize().ordinal()  + 1]);
             addLogChanges(String.format(SIZE_CHANGE,currentSize,getSize()));
@@ -128,6 +117,10 @@ public class StoryImpl extends TaskBase implements Story {
 
     public SizeStory getSize() {
         return size;
+    }
+
+    public Priority getPriority() {
+        return priority;
     }
 }
 
