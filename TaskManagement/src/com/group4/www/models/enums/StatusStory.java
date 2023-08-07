@@ -6,4 +6,23 @@ public enum StatusStory {
     DONE;
 
     //TODO Override to string!
+
+
+    @Override
+    public String toString() {
+        switch (this){
+            case NOT_DONE:
+                return "Not done";
+
+            case DONE :
+                return "Done";
+
+            case IN_PROGRESS:
+                return "In progress";
+
+            default:
+                return "Unknown";
+        }
+
+    }
 }

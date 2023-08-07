@@ -14,7 +14,7 @@ public interface Member  {
 
     void removeTask(String title);
 
-    void addActivityHistory(EventLog eventLog);
+    void addActivityHistory(String massage);
 
-    void removeActivityHistory(EventLog eventLog);
+
 }

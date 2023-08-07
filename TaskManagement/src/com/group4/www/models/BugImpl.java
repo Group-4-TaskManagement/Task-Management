@@ -47,8 +47,8 @@ public class BugImpl extends TaskBase implements Bug {
     private StatusBug status;
 
 
-    public BugImpl(String title, String description, Priority priority, SeverityBug severity, Member assignee) {
-        super(title, description, assignee);
+    public BugImpl(int id,String title, String description, Priority priority, SeverityBug severity, Member assignee) {
+        super(id,title, description, assignee);
         this.priority = priority;
         this.severity = severity;
         addStepsToReproduce();

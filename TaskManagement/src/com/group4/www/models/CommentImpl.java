@@ -1,10 +1,11 @@
 package com.group4.www.models;
 
 import com.group4.www.models.contracts.Comment;
+import com.group4.www.models.contracts.Identifiable;
 
 import java.util.Objects;
 
-public class CommentImpl implements Comment {
+public class CommentImpl implements Comment, Identifiable {
 
     private int id;
     private String author;
@@ -31,6 +32,10 @@ public class CommentImpl implements Comment {
     public String getMessage() {
         return message;
     }
+    @Override
+    public int getId() {
+        return id;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -44,4 +49,6 @@ public class CommentImpl implements Comment {
     public int hashCode() {
         return Objects.hash(author, message);
     }
+
+
 }

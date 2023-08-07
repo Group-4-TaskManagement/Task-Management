@@ -1,10 +1,18 @@
 package com.group4.www.models.contracts;
 
 public interface Task {
-    public String getTitle();
+    String getTitle();
 
-    public String getDescription();
+    String getDescription();
 
-    public Member getAssignee();
+    Member getAssignee();
+
+    void addComment(Comment comment);
+
+    void removeComment(Comment comment);
+
+    void addLogChanges(String massage);
+
+
 
 }
