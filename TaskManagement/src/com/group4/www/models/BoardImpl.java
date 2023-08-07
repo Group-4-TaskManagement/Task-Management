@@ -17,13 +17,44 @@ public class BoardImpl implements Board {
     private  List<Task> tasks;
     private final List<EventLog> history = new ArrayList<>();
 
-    public BoardImpl(String name, List<Task> tasks) {
+    public BoardImpl(String name) {
         setName(name);
-        this.tasks = tasks;
+        this.tasks = new ArrayList<>();
     }
 
     public void setName(String name) {
         ValidationHelpers.validateIntRange(name.length(), MIN_BOARD_NAME, MAX_BOARD_NAME, NAME_LENGTH_ERROR);
         this.name = name;
+    }
+    @Override
+    public void addTask(Task task) {
+        if (tasks.contains(task)) {
+            throw new IllegalArgumentException("Task already in the list");
+        }
+        tasks.add(task);
+    }
+    @Override
+    public void removeTask(Task task) {
+        if (!tasks.contains(task)) {
+            throw new IllegalArgumentException("Task not in the list");
+        }
+        tasks.remove(task);
+    }
+    @Override
+    public void logEvent(String event) {
+        history.add(new EventLogImpl(event));
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+    @Override
+    public List<Task> getTasks() {
+        return new ArrayList<>(tasks);
+    }
+    @Override
+    public List<EventLog> getHistory() {
+        return new ArrayList<>(history);
     }
 }

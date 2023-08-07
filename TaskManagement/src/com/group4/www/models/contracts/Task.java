@@ -1,6 +1,6 @@
 package com.group4.www.models.contracts;
 
-public interface Task {
+public interface Task extends Identifiable {
     String getTitle();
 
     String getDescription();
