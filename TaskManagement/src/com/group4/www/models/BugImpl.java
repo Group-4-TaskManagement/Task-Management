@@ -1,50 +1,35 @@
 package com.group4.www.models;
 
 import com.group4.www.models.contracts.Bug;
+import com.group4.www.models.contracts.EventLog;
 import com.group4.www.models.contracts.Member;
 import com.group4.www.models.enums.Priority;
 import com.group4.www.models.enums.SeverityBug;
 import com.group4.www.models.enums.StatusBug;
+import com.group4.www.models.enums.StatusStory;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 public class BugImpl extends TaskBase implements Bug {
-    public static final String ADVANCED_STATUS = "The status of bug changed from Active to Fixed.";
-    public static final String ADVANCE_STATUS_ERROR = "Can not advance status! Already at Fixed.";
-    public static final String STATUS_REVERTED = "The status of the bug changed from Fixed to Active";
-    public static final String REVERT_STATUS_ERROR = "Can not revert status! Already at Active";
     public static final String REPRODUCE_STEPS = "Please enter 3 steps for the procurement of the bug: \n";
-    public static final String PRIORITY_ADVANCE_LOW_MED =
-            "The priority of the bug was changed from Low to Medium.";
-    public static final String PRIORITY_ADVANCE_MED_HIGH =
-            "The priority of the bug was changed from Medium to High.";
-    public static final String PRIORITY_ADVANCE_ERROR =
-            "The priority of the bug can not be changed, it is already at High!";
-    public static final String PRIORITY_REV_HIGH_MED =
-            "The priority of the bug was changed from High to Medium.";
-    public static final String PRIORITY_REV_MED_LOW =
-            "The priority of the bug was changed from Medium to Low.";
-    public static final String PRIORITY_REV_ERROR =
-            "The priority of the bug can not be changed, it is already at Low!";
-    public static final String ADVANCE_SEV_MINOR_TO_MAJOR =
-            "The severity of the bug was changed from Minor to Major.";
-    public static final String ADVANCE_SEV_MAJOR_TO_CRITICAL =
-            "The severity of the bug was changed from Major to Critical.";
-    public static final String SEVERITY_ADVANCE_ERROR =
-            "The severity of the bug can not be changed, it is already at Critical!";
-    public static final String REV_SEV_CRITICAL_TO_MAJOR =
-            "The severity of the bug was changed from Critical to Major.";
-    public static final String REV_SEV_MAJOR_TO_MINOR =
-            "The severity of the bug was changed from Major to Minor.";
-    public static final String SEV_REV_ERROR =
-            "The severity of the bug can not be changed, it is already at Minor!";
+    public static final String CHANGE_STATUS = "The status of the bug was changed from %s to %s.";
+    public static final String ADV_STATUS_ERR = "The status of the bug can not be advanced, it is already at %s!";
+    public static final String REV_STATUS_ERR = "The status of the bug can not be reverted, it is already at %s!";
+    public static final String CHANGE_PRIORITY = "The priority of the bug was changed from %s to %s.";
+    public static final String ADV_PRIORITY_ERR = "The priority of the bug can not be advanced, it is already at %s!";
+    public static final String REV_PRIORITY_ERR = "The priority of the bug can not be reverted, it is already at %s!";
+    public static final String CHANGE_SEVERITY = "The severity of the bug was changed from %s to %s.";
+    public static final String ADV_SEVERITY_ERR = "The severity of the bug can not be advanced, it is already at %s!";
+    public static final String REV_SEVERITY_ERR = "The severity of the bug can not be changed, it is already at %s!";
 
     private List<String> steps;
     private Priority priority;
     private SeverityBug severity;
     private StatusBug status;
+
 
 
     public BugImpl(int id,String title, String description, Priority priority, SeverityBug severity, Member assignee) {
@@ -79,77 +64,76 @@ public class BugImpl extends TaskBase implements Bug {
     private void addStepsToReproduce() {
         steps = new ArrayList<>();
         System.out.print(REPRODUCE_STEPS);
-        for (int i = 1; i <= 3; i++) {
-            System.out.print(String.format("STEP %d: ", i));
-            Scanner scn = new Scanner(System.in);
-            steps.add(scn.nextLine());
-        }
+        Scanner scn = new Scanner(System.in);
+        String steps = scn.nextLine();
+        this.steps = Arrays.asList(steps.split(";"));
     }
 
     @Override
     public void advanceStatus() {
-        if (status == StatusBug.ACTIVE) {
-            this.status = StatusBug.FIXED;
-            System.out.println(ADVANCED_STATUS);
-        } else
-            System.out.println(ADVANCE_STATUS_ERROR);
+        if (getStatus() == StatusBug.FIXED) {
+            String currentStatus = getStatus().toString();
+            status = StatusBug.values()[getStatus().ordinal() + 1];
+            addLogChanges(String.format(CHANGE_STATUS,currentStatus,getStatus()));
+        } else{
+            addLogChanges(String.format(ADV_STATUS_ERR, getStatus()));
+        }
+
     }
 
     @Override
-    public void revertStatus() {
-        if (status == StatusBug.FIXED) {
-            this.status = StatusBug.ACTIVE;
-            System.out.println(STATUS_REVERTED);
-        } else
-            System.out.println(REVERT_STATUS_ERROR);
+    public  void revertStatus() {
+        if (getStatus() != StatusBug.ACTIVE) {
+            String currentStatus = getStatus().toString();
+            status = StatusBug.values()[getStatus().ordinal() - 1];
+            addLogChanges(String.format(CHANGE_STATUS,currentStatus,getStatus()));
+        } else {
+            addLogChanges(String.format(REV_STATUS_ERR, getStatus()));
+        }
     }
 
     @Override
     public void advancePriority() {
-        if(getPriority()== Priority.LOW){
-            this.priority= Priority.MEDIUM;
-            System.out.println(PRIORITY_ADVANCE_LOW_MED);
+        if (getPriority() != Priority.HIGH) {
+            String currentPriority = getPriority().toString();
+            priority = Priority.values()[getPriority().ordinal() + 1];
+            addLogChanges(String.format(CHANGE_PRIORITY,currentPriority,getPriority()));
+        } else {
+            addLogChanges(String.format(ADV_PRIORITY_ERR, getPriority()));
         }
-        if(getPriority()== Priority.MEDIUM){
-            this.priority= Priority.HIGH;
-            System.out.println(PRIORITY_ADVANCE_MED_HIGH);
-        }else System.out.println(PRIORITY_ADVANCE_ERROR);
     }
 
     @Override
     public void revertPriority() {
-        if(getPriority()== Priority.HIGH){
-            this.priority= Priority.MEDIUM;
-            System.out.println(PRIORITY_REV_HIGH_MED);
+        if (getPriority() != Priority.LOW) {
+            String currentPriority = getPriority().toString();
+            priority = Priority.values()[getPriority().ordinal() - 1];
+            addLogChanges(String.format(CHANGE_PRIORITY,currentPriority,getPriority()));
+        } else {
+            addLogChanges(String.format(REV_PRIORITY_ERR, getPriority()));
         }
-        if(getPriority()== Priority.MEDIUM){
-            this.priority= Priority.LOW;
-            System.out.println(PRIORITY_REV_MED_LOW);
-        }else System.out.println(PRIORITY_REV_ERROR);
     }
 
     @Override
     public void advanceSeverity() {
-        if(getSeverity()==SeverityBug.MINOR){
-            this.severity=SeverityBug.MAJOR;
-            System.out.println(ADVANCE_SEV_MINOR_TO_MAJOR);
+        if (getSeverity() != SeverityBug.CRITICAL) {
+            String currentSeverity = getSeverity().toString();
+            severity = SeverityBug.values()[getSeverity().ordinal() + 1];
+            addLogChanges(String.format(CHANGE_SEVERITY,currentSeverity,getSeverity()));
+        } else {
+            addLogChanges(String.format(ADV_SEVERITY_ERR, getSeverity()));
         }
-        if(getSeverity()==SeverityBug.MAJOR){
-            this.severity=SeverityBug.CRITICAL;
-            System.out.println(ADVANCE_SEV_MAJOR_TO_CRITICAL);
-        }else System.out.println(SEVERITY_ADVANCE_ERROR);
     }
 
     @Override
     public void revertSeverity() {
-        if(getSeverity()==SeverityBug.CRITICAL){
-            this.severity=SeverityBug.MAJOR;
-            System.out.println(REV_SEV_CRITICAL_TO_MAJOR);
+        if (getSeverity() != SeverityBug.MINOR) {
+            String currentSeverity = getSeverity().toString();
+            severity = SeverityBug.values()[getSeverity().ordinal() - 1];
+            addLogChanges(String.format(CHANGE_SEVERITY,currentSeverity,getSeverity()));
+        } else {
+            addLogChanges(String.format(REV_SEVERITY_ERR, getSeverity()));
         }
-        if(getSeverity()==SeverityBug.MAJOR){
-            this.severity=SeverityBug.MINOR;
-            System.out.println(REV_SEV_MAJOR_TO_MINOR);
-        }else System.out.println(SEV_REV_ERROR);
     }
 
 }
