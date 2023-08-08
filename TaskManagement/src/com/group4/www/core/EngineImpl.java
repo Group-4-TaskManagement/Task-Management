@@ -43,7 +43,7 @@ public class EngineImpl implements Engine {
     }
 
     private void processCommand(String input){
-        String commandName = input.split(";")[0];
+        String commandName = input.split(" ")[0];
         Command command1 = commandFactory.createCommandFromCommandName(commandName,repository);
         List<String> parameters = extractCommandParameters(input);
         String executionResult = command1.execute(parameters);
