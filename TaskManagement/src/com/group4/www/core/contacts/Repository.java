@@ -14,10 +14,12 @@ import com.group4.www.models.tasks.contracts.Task;
 import java.util.List;
 
 public interface Repository {
-    //MARIAN
+//MARIAN
     Member createPerson(String name);
 
     Team createTeam(String name);
+
+    Board createBoard(String name);
 
     Bug createBug(String title, String description, Priority priority, SeverityBug severity, Member assignee);
 //Stoyan
@@ -27,21 +29,21 @@ public interface Repository {
 
     Board createBoardInTeam(String name, String teamName);
 //MONIKA
-    List<Member> showAllMembers();
+    String showAllMembers();
 
-    List<EventLog> showPersonActivity(String memberName);
+    String showPersonActivity(String memberName);
 
-    List<Team> showAllTeams();
+    String showAllTeams();
 //MARIAN
-    List<EventLog> showTeamActivity(String teamName);
+    String showTeamActivity(String teamName);
 
     void addMemberToTeam(String personName, String teamName);
 
-    List<Member> showAllTeamMembers(String teamName);
+    String showAllTeamMembers(String teamName);
 //STOYAN
-    List<Board> showAllTeamBoards(String teamName);
+    String showAllTeamBoards(String teamName);
 
-    List<EventLog> showBoardActivity(String boardName);
+    String showBoardActivity(String boardName);
 
     void advanceBugStatus(int bugID);
 //MONIKA

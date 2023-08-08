@@ -49,6 +49,18 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
+    public Board createBoard(String name) {
+        for(Board b : boards){
+            if(b.getName().equals(name)){
+                throw new IllegalArgumentException("Board with this name, already exist.");
+            }
+        }
+        Board board = new BoardImpl(name);
+        this.boards.add(board);
+        return board;
+    }
+
+    @Override
     public Bug createBug(String title, String description, Priority priority, SeverityBug severity, Member assignee) {
         Bug bug=new BugImpl(++Id,title,description,priority,severity,assignee);
         this.bugs.add(bug);
@@ -73,22 +85,26 @@ public class RepositoryImpl implements Repository {
 
     @Override
     public Board createBoardInTeam(String name, String teamName) {
-        Board board = new BoardImpl(name);
-        this.boards.add(board);
-        //TODO Find for teams to add
+        Board board = createBoard(name);
+        Team team = findTeam(teamName);
+        team.addBoard(board);
         return board;
     }
 
     @Override
-    public List<Member> showAllMembers() {
-        return new ArrayList<>(members);
+    public String showAllMembers() {
+        StringBuilder builder = new StringBuilder();
+        for(Member member: members) {
+            builder.append(member);
+        }
+        return builder.toString();
     }
 
     @Override
-    public List<EventLog> showPersonActivity(String memberName) {
+    public String showPersonActivity(String memberName) {
         for (Member member : members) {
             if (member.getName().equals(memberName)) {
-                return new ArrayList<>(member.getActivityHistory());
+                return member.getActivityHistory().toString();
             }
 
         }
@@ -96,14 +112,18 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
-    public List<Team> showAllTeams() {
-        return new ArrayList<>(teams);
+    public String showAllTeams() {
+        return new ArrayList<>(teams).toString();
     }
 
     @Override
-    public List<EventLog> showTeamActivity(String teamName) {
-
-        return null;
+    public String showTeamActivity(String teamName) {
+        Team team = findTeam(teamName);
+                for (Member member : team.getMembers()) {
+                     member.getActivityHistory();
+                     //TODO how should we return all the activities
+                }
+        throw new IllegalArgumentException("There is no history to be displayed in this team.");
     }
 
     @Override
@@ -114,18 +134,18 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
-    public List<Member> showAllTeamMembers(String teamName) {
+    public String showAllTeamMembers(String teamName) {
         Team team=findTeam(teamName);
-        return team.getMembers();
+        return team.getMembers().toString();
     }
 
     @Override
-    public List<Board> showAllTeamBoards(String teamName) {
+    public String showAllTeamBoards(String teamName) {
         return null;
     }
 
     @Override
-    public List<EventLog> showBoardActivity(String boardName) {
+    public String showBoardActivity(String boardName) {
         return null;
     }
 
