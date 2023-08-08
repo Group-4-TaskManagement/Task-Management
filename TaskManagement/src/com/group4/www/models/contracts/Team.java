@@ -9,4 +9,10 @@ public interface Team {
 
     public List<Board> showBoards();
 
+    void addMember(Member member);
+
+    void removeMember(Member member);
+    void addBoard(Board board);
+    void removeBoard(Board board);
+
 }

@@ -52,6 +52,7 @@ public class TeamImpl implements Team {
         return new ArrayList<>(boards);
     }
 
+    @Override
     public void addMember(Member member){
         if(members.contains(member)){
             throw new IllegalArgumentException
@@ -59,7 +60,7 @@ public class TeamImpl implements Team {
         }
         members.add(member);
     }
-
+    @Override
     public void removeMember(Member member){
         if(!members.contains(member)){
             throw new IllegalArgumentException
@@ -68,6 +69,7 @@ public class TeamImpl implements Team {
         members.remove(member);
     }
 
+    @Override
     public void addBoard(Board board){
         if(boards.contains(board)){
             throw new IllegalArgumentException
@@ -76,6 +78,7 @@ public class TeamImpl implements Team {
         boards.add(board);
     }
 
+    @Override
     public void removeBoard(Board board){
         if(!boards.contains(board)){
             throw  new IllegalArgumentException(BOARD_NOT_ASSIGNED_IN_TEAM_ERROR);

@@ -2,16 +2,20 @@ package com.group4.www.core;
 
 import com.group4.www.core.contacts.Repository;
 import com.group4.www.models.BoardImpl;
+import com.group4.www.models.MemberImpl;
+import com.group4.www.models.TeamImpl;
 import com.group4.www.models.contracts.*;
 import com.group4.www.models.enums.Priority;
 import com.group4.www.models.enums.SeverityBug;
 import com.group4.www.models.enums.SizeStory;
 import com.group4.www.models.enums.StatusStory;
+import com.group4.www.models.tasks.BugImpl;
 import com.group4.www.models.tasks.FeedbackImpl;
 import com.group4.www.models.tasks.StoryImpl;
 import com.group4.www.models.tasks.contracts.Bug;
 import com.group4.www.models.tasks.contracts.Feedback;
 import com.group4.www.models.tasks.contracts.Story;
+import com.group4.www.models.tasks.contracts.Task;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,17 +36,23 @@ public class RepositoryImpl implements Repository {
 
     @Override
     public Member createPerson(String name) {
-        return null;
+        Member member=new MemberImpl(name);
+        this.members.add(member);
+        return member;
     }
 
     @Override
     public Team createTeam(String name) {
-        return null;
+        Team team=new TeamImpl(name);
+        this.teams.add(team);
+        return team;
     }
 
     @Override
     public Bug createBug(String title, String description, Priority priority, SeverityBug severity, Member assignee) {
-        return null;
+        Bug bug=new BugImpl(++Id,title,description,priority,severity,assignee);
+        this.bugs.add(bug);
+        return bug;
     }
 
     @Override
@@ -92,17 +102,21 @@ public class RepositoryImpl implements Repository {
 
     @Override
     public List<EventLog> showTeamActivity(String teamName) {
+
         return null;
     }
 
     @Override
     public void addMemberToTeam(String personName, String teamName) {
-
+        Member member=findMember(personName);
+        Team team=findTeam(teamName);
+        team.addMember(member);
     }
 
     @Override
     public List<Member> showAllTeamMembers(String teamName) {
-        return null;
+        Team team=findTeam(teamName);
+        return team.getMembers();
     }
 
     @Override

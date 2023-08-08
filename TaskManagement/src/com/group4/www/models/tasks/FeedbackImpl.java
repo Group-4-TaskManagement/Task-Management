@@ -3,6 +3,7 @@ package com.group4.www.models.tasks;
 import com.group4.www.models.tasks.contracts.Feedback;
 import com.group4.www.models.contracts.Member;
 import com.group4.www.models.enums.StatusFeedback;
+import com.group4.www.models.utils.ValidationHelpers;
 
 public class FeedbackImpl extends TaskBase implements Feedback {
     public static final String STATUS_CHANGE =
@@ -27,8 +28,9 @@ public class FeedbackImpl extends TaskBase implements Feedback {
         return id;
     }
 
-    public void setRating(int rating) {
-        //todo rating min and max 1 TO 10 also add change rating method
+   private void setRating(int rating) {
+        ValidationHelpers.validateIntRange(rating,
+                RATING_MIN,RATING_MAX,String.format(RATING_ERROR,RATING_MIN,RATING_MAX));
         this.rating = rating;
     }
 
@@ -66,11 +68,7 @@ public class FeedbackImpl extends TaskBase implements Feedback {
 
     @Override
     public void changeRating(int newRating) {
-        if(newRating < RATING_MIN || newRating > RATING_MAX){
-            throw new IllegalArgumentException(String.format(RATING_ERROR,RATING_MIN,RATING_MAX));
-        }
-        this.rating= newRating;
-
+           setRating(newRating);
     }
 
     @Override
