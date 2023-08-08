@@ -1,11 +1,12 @@
-package com.group4.www.commands;
+package com.group4.www.commands.creations;
 
+import com.group4.www.commands.Command;
 import com.group4.www.core.contacts.Repository;
 import com.group4.www.models.utils.ValidationHelpers;
 
 import java.util.List;
 
-public class CreatePerson implements Command{
+public class CreatePerson implements Command {
     public static final int EXPECTED_NUMBER_OF_ARGUMENTS = 1;
     public static final String CREATED_MEMBER_MESS = "Member with name %s was created";
 

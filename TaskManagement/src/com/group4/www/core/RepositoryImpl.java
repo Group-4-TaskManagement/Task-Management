@@ -81,7 +81,6 @@ public class RepositoryImpl implements Repository {
     public Story createStory(String title, String description, Member assignee, Priority priority, SizeStory size, StatusStory status) {
         Story story = new StoryImpl(++Id, title, description, assignee, priority, size, status);
         this.stories.add(story);
-        //TODO Find for assignee in members
         return story;
     }
 

@@ -1,7 +1,10 @@
 package com.group4.www.core;
 
 import com.group4.www.commands.Command;
-import com.group4.www.commands.CreatePerson;
+import com.group4.www.commands.creations.CreateBug;
+import com.group4.www.commands.creations.CreatePerson;
+import com.group4.www.commands.creations.CreateStory;
+import com.group4.www.commands.creations.CreateTeam;
 import com.group4.www.commands.enums.CommandType;
 import com.group4.www.core.contacts.CommandFactory;
 import com.group4.www.core.contacts.Repository;
@@ -18,11 +21,11 @@ public class CommandFactoryImpl implements CommandFactory {
             case CREATEPERSON:
                 return new CreatePerson(repository);
             case CREATETEAM:
-                return null;
+                return new CreateTeam(repository);
             case CREATEBUG:
-                return null;
+                return new CreateBug(repository);
             case CREATESTORY:
-                return null;
+                return new CreateStory(repository);
             case CREATEFEEDBACK:
                 return null;
             case CREATEBOARD:

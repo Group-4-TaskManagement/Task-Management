@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class BugImpl extends TaskBase implements Bug {
-    public static final String REPRODUCE_STEPS = "Please enter 3 steps for the procurement of the bug: \n";
+    public static final String REPRODUCE_STEPS = "Please enter steps, separated by ';', for the reproduction of the bug: \n";
     public static final String CHANGE_STATUS = "The status of the bug was changed from %s to %s.";
     public static final String ADV_STATUS_ERR = "The status of the bug can not be advanced, it is already at %s!";
     public static final String REV_STATUS_ERR = "The status of the bug can not be reverted, it is already at %s!";
