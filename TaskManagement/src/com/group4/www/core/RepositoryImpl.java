@@ -202,22 +202,26 @@ public class RepositoryImpl implements Repository {
 
     @Override
     public void advanceStoryStatus(int storyID) {
-
+        Story story = findStoryByID(storyID);
+        story.advanceStatus();
     }
 
     @Override
     public void revertStoryStatus(int storyID) {
-
+        Story story = findStoryByID(storyID);
+        story.revertStatus();
     }
 
     @Override
     public void advanceStorySize(int storyID) {
-
+        Story story = findStoryByID(storyID);
+        story.advanceSize();
     }
 
     @Override
     public void revertStorySize(int storyID) {
-
+        Story story = findStoryByID(storyID);
+        story.revertSize();
     }
 
     @Override
