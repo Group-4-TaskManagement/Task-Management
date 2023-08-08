@@ -25,18 +25,18 @@ public class RepositoryImpl implements Repository {
     private static final String BOARD_NOT_EXIST = "The board does not exist";
     private static final String TEAM_NOT_EXIST = "The team does not exist";
     private int Id;
-    private List<Team> teams;
-    private List<Member> members;
-    private List<Board> boards;
-    private List<Bug> bugs;
-    private List<Story> stories;
-    private List<Feedback> feedbacks;
+    private List<Team> teams = new ArrayList<>();
+    private List<Member> members = new ArrayList<>();
+    private List<Board> boards = new ArrayList<>();
+    private List<Bug> bugs = new ArrayList<>();
+    private List<Story> stories = new ArrayList<>();
+    private List<Feedback> feedbacks = new ArrayList<>();
 
     public RepositoryImpl(){ Id = 0;}
 
     @Override
     public Member createPerson(String name) {
-        Member member=new MemberImpl(name);
+        Member member = new MemberImpl(name);
         for(Member b : members){
             if(b.getName().equals(name)){
                 throw new IllegalArgumentException("Member with this name, already exist.");

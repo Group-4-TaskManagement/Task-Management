@@ -1,5 +1,7 @@
 package com.group4.www.commands;
 
-public interface Command {
+import java.util.List;
 
+public interface Command {
+    String execute(List<String> parameters);
 }
