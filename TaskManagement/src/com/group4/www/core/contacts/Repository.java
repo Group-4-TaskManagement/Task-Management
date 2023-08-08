@@ -9,6 +9,7 @@ import com.group4.www.models.contracts.Board;
 import com.group4.www.models.tasks.contracts.Bug;
 import com.group4.www.models.tasks.contracts.Feedback;
 import com.group4.www.models.tasks.contracts.Story;
+import com.group4.www.models.tasks.contracts.Task;
 
 import java.util.List;
 
