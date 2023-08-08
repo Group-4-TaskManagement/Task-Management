@@ -12,9 +12,13 @@ import com.group4.www.models.tasks.contracts.Bug;
 import com.group4.www.models.tasks.contracts.Feedback;
 import com.group4.www.models.tasks.contracts.Story;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RepositoryImpl implements Repository {
+    private static final String MEMBER_NOT_EXIST= "A member with named %s does not exist";
+    private static final String BOARD_NOT_EXIST= "The board does not exist";
+    private static final String TEAM_NOT_EXIST= "The team does not exist";
     private List<Team> teams;
     private List<Member> members;
     private List<Board> boards;
@@ -52,17 +56,23 @@ public class RepositoryImpl implements Repository {
 
     @Override
     public List<Member> showAllMembers() {
-        return null;
+        return new ArrayList<>(members);
     }
 
     @Override
     public List<EventLog> showPersonActivity(String memberName) {
-        return null;
+        for (Member member : members) {
+            if (member.getName().equals(memberName)) {
+                return new ArrayList<>(member.getActivityHistory());
+            }
+
+        }
+        throw new IllegalArgumentException(String.format(MEMBER_NOT_EXIST, memberName));
     }
 
     @Override
     public List<Team> showAllTeams() {
-        return null;
+        return new ArrayList<>(teams);
     }
 
     @Override
@@ -97,16 +107,44 @@ public class RepositoryImpl implements Repository {
 
     @Override
     public void revertBugStatus(int bugID) {
+        Bug  bug = findBugByID(bugID);
+        bug.revertStatus();
 
     }
 
     @Override
     public void advancePriority(int taskID) {
+        for (Task task:tasks) {
+            if(task.getId() == taskID){
+                if(task.getClass().isInstance(Story.class)){
+                    Story story =(Story) task;
+                    story.advancePriority();
+                }
+                else{
+                    Bug bug = (Bug) task;
+                    bug.advancePriority();
+                }
+            }
+
+        }
 
     }
 
     @Override
     public void revertPriority(int taskID) {
+        for (Task task:tasks) {
+            if(task.getId() == taskID){
+                if(task.getClass().isInstance(Story.class)){
+                    Story story =(Story) task;
+                    story.revertPriority();
+                }
+                else{
+                    Bug bug = (Bug) task;
+                    bug.revertPriority();
+                }
+            }
+
+        }
 
     }
 
@@ -143,15 +181,23 @@ public class RepositoryImpl implements Repository {
     @Override
     public void advanceFeedbackStatus(int taskID) {
 
+        Feedback  feedback = findFeedbackByID(taskID);
+        feedback.advanceStatus();
+
     }
 
     @Override
-    public void revertFeedbackStatus(int feedbackID) {
+    public void revertFeedbackStatus(int taskID) {
+        Feedback  feedback = findFeedbackByID(taskID);
+
+        feedback.revertStatusFeedback();
 
     }
 
     @Override
     public void changeFeedbackRating(int newRating, int taskID) {
+        Feedback feedback = findFeedbackByID(taskID);
+        feedback.changeRating(newRating);
 
     }
 
@@ -187,16 +233,35 @@ public class RepositoryImpl implements Repository {
 
     @Override
     public Member findMember(String memberName) {
-        return null;
+
+        for (Member member:members) {
+            if (member.getName().equals(memberName)){
+                return member;
+            }
+
+        }
+        throw new IllegalArgumentException(String.format( MEMBER_NOT_EXIST,memberName));
     }
 
     @Override
     public Board findBoard(String boardName) {
-        return null;
+        for (Board board:boards) {
+            if(board.getName().equals(boardName)){
+                return board;
+            }
+
+        }
+        throw  new IllegalArgumentException(BOARD_NOT_EXIST);
     }
 
     @Override
     public Team findTeam(String teamName) {
-        return null;
+        for (Team team:teams) {
+            if(team.getName().equals(teamName)){
+                return team;
+            }
+
+        }
+       throw  new IllegalArgumentException(TEAM_NOT_EXIST);
     }
 }

@@ -9,6 +9,10 @@ public class FeedbackImpl extends TaskBase implements Feedback {
             "The status of the feedback was changed from %s to %s.";
     public static final String STATUS_ERROR =
             "The status of the feedback can not be changed, it is already at %s!";
+
+    private  static  final int  RATING_MIN = 1;
+    private  static  final int  RATING_MAX = 10;
+    private  static  final String  RATING_ERROR = "Rating must be between %d and %d";
     private int rating;
     int id;
     private StatusFeedback statusFeedback;
@@ -36,6 +40,10 @@ public class FeedbackImpl extends TaskBase implements Feedback {
         return statusFeedback;
     }
 
+
+
+
+
     public  void revertStatusFeedback() {
         if (getStatusFeedback() != StatusFeedback.NEW) {
             String currentStatus = getStatusFeedback().toString();
@@ -54,6 +62,15 @@ public class FeedbackImpl extends TaskBase implements Feedback {
         } else {
             addLogChanges(String.format(STATUS_ERROR, getStatusFeedback()));
         }
+    }
+
+    @Override
+    public void changeRating(int newRating) {
+        if(newRating < RATING_MIN || newRating > RATING_MAX){
+            throw new IllegalArgumentException(String.format(RATING_ERROR,RATING_MIN,RATING_MAX));
+        }
+        this.rating= newRating;
+
     }
 
     @Override

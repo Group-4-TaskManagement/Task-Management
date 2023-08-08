@@ -7,4 +7,10 @@ public interface Feedback extends Task {
     int getRating();
 
     StatusFeedback getStatusFeedback();
+    public  void revertStatusFeedback();
+
+    public void advanceStatus();
+
+
+    void changeRating(int newRating);
 }
