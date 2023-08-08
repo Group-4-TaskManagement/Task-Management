@@ -9,8 +9,6 @@ import com.group4.www.models.enums.SizeStory;
 import com.group4.www.models.enums.StatusStory;
 import com.group4.www.models.tasks.FeedbackImpl;
 import com.group4.www.models.tasks.StoryImpl;
-import com.group4.www.models.tasks.contracts.Task;
-import com.group4.www.models.contracts.Board;
 import com.group4.www.models.tasks.contracts.Bug;
 import com.group4.www.models.tasks.contracts.Feedback;
 import com.group4.www.models.tasks.contracts.Story;
@@ -130,38 +128,33 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
-    public void advancePriority(int taskID) {
-        for (Task task : tasks) {
-            if (task.getId() == taskID) {
-                if (task.getClass().isInstance(Story.class)) {
-                    Story story = (Story) task;
-                    story.advancePriority();
-                } else {
-                    Bug bug = (Bug) task;
-                    bug.advancePriority();
-                }
-            }
-
-        }
+    public void advancePriorityStory(int taskID) {
+        Story story = findStoryByID(taskID);
+        story.advancePriority();
 
     }
 
     @Override
-    public void revertPriority(int taskID) {
-        for (Task task : tasks) {
-            if (task.getId() == taskID) {
-                if (task.getClass().isInstance(Story.class)) {
-                    Story story = (Story) task;
-                    story.revertPriority();
-                } else {
-                    Bug bug = (Bug) task;
-                    bug.revertPriority();
-                }
-            }
-
-        }
+    public void advancePriorityBug(int taskID) {
+        Bug bug = findBugByID(taskID);
+        bug.advancePriority();
 
     }
+
+    @Override
+    public void revertPriorityStory(int taskID) {
+        Story story = findStoryByID(taskID);
+        story.revertPriority();
+
+    }
+
+    @Override
+    public void revertPriorityBug(int taskID) {
+        Bug bug = findBugByID(taskID);
+        bug.revertPriority();
+
+    }
+
 
     @Override
     public void advanceBugSeverity(int bugID) {
@@ -203,8 +196,8 @@ public class RepositoryImpl implements Repository {
 
     @Override
     public void revertFeedbackStatus(int taskID) {
-        Feedback feedback = findFeedbackByID(taskID);
 
+        Feedback feedback = findFeedbackByID(taskID);
         feedback.revertStatusFeedback();
 
     }
@@ -247,6 +240,8 @@ public class RepositoryImpl implements Repository {
                 return story;
         }
         throw new IllegalArgumentException(String.format("There is no story with ID:%d", id));
+
+
     }
 
     @Override

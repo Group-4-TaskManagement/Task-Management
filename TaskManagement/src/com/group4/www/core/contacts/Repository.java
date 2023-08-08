@@ -47,9 +47,11 @@ public interface Repository {
 //MONIKA
     void revertBugStatus(int bugID);
 
-    void advancePriority(int taskID);
+    void advancePriorityStory(int taskID);
+    void advancePriorityBug(int taskID);
 
-    void revertPriority(int taskID);
+    void revertPriorityStory(int taskID);
+    void revertPriorityBug(int taskID);
 //MARIAN
     void advanceBugSeverity(int bugID);
 
@@ -65,7 +67,7 @@ public interface Repository {
 //MONIKA
     void advanceFeedbackStatus(int taskID);
 
-    void revertFeedbackStatus(int feedbackID);
+    void revertFeedbackStatus(int taskID);
 
     void changeFeedbackRating(int newRating, int taskID);
 //MARIAN
