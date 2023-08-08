@@ -30,7 +30,7 @@ public class BugImpl extends TaskBase implements Bug {
 
 
 
-    public BugImpl(int id,String title, String description, Priority priority, SeverityBug severity, Member assignee) {
+    public BugImpl(int id,String title, String description, Member assignee, Priority priority, SeverityBug severity) {
         super(id,title, description, assignee);
         this.priority = priority;
         this.severity = severity;

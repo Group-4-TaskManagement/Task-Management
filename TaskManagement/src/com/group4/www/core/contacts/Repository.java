@@ -21,7 +21,7 @@ public interface Repository {
 
     Board createBoard(String name);
 
-    Bug createBug(String title, String description, Priority priority, SeverityBug severity, Member assignee);
+    Bug createBug(String title, String description, Member assignee, Priority priority, SeverityBug severity);
 //Stoyan
     Story createStory(String title, String description, Member assignee, Priority priority, SizeStory size, StatusStory status);
 

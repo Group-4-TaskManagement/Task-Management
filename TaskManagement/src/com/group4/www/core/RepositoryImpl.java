@@ -71,8 +71,8 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
-    public Bug createBug(String title, String description, Priority priority, SeverityBug severity, Member assignee) {
-        Bug bug=new BugImpl(++Id,title,description,priority,severity,assignee);
+    public Bug createBug(String title, String description,Member assignee, Priority priority, SeverityBug severity) {
+        Bug bug=new BugImpl(++Id,title,description,assignee,priority,severity);
         this.bugs.add(bug);
         return bug;
     }
