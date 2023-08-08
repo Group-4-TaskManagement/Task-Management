@@ -14,7 +14,7 @@ public interface Member  {
 
     void addTask(Task task);
 
-    void removeTask(String title);
+    void removeTask(int id);
 
     void addActivityHistory(String message);
 

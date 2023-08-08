@@ -37,12 +37,22 @@ public class RepositoryImpl implements Repository {
     @Override
     public Member createPerson(String name) {
         Member member=new MemberImpl(name);
+        for(Member b : members){
+            if(b.getName().equals(name)){
+                throw new IllegalArgumentException("Member with this name, already exist.");
+            }
+        }
         this.members.add(member);
         return member;
     }
 
     @Override
     public Team createTeam(String name) {
+        for(Team b : teams){
+            if(b.getName().equals(name)){
+                throw new IllegalArgumentException("Team with this name, already exist.");
+            }
+        }
         Team team=new TeamImpl(name);
         this.teams.add(team);
         return team;
@@ -118,13 +128,18 @@ public class RepositoryImpl implements Repository {
 
     @Override
     public String showTeamActivity(String teamName) {
+        StringBuilder sb=new StringBuilder();
         Team team = findTeam(teamName);
                 for (Member member : team.getMembers()) {
-                     member.getActivityHistory();
-                     //TODO how should we return all the activities
+                     sb.append(member.getActivityHistory());
                 }
-        throw new IllegalArgumentException("There is no history to be displayed in this team.");
+                if(sb.isEmpty()){
+                    throw new IllegalArgumentException(
+                            "There is no history to be displayed in this team.");
+                }
+                return sb.toString();
     }
+
 
     @Override
     public void addMemberToTeam(String personName, String teamName) {
@@ -141,17 +156,20 @@ public class RepositoryImpl implements Repository {
 
     @Override
     public String showAllTeamBoards(String teamName) {
-        return null;
+        Team team=findTeam(teamName);
+        return team.showBoards().toString();
     }
 
     @Override
     public String showBoardActivity(String boardName) {
-        return null;
+        Board board=findBoard(boardName);
+        return board.getHistory().toString();
     }
 
     @Override
     public void advanceBugStatus(int bugID) {
-
+        Bug bug=findBugByID(bugID);
+        bug.advanceStatus();
     }
 
     @Override
@@ -192,12 +210,14 @@ public class RepositoryImpl implements Repository {
 
     @Override
     public void advanceBugSeverity(int bugID) {
-
+        Bug bug = findBugByID(bugID);
+        bug.advanceSeverity();
     }
 
     @Override
     public void revertBugSeverity(int bugID) {
-
+        Bug bug = findBugByID(bugID);
+        bug.advanceSeverity();
     }
 
     @Override
@@ -249,16 +269,48 @@ public class RepositoryImpl implements Repository {
 
     @Override
     public void assignTaskToMember(int taskID, String memberName) {
+        Member member=findMember(memberName);
+        for (Bug b:bugs) {
+            if(b.getId()==taskID){
+                member.addTask(b);
+            }
+        }
+        for (Feedback b:feedbacks) {
+            if(b.getId()==taskID){
+                member.addTask(b);
+            }
+        }
+        for (Story b:stories) {
+            if(b.getId()==taskID){
+                member.addTask(b);
+            }
+        }
 
     }
 
     @Override
     public void unAssignTaskToMember(int taskID, String memberName) {
-
+        Member member=findMember(memberName);
+       member.removeTask(taskID);
     }
 
     @Override
     public void addCommentToTask(Comment comment, int taskID) {
+        for (Bug b:bugs) {
+            if(b.getId()==taskID){
+                b.addComment(comment);
+            }
+        }
+        for (Feedback b:feedbacks) {
+            if(b.getId()==taskID){
+                b.addComment(comment);
+            }
+        }
+        for (Story b:stories) {
+            if(b.getId()==taskID){
+                b.addComment(comment);
+            }
+        }
 
     }
 

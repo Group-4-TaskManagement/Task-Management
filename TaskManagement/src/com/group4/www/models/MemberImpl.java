@@ -43,7 +43,7 @@ public class MemberImpl implements Member {
     public void addTask(Task task){
 
         for (Task task1:tasks) {
-            if(task.getTitle().equals(task1.getTitle())){
+            if(task1.getId()== task.getId()){
                 throw  new IllegalArgumentException(TASK_EXIST);
             }
 
@@ -54,11 +54,11 @@ public class MemberImpl implements Member {
 
     }
 
-    public  void removeTask(String title) {
+    public  void removeTask(int id) {
         boolean isRemove = false;
-        for (Task task1 : tasks) {
-            if (title.equals(task1.getTitle())) {
-                tasks.remove(task1);
+        for (Task task : tasks) {
+            if (id== task.getId()) {
+                tasks.remove(task);
                 isRemove =  true;
                 addActivityHistory(TASK_REMOVE);
             }
