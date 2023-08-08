@@ -25,6 +25,8 @@ public class CommandFactoryImpl implements CommandFactory {
                 return null;
             case CREATEFEEDBACK:
                 return null;
+            case CREATEBOARD:
+                return null;
             case CREATEBOARDINTEAM:
                 return null;
             case SHOWALLMEMBERS:
