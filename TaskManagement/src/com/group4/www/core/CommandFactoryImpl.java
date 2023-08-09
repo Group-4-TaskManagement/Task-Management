@@ -81,18 +81,6 @@ public class CommandFactoryImpl implements CommandFactory {
                 return null;
             case ADDCOMMENTTOTASK:
                 return null;
-            case FINDBUG:
-                return null;
-            case FINDSTORY:
-                return null;
-            case FINDFEEDBACK:
-                return null;
-            case FINDMEMBER:
-                return null;
-            case FINDBOARD:
-                return null;
-            case FINDTEAM:
-                return null;
             default: throw new IllegalArgumentException(String.format(INVALID_COMMAND,commandTypeAsString));
         }
     }

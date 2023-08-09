@@ -45,13 +45,6 @@ public enum CommandType {
     UNASSIGNTASKTOMEMBER,
     ADDCOMMENTTOTASK,
     //STOYAN
-    FINDBUG,
-    FINDSTORY,
-    FINDFEEDBACK,
-    //MARIAN
-    FINDMEMBER,
-    FINDBOARD,
-    FINDTEAM;
 
 
 }
