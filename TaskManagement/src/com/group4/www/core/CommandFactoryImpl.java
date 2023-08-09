@@ -64,11 +64,11 @@ public class CommandFactoryImpl implements CommandFactory {
             case ADVANCESTORYSTATUS:
                 return null;
             case REVERTSTORYSTATUS:
-                return null;
+                return new RevertStoryStatus(repository);
             case ADVANCESTORYSIZE:
-                return null;
+                return new AdvanceStorySize(repository);
             case REVERTSTORYSIZE:
-                return null;
+                return new RevertStorySize(repository);
             case ADVANCEFEEDBACKSTATUS:
                 return null;
             case REVERTFEEDBACKSTATUS:
