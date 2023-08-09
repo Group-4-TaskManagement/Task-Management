@@ -94,6 +94,9 @@ public class MemberImpl implements Member {
         return new ArrayList<>(activityHistory);
     }
 
-
+    @Override
+    public String toString() {
+        return String.format("%s\n",getName());
+    }
 }
 

@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RepositoryImpl implements Repository {
-    private static final String MEMBER_NOT_EXIST = "A member with named %s does not exist";
+    private static final String MEMBER_NOT_EXIST = "A member with name %s does not exist";
     private static final String BOARD_NOT_EXIST = "The board does not exist";
     private static final String TEAM_NOT_EXIST = "The team does not exist";
     private int Id;
@@ -87,7 +87,6 @@ public class RepositoryImpl implements Repository {
     @Override
     public Feedback createFeedback(String title, String description, Member assignee, int rating) {
         Feedback feedback = new FeedbackImpl(++Id, title, description, assignee, rating);
-        //TODO Find for assignee in members
         this.feedbacks.add(feedback);
         return feedback;
     }
@@ -103,19 +102,33 @@ public class RepositoryImpl implements Repository {
     @Override
     public String showAllMembers() {
         StringBuilder builder = new StringBuilder();
-        for(Member member: members) {
-            builder.append(member);
+        int c = 0;
+        builder.append("--- REGISTERED MEMBERS ---\n");
+        if(members.size()==0){
+            builder.append("There are not registered members yet!");
+            return builder.toString();
         }
+        for (Member member : members) {
+            builder.append(String.format("%d. %s",++c,member));
+        }
+        builder.append("----------");
         return builder.toString();
     }
 
     @Override
     public String showPersonActivity(String memberName) {
+        StringBuilder builder = new StringBuilder();
+        int c = 0;
         for (Member member : members) {
             if (member.getName().equals(memberName)) {
-                return member.getActivityHistory().toString();
+                if(member.getActivityHistory().size()==0){
+                    builder.append("This member does not have any activity yet.");
+                }
+                for(EventLog history: member.getActivityHistory()){
+                    builder.append(String.format("%d. %s",++c,history));
+                }
+                return builder.toString();
             }
-
         }
         throw new IllegalArgumentException(String.format(MEMBER_NOT_EXIST, memberName));
     }
@@ -167,7 +180,7 @@ public class RepositoryImpl implements Repository {
 
     @Override
     public void advanceBugStatus(int bugID) {
-        Bug bug=findBugByID(bugID);
+        Bug bug = findBugByID(bugID);
         bug.advanceStatus();
     }
 

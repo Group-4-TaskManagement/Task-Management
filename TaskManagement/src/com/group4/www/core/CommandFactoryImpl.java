@@ -1,10 +1,7 @@
 package com.group4.www.core;
 
 import com.group4.www.commands.Command;
-import com.group4.www.commands.creations.CreateBug;
-import com.group4.www.commands.creations.CreatePerson;
-import com.group4.www.commands.creations.CreateStory;
-import com.group4.www.commands.creations.CreateTeam;
+import com.group4.www.commands.creations.*;
 import com.group4.www.commands.enums.CommandType;
 import com.group4.www.core.contacts.CommandFactory;
 import com.group4.www.core.contacts.Repository;
@@ -31,11 +28,11 @@ public class CommandFactoryImpl implements CommandFactory {
             case CREATEBOARD:
                 return null;
             case CREATEBOARDINTEAM:
-                return null;
+                return new CreateBoardInTeam(repository);
             case SHOWALLMEMBERS:
-                return null;
+                return new ShowAllMembers(repository);
             case SHOWPERSONACTIVITY:
-                return null;
+                return new ShowPersonActivity(repository);
             case SHOWALLTEAM:
                 return null;
             case SHOWTEAMACTIVITY:
@@ -49,11 +46,11 @@ public class CommandFactoryImpl implements CommandFactory {
             case SHOWBOARDACTIVITY:
                 return null;
             case ADVANCEBUGSTATUS:
-                return null;
+                return new AdvanceBugStatus(repository);
             case REVERTBUGSTATUS:
-                return null;
+                return new RevertBugStatus(repository);
             case ADVANCESTORYPRIORITY:
-                return null;
+                return new AdvanceStoryPriority(repository);
             case ADVANCEBUGPRIORITY:
                 return null;
             case REVERTSTORYPRIORITY:

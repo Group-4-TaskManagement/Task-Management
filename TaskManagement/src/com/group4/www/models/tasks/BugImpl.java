@@ -13,7 +13,7 @@ import java.util.Scanner;
 
 public class BugImpl extends TaskBase implements Bug {
     public static final String REPRODUCE_STEPS = "Please enter steps, separated by ';', for the reproduction of the bug: \n";
-    public static final String CHANGE_STATUS = "The status of the bug was changed from %s to %s.";
+    public static final String CHANGE_STATUS = "The status of the bug was changed from %s to %s. ";
     public static final String ADV_STATUS_ERR = "The status of the bug can not be advanced, it is already at %s!";
     public static final String REV_STATUS_ERR = "The status of the bug can not be reverted, it is already at %s!";
     public static final String CHANGE_PRIORITY = "The priority of the bug was changed from %s to %s.";
@@ -69,12 +69,14 @@ public class BugImpl extends TaskBase implements Bug {
 
     @Override
     public void advanceStatus() {
-        if (getStatus() == StatusBug.FIXED) {
+        if (getStatus() != StatusBug.FIXED) {
             String currentStatus = getStatus().toString();
             status = StatusBug.values()[getStatus().ordinal() + 1];
+            System.out.printf(CHANGE_STATUS,currentStatus,getStatus());
             addLogChanges(String.format(CHANGE_STATUS,currentStatus,getStatus()));
         } else{
             addLogChanges(String.format(ADV_STATUS_ERR, getStatus()));
+            throw new IllegalArgumentException(String.format(ADV_STATUS_ERR,getStatus()));
         }
 
     }
@@ -84,9 +86,11 @@ public class BugImpl extends TaskBase implements Bug {
         if (getStatus() != StatusBug.ACTIVE) {
             String currentStatus = getStatus().toString();
             status = StatusBug.values()[getStatus().ordinal() - 1];
+            System.out.printf(CHANGE_STATUS,currentStatus,getStatus());
             addLogChanges(String.format(CHANGE_STATUS,currentStatus,getStatus()));
         } else {
             addLogChanges(String.format(REV_STATUS_ERR, getStatus()));
+            throw new IllegalArgumentException(String.format(REV_STATUS_ERR,getStatus()));
         }
     }
 

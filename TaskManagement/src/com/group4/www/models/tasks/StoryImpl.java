@@ -9,7 +9,7 @@ import com.group4.www.models.tasks.contracts.Story;
 public class StoryImpl extends TaskBase implements Story {
 
     public static final String PRIORITY_CHANGE =
-            "The priority of the story was changed from %s to %s.";
+            "The priority of the story was changed from %s to %s. ";
     public static final String PRIORITY_ERROR =
             "The priority of the story can not be changed, it is already at %s!";
 
@@ -44,9 +44,11 @@ public class StoryImpl extends TaskBase implements Story {
         if (getPriority() != Priority.LOW) {
             String currentPriority = getPriority().toString();
             status = (StatusStory.values()[getPriority().ordinal() - 1]);
+            System.out.printf(PRIORITY_CHANGE,currentPriority,getPriority());
             addLogChanges(String.format(PRIORITY_CHANGE,currentPriority,getPriority()));
         } else {
             addLogChanges(String.format(PRIORITY_ERROR, getPriority()));
+            throw new IllegalArgumentException(String.format(PRIORITY_ERROR,getPriority()));
         }
     }
 
@@ -56,9 +58,11 @@ public class StoryImpl extends TaskBase implements Story {
         if (getPriority() != Priority.HIGH) {
             String currentPriority = getPriority().toString();
             status = (StatusStory.values()[getPriority().ordinal() + 1]);
+            System.out.printf(PRIORITY_CHANGE,currentPriority,getPriority());
             addLogChanges(String.format(PRIORITY_CHANGE,currentPriority,getPriority()));
         } else {
             addLogChanges(String.format(PRIORITY_ERROR, getPriority()));
+            throw new IllegalArgumentException(String.format(PRIORITY_ERROR,getPriority()));
         }
 
     }
