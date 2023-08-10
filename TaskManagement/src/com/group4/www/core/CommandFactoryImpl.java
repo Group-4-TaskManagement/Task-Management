@@ -54,11 +54,11 @@ public class CommandFactoryImpl implements CommandFactory {
             case ADDCOMMENTTOTASK:
                 return new AddCommentToTask(repository);
             case CHANGEBUGSTATUS:
-                return null;
+                return new ChangeBugStatus(repository);
             case CHANGEBUGPRIORITY:
-                return null;
+                return new ChangeBugPriority(repository);
             case CHANGEBUGSEVERITY:
-                return null;
+                return new ChangeBugSeverity(repository);
             case CHANGESTORYSTATUS:
                 return null;
             case CHANGESTORYPRIORITY:

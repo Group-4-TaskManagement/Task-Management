@@ -16,12 +16,17 @@ public class BugImpl extends TaskBase implements Bug {
     public static final String CHANGE_STATUS = "The status of the bug was changed from %s to %s. ";
     public static final String ADV_STATUS_ERR = "The status of the bug can not be advanced, it is already at %s!";
     public static final String REV_STATUS_ERR = "The status of the bug can not be reverted, it is already at %s!";
-    public static final String CHANGE_PRIORITY = "The priority of the bug was changed from %s to %s.";
+    public static final String BUG_CHANGE_PRIORITY_MESS = "The priority of bug with ID:%d was changed from %s to %s.";
     public static final String ADV_PRIORITY_ERR = "The priority of the bug can not be advanced, it is already at %s!";
     public static final String REV_PRIORITY_ERR = "The priority of the bug can not be reverted, it is already at %s!";
     public static final String CHANGE_SEVERITY = "The severity of the bug was changed from %s to %s.";
     public static final String ADV_SEVERITY_ERR = "The severity of the bug can not be advanced, it is already at %s!";
     public static final String REV_SEVERITY_ERR = "The severity of the bug can not be changed, it is already at %s!";
+    public static final String BUG_CHANGE_STATUS_ERR = "Can not change the status of the bug. It is already at %s.";
+    public static final String BUG_CHANGE_STATUS_MESS = "The status of bug with ID:%d was changed from %s to %s.";
+    public static final String BUG_CHANGE_PRIORITY_ERR = "Can not change the priority of the bug. It is already at %s.";
+    public static final String BUG_CHANGE_SEVERITY_ERR = "Can not change the severity of the bug. It is already at %s.";
+    public static final String BUG_CHANGE_SEVERITY_MESS = "The severity of bug with ID:%d was changed from %s to %s. ";
 
     private List<String> steps;
     private Priority priority;
@@ -55,6 +60,39 @@ public class BugImpl extends TaskBase implements Bug {
     }
 
     @Override
+    public void setStatus(StatusBug statusBug) {
+        if(statusBug==getStatus()) {
+            throw new IllegalArgumentException(String.format(BUG_CHANGE_STATUS_ERR, getStatus()));
+        }else {
+            System.out.printf(BUG_CHANGE_STATUS_MESS,getId(), getStatus(), statusBug);
+            addLogChanges(String.format(BUG_CHANGE_STATUS_MESS,getId(),getStatus(),statusBug));
+            this.status = statusBug;
+        }
+    }
+
+    @Override
+    public void setPriority(Priority priorityBug) {
+        if(priorityBug==getPriority()) {
+            throw new IllegalArgumentException(String.format(BUG_CHANGE_PRIORITY_ERR, getPriority()));
+        }else {
+            System.out.printf(BUG_CHANGE_PRIORITY_MESS,getId(), getPriority(), priorityBug);
+            addLogChanges(String.format(BUG_CHANGE_PRIORITY_MESS,getId(),getPriority(),priorityBug));
+            this.priority = priorityBug;
+        }
+    }
+
+    @Override
+    public void setSeverity(SeverityBug severityBug) {
+        if(severityBug==getSeverity()) {
+            throw new IllegalArgumentException(String.format(BUG_CHANGE_SEVERITY_ERR, getSeverity()));
+        }else {
+            System.out.printf(BUG_CHANGE_SEVERITY_MESS,getId(), getSeverity(), severityBug);
+            addLogChanges(String.format(BUG_CHANGE_SEVERITY_MESS,getId(),getSeverity(),severityBug));
+            this.severity = severityBug;
+        }
+    }
+
+    @Override
     public List<String> getSteps() {
         return new ArrayList<>(steps);
     }
@@ -65,77 +103,6 @@ public class BugImpl extends TaskBase implements Bug {
         Scanner scn = new Scanner(System.in);
         String steps = scn.nextLine();
         this.steps = Arrays.asList(steps.split(";"));
-    }
-
-    @Override
-    public void advanceStatus() {
-        if (getStatus() != StatusBug.FIXED) {
-            String currentStatus = getStatus().toString();
-            status = StatusBug.values()[getStatus().ordinal() + 1];
-            System.out.printf(CHANGE_STATUS,currentStatus,getStatus());
-            addLogChanges(String.format(CHANGE_STATUS,currentStatus,getStatus()));
-        } else{
-            addLogChanges(String.format(ADV_STATUS_ERR, getStatus()));
-            throw new IllegalArgumentException(String.format(ADV_STATUS_ERR,getStatus()));
-        }
-
-    }
-
-    @Override
-    public  void revertStatus() {
-        if (getStatus() != StatusBug.ACTIVE) {
-            String currentStatus = getStatus().toString();
-            status = StatusBug.values()[getStatus().ordinal() - 1];
-            System.out.printf(CHANGE_STATUS,currentStatus,getStatus());
-            addLogChanges(String.format(CHANGE_STATUS,currentStatus,getStatus()));
-        } else {
-            addLogChanges(String.format(REV_STATUS_ERR, getStatus()));
-            throw new IllegalArgumentException(String.format(REV_STATUS_ERR,getStatus()));
-        }
-    }
-
-    @Override
-    public void advancePriority() {
-        if (getPriority() != Priority.HIGH) {
-            String currentPriority = getPriority().toString();
-            priority = Priority.values()[getPriority().ordinal() + 1];
-            addLogChanges(String.format(CHANGE_PRIORITY,currentPriority,getPriority()));
-        } else {
-            addLogChanges(String.format(ADV_PRIORITY_ERR, getPriority()));
-        }
-    }
-
-    @Override
-    public void revertPriority() {
-        if (getPriority() != Priority.LOW) {
-            String currentPriority = getPriority().toString();
-            priority = Priority.values()[getPriority().ordinal() - 1];
-            addLogChanges(String.format(CHANGE_PRIORITY,currentPriority,getPriority()));
-        } else {
-            addLogChanges(String.format(REV_PRIORITY_ERR, getPriority()));
-        }
-    }
-
-    @Override
-    public void advanceSeverity() {
-        if (getSeverity() != SeverityBug.CRITICAL) {
-            String currentSeverity = getSeverity().toString();
-            severity = SeverityBug.values()[getSeverity().ordinal() + 1];
-            addLogChanges(String.format(CHANGE_SEVERITY,currentSeverity,getSeverity()));
-        } else {
-            addLogChanges(String.format(ADV_SEVERITY_ERR, getSeverity()));
-        }
-    }
-
-    @Override
-    public void revertSeverity() {
-        if (getSeverity() != SeverityBug.MINOR) {
-            String currentSeverity = getSeverity().toString();
-            severity = SeverityBug.values()[getSeverity().ordinal() - 1];
-            addLogChanges(String.format(CHANGE_SEVERITY,currentSeverity,getSeverity()));
-        } else {
-            addLogChanges(String.format(REV_SEVERITY_ERR, getSeverity()));
-        }
     }
 
 }

@@ -7,10 +7,7 @@ import com.group4.www.models.CommentImpl;
 import com.group4.www.models.MemberImpl;
 import com.group4.www.models.TeamImpl;
 import com.group4.www.models.contracts.*;
-import com.group4.www.models.enums.Priority;
-import com.group4.www.models.enums.SeverityBug;
-import com.group4.www.models.enums.SizeStory;
-import com.group4.www.models.enums.StatusStory;
+import com.group4.www.models.enums.*;
 import com.group4.www.models.tasks.BugImpl;
 import com.group4.www.models.tasks.FeedbackImpl;
 import com.group4.www.models.tasks.StoryImpl;
@@ -227,10 +224,28 @@ public class RepositoryImpl implements Repository {
         }
 
         if(!addComment){
-            throw new IllegalArgumentException(String.format("There is no таск with ID:%d", taskID));
+            throw new IllegalArgumentException(String.format("There is no task with ID:%d", taskID));
         }
         return String.format(COMMENT_ADDED_TO_TASK,comment.getId(),taskID);
 
+    }
+
+    @Override
+    public void changeBugStatus(int id, StatusBug statusBug) {
+        Bug bug = findBugByID(id);
+        bug.setStatus(statusBug);
+    }
+
+    @Override
+    public void changeBugPriority(int id, Priority priorityBug) {
+        Bug bug = findBugByID(id);
+        bug.setPriority(priorityBug);
+    }
+
+    @Override
+    public void changeBugSeverity(int id, SeverityBug severityBug) {
+        Bug bug = findBugByID(id);
+        bug.setSeverity(severityBug);
     }
 
     @Override
