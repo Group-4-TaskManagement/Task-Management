@@ -15,6 +15,8 @@ import java.util.List;
 
 public interface Repository {
 //MARIAN
+
+    Comment createComment(String author, String message);
     Member createPerson(String name);
 
     Team createTeam(String name);
@@ -73,11 +75,11 @@ public interface Repository {
 
     void changeFeedbackRating(int newRating, int taskID);
 //MARIAN
-    void assignTaskToMember(int taskID, String memberName);
+    String assignTaskToMember(int taskID, String memberName);
 
-    void unAssignTaskToMember(int taskID, String memberName);
+    String unAssignTaskToMember(int taskID, String memberName);
 
-    void addCommentToTask(Comment comment, int taskID);
+    String addCommentToTask(Comment comment, int taskID);
 //STOYAN
     Bug findBugByID(int id);
 

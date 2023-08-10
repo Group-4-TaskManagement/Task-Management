@@ -2,6 +2,7 @@ package com.group4.www.core;
 
 import com.group4.www.core.contacts.Repository;
 import com.group4.www.models.BoardImpl;
+import com.group4.www.models.CommentImpl;
 import com.group4.www.models.MemberImpl;
 import com.group4.www.models.TeamImpl;
 import com.group4.www.models.contracts.*;
@@ -24,6 +25,9 @@ public class RepositoryImpl implements Repository {
     private static final String MEMBER_NOT_EXIST = "A member with name %s does not exist";
     private static final String BOARD_NOT_EXIST = "The board does not exist";
     private static final String TEAM_NOT_EXIST = "The team does not exist";
+    public static final String TASK_ADDED_TO_MEMBER = "Task with id %d has been added to %s task list";
+    public static final String TASK_REMOVED_TO_MEMBER = "Task with id %d has been removed from %s's task list";
+    public static final String COMMENT_ADDED_TO_TASK = "A comment with id %d has been added to the task with id %d";
     private int Id;
     private List<Team> teams = new ArrayList<>();
     private List<Member> members = new ArrayList<>();
@@ -32,7 +36,16 @@ public class RepositoryImpl implements Repository {
     private List<Story> stories = new ArrayList<>();
     private List<Feedback> feedbacks = new ArrayList<>();
 
+    private List<Comment> comments = new ArrayList<>();
+
     public RepositoryImpl(){ Id = 0;}
+
+    @Override
+    public Comment createComment(String author, String message) {
+        Comment comment = new CommentImpl(++Id,author,message);
+        comments.add(comment);
+        return comment;
+    }
 
     @Override
     public Member createPerson(String name) {
@@ -280,7 +293,7 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
-    public void assignTaskToMember(int taskID, String memberName) {
+    public String assignTaskToMember(int taskID, String memberName) {
         Member member=findMember(memberName);
         for (Bug b:bugs) {
             if(b.getId()==taskID){
@@ -298,31 +311,45 @@ public class RepositoryImpl implements Repository {
             }
         }
 
+        return String.format(TASK_ADDED_TO_MEMBER, taskID,memberName);
+
     }
 
     @Override
-    public void unAssignTaskToMember(int taskID, String memberName) {
+    public String unAssignTaskToMember(int taskID, String memberName) {
         Member member=findMember(memberName);
        member.removeTask(taskID);
+
+       return String.format(TASK_REMOVED_TO_MEMBER,taskID,memberName);
     }
 
     @Override
-    public void addCommentToTask(Comment comment, int taskID) {
+    public String addCommentToTask(Comment comment, int taskID) {
+
+        boolean addComment = false;
         for (Bug b:bugs) {
             if(b.getId()==taskID){
                 b.addComment(comment);
+                addComment = true;
             }
         }
         for (Feedback b:feedbacks) {
             if(b.getId()==taskID){
                 b.addComment(comment);
+                addComment = true;
             }
         }
         for (Story b:stories) {
             if(b.getId()==taskID){
                 b.addComment(comment);
+                addComment = true;
             }
         }
+
+        if(!addComment){
+            throw new IllegalArgumentException(String.format("There is no таск with ID:%d", taskID));
+        }
+        return String.format(COMMENT_ADDED_TO_TASK,comment.getId(),taskID);
 
     }
 
