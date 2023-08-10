@@ -1,5 +1,6 @@
 package com.group4.www.core;
 
+import com.group4.www.commands.creations.ShowAllMembers;
 import com.group4.www.core.contacts.Repository;
 import com.group4.www.models.BoardImpl;
 import com.group4.www.models.CommentImpl;
@@ -16,6 +17,7 @@ import com.group4.www.models.tasks.StoryImpl;
 import com.group4.www.models.tasks.contracts.Bug;
 import com.group4.www.models.tasks.contracts.Feedback;
 import com.group4.www.models.tasks.contracts.Story;
+import com.group4.www.models.utils.FormattingHelpers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -117,40 +119,24 @@ public class RepositoryImpl implements Repository {
 
     @Override
     public String showAllMembers() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("------MEMBERS------\n");
-        builder.append(showAll(members,"members"));
-        builder.append("-------------------");
-        return builder.toString().trim();
+        return showAll(members,"members");
     }
 
     @Override
     public String showPersonActivity(String memberName) {
         Member member = findMember(memberName);
-        StringBuilder builder = new StringBuilder();
-        builder.append(String.format("------%s------\n",member.getName()));
-        builder.append(showAll(member.getActivityHistory(),"activity"));
-        builder.append("------------------");
-        return builder.toString();
+        return showAll(member.getActivityHistory(),"activity");
     }
 
     @Override
     public String showAllTeams() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("------TEAMS------\n");
-        builder.append(showAll(teams,"teams"));
-        builder.append("-------------------");
-        return builder.toString().trim();
+        return showAll(teams,"teams");
     }
 
     @Override
     public String showTeamActivity(String teamName) {
        Team team = findTeam(teamName);
-       StringBuilder builder = new StringBuilder();
-       builder.append(String.format("------%s------\n",team.getName()));
-       builder.append(showAll(team.getTeamActivity(),"activity"));
-       builder.append("--------------------");
-       return builder.toString();
+       return showAll(team.getTeamActivity(),"activity");
     }
 
 
@@ -164,31 +150,19 @@ public class RepositoryImpl implements Repository {
     @Override
     public String showAllTeamMembers(String teamName) {
         Team team=findTeam(teamName);
-        StringBuilder builder = new StringBuilder();
-        builder.append(String.format("----- Members in %s -----\n",team.getName()));
-        builder.append(showAll(team.getMembers(),"boards"));
-        builder.append("------------------------");
-        return builder.toString();
+        return showAll(team.getMembers(),"members");
     }
 
     @Override
     public String showAllTeamBoards(String teamName) {
         Team team=findTeam(teamName);
-        StringBuilder builder = new StringBuilder();
-        builder.append(pad(String.format("Boards in %s",team.getName()),19,'-')).append("\n");
-        builder.append(showAll(team.getBoards(),"boards"));
-        builder.append(pad("",19,'-')).append("\n");
-        return builder.toString();
+        return showAll(team.getBoards(),"boards");
     }
 
     @Override
     public String showBoardActivity(String boardName) {
         Board board = findBoard(boardName);
-        StringBuilder builder = new StringBuilder();
-        builder.append(pad("Board Activity",19,'-')).append("\n");
-        builder.append(showAll(board.getHistory(),"activity"));
-        builder.append(pad("",19,'-')).append("\n");
-        return builder.toString();
+        return showAll(board.getHistory(),"activity");
     }
 
     @Override
@@ -419,37 +393,17 @@ public class RepositoryImpl implements Repository {
 
     public <T extends Printable> String showAll(List<T> elements,String typeName){
         StringBuilder builder = new StringBuilder();
+        builder.append(FormattingHelpers.pad(typeName.toUpperCase(),19,'-')).append("\n");
         if(elements.size()==0){
             builder.append(String.format("There are no %s added yet.\n",typeName));
+            builder.append(FormattingHelpers.pad("",19,'-')).append("\n");
             return builder.toString();
         }
         for(T element: elements){
-            builder.append(pad(element.getAsString(),19, ' '));
+            builder.append(FormattingHelpers.pad(element.getAsString(),19, ' '));
             builder.append("\n");
         }
+        builder.append(FormattingHelpers.pad("",19,'-'));
         return builder.toString();
-    }
-    public static String pad(String source, int length, char paddingSymbol) {
-        String[] input = source.split("");
-        if (input.length >= length) return source;
-
-        ArrayList<String> output = new ArrayList<>();
-        for (String st :
-                input) {
-            output.add(st);
-        }
-
-        while (output.size() < length) {
-            output.add(0, String.valueOf(paddingSymbol));
-            output.add(String.valueOf(paddingSymbol));
-        }
-
-        String result = "";
-        for (String st :
-                output) {
-            result += st;
-        }
-
-        return result;
     }
 }

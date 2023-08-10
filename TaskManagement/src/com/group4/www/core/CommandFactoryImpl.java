@@ -33,7 +33,7 @@ public class CommandFactoryImpl implements CommandFactory {
                 return new ShowAllMembers(repository);
             case SHOWPERSONACTIVITY:
                 return new ShowPersonActivity(repository);
-            case SHOWALLTEAM:
+            case SHOWALLTEAMS:
                 return new ShowAllTeam(repository);
             case SHOWTEAMACTIVITY:
                 return new ShowTeamActivity(repository);
