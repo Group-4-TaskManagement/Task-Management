@@ -95,7 +95,7 @@ public class MemberImpl implements Member {
 
     @Override
     public String getAsString() {
-        return String.format("      %s\n",getName());
+        return getName();
     }
 }
 

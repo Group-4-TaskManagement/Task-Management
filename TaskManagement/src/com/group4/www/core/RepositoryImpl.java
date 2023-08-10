@@ -410,8 +410,32 @@ public class RepositoryImpl implements Repository {
             return builder.toString();
         }
         for(T element: elements){
-            builder.append(element.getAsString());
+            builder.append(pad(element.getAsString(),19, ' '));
+            builder.append("\n");
         }
         return builder.toString();
+    }
+    public static String pad(String source, int length, char paddingSymbol) {
+        String[] input = source.split("");
+        if (input.length >= length) return source;
+
+        ArrayList<String> output = new ArrayList<>();
+        for (String st :
+                input) {
+            output.add(st);
+        }
+
+        while (output.size() < length) {
+            output.add(0, String.valueOf(paddingSymbol));
+            output.add(String.valueOf(paddingSymbol));
+        }
+
+        String result = "";
+        for (String st :
+                output) {
+            result += st;
+        }
+
+        return result;
     }
 }
