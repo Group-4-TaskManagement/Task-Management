@@ -24,9 +24,9 @@ public class CommandFactoryImpl implements CommandFactory {
             case CREATESTORY:
                 return new CreateStory(repository);
             case CREATEFEEDBACK:
-                return null;
+                return new CreateFeedback(repository);
             case CREATEBOARD:
-                return null;
+                return new CreateBord(repository);
             case CREATEBOARDINTEAM:
                 return new CreateBoardInTeam(repository);
             case SHOWALLMEMBERS:
@@ -34,11 +34,11 @@ public class CommandFactoryImpl implements CommandFactory {
             case SHOWPERSONACTIVITY:
                 return new ShowPersonActivity(repository);
             case SHOWALLTEAM:
-                return null;
+                return new ShowAllTeam(repository);
             case SHOWTEAMACTIVITY:
-                return null;
+                return new ShowTeamActivity(repository);
             case ADDMEMBERTOTEAM:
-                return null;
+                return new AddMemberToTeam(repository);
             case SHOWALLTEAMMEMBERS:
                 return null;
             case SHOWALLTEAMBOARDS:
@@ -74,7 +74,7 @@ public class CommandFactoryImpl implements CommandFactory {
             case REVERTFEEDBACKSTATUS:
                 return null;
             case CHANGEFEEDBACKRATING:
-                return null;
+                return new ChangeFeedbackRating(repository);
             case ASSIGNTASKTOMEMBER:
                 return new AssignTaskToMember(repository);
             case UNASSIGNTASKTOMEMBER:
