@@ -24,69 +24,43 @@ public interface Repository {
     Board createBoard(String name);
 
     Bug createBugInBoard(String title, String description, Member assignee, Priority priority, SeverityBug severity,String boardName);
-//Stoyan
+
     Story createStoryInBoard(String title, String description, Member assignee, Priority priority, SizeStory size, StatusStory status,String boardName);
 
     Feedback createFeedbackInBoard(String title, String description, Member assignee, int rating,String boardName);
 
     Board createBoardInTeam(String name, String teamName);
-//MONIKA
+
     String showAllMembers();
 
     String showPersonActivity(String memberName);
 
     String showAllTeams();
-//MARIAN
+
     String showTeamActivity(String teamName);
 
     void addMemberToTeam(String personName, String teamName);
 
     String showAllTeamMembers(String teamName);
-//STOYAN
+
     String showAllTeamBoards(String teamName);
 
     String showBoardActivity(String boardName);
 
-    void advanceBugStatus(int bugID);
-//MONIKA
-    void revertBugStatus(int bugID);
-
-    void advancePriorityStory(int taskID);
-    void advancePriorityBug(int taskID);
-
-    void revertPriorityStory(int taskID);
-    void revertPriorityBug(int taskID);
-//MARIAN
-    void advanceBugSeverity(int bugID);
-
-    void revertBugSeverity(int bugID);
-
-    void advanceStoryStatus(int storyID);
-//STOYAN
-    void revertStoryStatus(int storyID);
-
-    void advanceStorySize(int storyID);
-
-    void revertStorySize(int storyID);
-//MONIKA
-    void advanceFeedbackStatus(int taskID);
-
-    void revertFeedbackStatus(int taskID);
-
     void changeFeedbackRating(int newRating, int taskID);
-//MARIAN
+
     String assignTaskToMember(int taskID, String memberName);
 
     String unAssignTaskToMember(int taskID, String memberName);
 
     String addCommentToTask(Comment comment, int taskID);
-//STOYAN
+
     Bug findBugByID(int id);
 
     Story findStoryByID(int id);
 
     Feedback findFeedbackByID(int id);
-//MONIKA
+
     Member findMember(String memberName);
 
     Board findBoard(String boardName);

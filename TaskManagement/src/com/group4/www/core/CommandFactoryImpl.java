@@ -45,34 +45,6 @@ public class CommandFactoryImpl implements CommandFactory {
                 return new ShowAllTeamBoards(repository);
             case SHOWBOARDACTIVITY:
                 return new ShowBoardActivity(repository);
-            case ADVANCEBUGSTATUS:
-                return new AdvanceBugStatus(repository);
-            case REVERTBUGSTATUS:
-                return new RevertBugStatus(repository);
-            case ADVANCESTORYPRIORITY:
-                return new AdvanceStoryPriority(repository);
-            case ADVANCEBUGPRIORITY:
-                return null;
-            case REVERTSTORYPRIORITY:
-                return null;
-            case REVERTBUGPRIORITY:
-                return null;
-            case ADVANCEBUGSEVERITY:
-                return null;
-            case REVERTBUGSEVERITY:
-                return null;
-            case ADVANCESTORYSTATUS:
-                return null;
-            case REVERTSTORYSTATUS:
-                return new RevertStoryStatus(repository);
-            case ADVANCESTORYSIZE:
-                return new AdvanceStorySize(repository);
-            case REVERTSTORYSIZE:
-                return new RevertStorySize(repository);
-            case ADVANCEFEEDBACKSTATUS:
-                return null;
-            case REVERTFEEDBACKSTATUS:
-                return null;
             case CHANGEFEEDBACKRATING:
                 return new ChangeFeedbackRating(repository);
             case ASSIGNTASKTOMEMBER:
@@ -81,6 +53,20 @@ public class CommandFactoryImpl implements CommandFactory {
                 return new UnAssignTaskToMember(repository);
             case ADDCOMMENTTOTASK:
                 return new AddCommentToTask(repository);
+            case CHANGEBUGSTATUS:
+                return null;
+            case CHANGEBUGPRIORITY:
+                return null;
+            case CHANGEBUGSEVERITY:
+                return null;
+            case CHANGESTORYSTATUS:
+                return null;
+            case CHANGESTORYPRIORITY:
+                return null;
+            case CHANGESTORYSIZE:
+                return null;
+            case CHANGEFEEDBACKSTATUS:
+                return null;
             default: throw new IllegalArgumentException(String.format(INVALID_COMMAND,commandTypeAsString));
         }
     }
