@@ -93,6 +93,11 @@ abstract class TaskBase implements Task {
     public int getId() {
         return id;
     }
+
+    @Override
+    public String getAsString() {
+        return String.format("%s",getTitle());
+    }
 }
 
 

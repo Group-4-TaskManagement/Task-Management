@@ -51,4 +51,8 @@ public class CommentImpl implements Comment, Identifiable {
     }
 
 
+    @Override
+    public String getAsString() {
+        return String.format("Author:%s \n %s",getAuthor(),getMessage());
+    }
 }

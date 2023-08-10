@@ -16,4 +16,7 @@ public interface Team extends Printable{
     void removeBoard(Board board);
 
     List<Board> getBoards();
+
+    List<EventLog> getTeamActivity();
+    void addActivityHistory(String massage);
 }

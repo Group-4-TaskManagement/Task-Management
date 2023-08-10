@@ -18,6 +18,4 @@ public interface Member extends Printable {
 
     void addActivityHistory(String message);
 
-    public String showMemberActivity();
-
 }

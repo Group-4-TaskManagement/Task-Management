@@ -121,7 +121,11 @@ public class RepositoryImpl implements Repository {
     @Override
     public String showPersonActivity(String memberName) {
         Member member = findMember(memberName);
-        return member.showMemberActivity();
+        StringBuilder builder = new StringBuilder();
+        builder.append(String.format("------%s------\n",member.getName()));
+        builder.append(showAll(member.getActivityHistory(),"activity"));
+        builder.append("------------------");
+        return builder.toString();
     }
 
     @Override
@@ -135,16 +139,12 @@ public class RepositoryImpl implements Repository {
 
     @Override
     public String showTeamActivity(String teamName) {
-        StringBuilder sb=new StringBuilder();
-        Team team = findTeam(teamName);
-                for (Member member : team.getMembers()) {
-                     sb.append(member.getActivityHistory());
-                }
-                if(sb.isEmpty()){
-                    throw new IllegalArgumentException(
-                            "There is no history to be displayed in this team.");
-                }
-                return sb.toString();
+       Team team = findTeam(teamName);
+       StringBuilder builder = new StringBuilder();
+       builder.append(String.format("------%s------\n",team.getName()));
+       builder.append(showAll(team.getTeamActivity(),"activity"));
+       builder.append("--------------------");
+       return builder.toString();
     }
 
 
@@ -170,25 +170,7 @@ public class RepositoryImpl implements Repository {
         builder.append("------------------------");
         return builder.toString();
     }
-// public static StringcenterPadding(String input, char ch, int L)
-//
-//    {
-//
-//
-//
-//        // Center pad the string
-//
-//        String result
-//
-//            = StringUtils.center(str, L, ch);
-//
-//
-//
-//        // Return the resultant string
-//
-//        return result;
-//
-//    }
+
     @Override
     public String showBoardActivity(String boardName) {
         Board board=findBoard(boardName);

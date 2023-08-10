@@ -29,7 +29,7 @@ public class EventLogImpl implements EventLog {
     }
 
     @Override
-    public String toString() {
+    public String getAsString() {
       return String.format("[%s] %s\n", timestamp.format(formatter), description);
     }
 }

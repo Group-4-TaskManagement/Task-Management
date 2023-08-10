@@ -1,6 +1,6 @@
 package com.group4.www.models.contracts;
 
-public interface Comment {
+public interface Comment extends Printable{
 
     String getAuthor();
 

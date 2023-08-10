@@ -76,19 +76,6 @@ public class MemberImpl implements Member {
 
 
     }
-    @Override
-    public String showMemberActivity(){
-        StringBuilder builder = new StringBuilder();
-        int c = 0;
-        if(activityHistory.size()==0){
-            builder.append(String.format("%s does not have any activity yet.",getName()));
-            return builder.toString();
-        }
-        for(EventLog activity: activityHistory){
-            builder.append(String.format("%d. %s",++c,activity)).append(System.lineSeparator());
-        }
-        return builder.toString().trim();
-    }
 
 
     @Override
