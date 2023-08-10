@@ -76,11 +76,11 @@ public class CommandFactoryImpl implements CommandFactory {
             case CHANGEFEEDBACKRATING:
                 return null;
             case ASSIGNTASKTOMEMBER:
-                return null;
+                return new AssignTaskToMember(repository);
             case UNASSIGNTASKTOMEMBER:
-                return null;
+                return new UnAssignTaskToMember(repository);
             case ADDCOMMENTTOTASK:
-                return null;
+                return new AddCommentToTask(repository);
             default: throw new IllegalArgumentException(String.format(INVALID_COMMAND,commandTypeAsString));
         }
     }

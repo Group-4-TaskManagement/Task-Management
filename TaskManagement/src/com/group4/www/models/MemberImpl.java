@@ -17,7 +17,7 @@ public class MemberImpl implements Member {
     public static final String TASK_EXIST = "The Task really exist";
     public static final String TASK_NOT_EXIST = "The Task does not exist";
 
-    private static final String TASK_ADD = "The task was added";
+    private static final String TASK_ADD = "Task with was assigned to %s.";
     private static final String TASK_REMOVE = "The task was removed";
 
 
@@ -49,7 +49,7 @@ public class MemberImpl implements Member {
 
         }
         tasks.add(task);
-        addActivityHistory(TASK_ADD);
+        addActivityHistory(String.format(TASK_ADD,getName()));
 
 
     }
