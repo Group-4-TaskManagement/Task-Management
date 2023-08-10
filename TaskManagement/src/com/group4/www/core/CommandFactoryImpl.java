@@ -19,11 +19,11 @@ public class CommandFactoryImpl implements CommandFactory {
                 return new CreatePerson(repository);
             case CREATETEAM:
                 return new CreateTeam(repository);
-            case CREATEBUG:
+            case CREATEBUGINBOARD:
                 return new CreateBug(repository);
-            case CREATESTORY:
+            case CREATESTORYINBOARD:
                 return new CreateStory(repository);
-            case CREATEFEEDBACK:
+            case CREATEFEEDBACKINBOARD:
                 return new CreateFeedback(repository);
             case CREATEBOARD:
                 return new CreateBord(repository);
@@ -40,11 +40,11 @@ public class CommandFactoryImpl implements CommandFactory {
             case ADDMEMBERTOTEAM:
                 return new AddMemberToTeam(repository);
             case SHOWALLTEAMMEMBERS:
-                return null;
+                return new ShowAllTeamMembers(repository);
             case SHOWALLTEAMBOARDS:
                 return new ShowAllTeamBoards(repository);
             case SHOWBOARDACTIVITY:
-                return null;
+                return new ShowBoardActivity(repository);
             case ADVANCEBUGSTATUS:
                 return new AdvanceBugStatus(repository);
             case REVERTBUGSTATUS:

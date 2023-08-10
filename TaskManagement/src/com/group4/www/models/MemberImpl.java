@@ -25,8 +25,8 @@ public class MemberImpl implements Member {
 
 
     private String name;
-    private List<Task> tasks;
-    private List<EventLog> activityHistory;
+    private final List<Task> tasks;
+    private final List<EventLog> activityHistory;
 
 
     public MemberImpl(String name) {

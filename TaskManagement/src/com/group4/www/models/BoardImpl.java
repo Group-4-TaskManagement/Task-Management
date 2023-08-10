@@ -13,13 +13,16 @@ public class BoardImpl implements Board {
     public static final int MIN_BOARD_NAME = 5;
     public static final int MAX_BOARD_NAME = 15;
     public static final String NAME_LENGTH_ERROR = String.format("Board name must be between %d and %d symbols.", MAX_BOARD_NAME, MAX_BOARD_NAME);
+    public static final String TASK_ADDED_TO_BOARD_MESS = "Task with ID:%d was added to board %s";
+    public static final String TASK_REMOVED_FROM_BOARD_MESS = "Task with ID:%d was removed from board %s";
     private String name;
-    private  List<Task> tasks;
-    private final List<EventLog> history = new ArrayList<>();
+    private final List<Task> tasks;
+    private final List<EventLog> history;
 
     public BoardImpl(String name) {
         setName(name);
         this.tasks = new ArrayList<>();
+        this.history = new ArrayList<>();
     }
 
     public void setName(String name) {
@@ -31,6 +34,7 @@ public class BoardImpl implements Board {
         if (tasks.contains(task)) {
             throw new IllegalArgumentException("Task already in the list");
         }
+        logEvent(String.format(TASK_ADDED_TO_BOARD_MESS,task.getId(),getName()));
         tasks.add(task);
     }
     @Override
@@ -38,6 +42,7 @@ public class BoardImpl implements Board {
         if (!tasks.contains(task)) {
             throw new IllegalArgumentException("Task not in the list");
         }
+        logEvent(String.format(TASK_REMOVED_FROM_BOARD_MESS,task.getId(),getName()));
         tasks.remove(task);
     }
     @Override
@@ -60,6 +65,6 @@ public class BoardImpl implements Board {
 
     @Override
     public String getAsString() {
-        return String.format("           %s \n",getName());
+        return getName();
     }
 }

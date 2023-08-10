@@ -12,7 +12,7 @@ import java.util.List;
 
 public class CreateFeedback implements Command {
     private static final String FEEDBACK_CREATED = "Feedback with ID:%d was created";
-    public static final int EXPECTED_NUMBER_OF_PARAMETERS = 4;
+    public static final int EXPECTED_NUMBER_OF_PARAMETERS = 5;
     private final Repository repository;
     private String title;
     private String description;
@@ -27,7 +27,7 @@ public class CreateFeedback implements Command {
     public String execute(List<String> parameters) {
         ValidationHelpers.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_PARAMETERS);
         parseParameters(parameters);
-        Feedback feedback = repository.createFeedback(title, description, member ,rating);
+        Feedback feedback = repository.createFeedbackInBoard(title, description, member ,rating,parameters.get(4));
         return String.format(FEEDBACK_CREATED,feedback.getId());
     }
     private void parseParameters(List<String> parameters){

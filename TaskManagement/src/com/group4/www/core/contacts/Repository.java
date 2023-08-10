@@ -23,11 +23,11 @@ public interface Repository {
 
     Board createBoard(String name);
 
-    Bug createBug(String title, String description, Member assignee, Priority priority, SeverityBug severity);
+    Bug createBugInBoard(String title, String description, Member assignee, Priority priority, SeverityBug severity,String boardName);
 //Stoyan
-    Story createStory(String title, String description, Member assignee, Priority priority, SizeStory size, StatusStory status);
+    Story createStoryInBoard(String title, String description, Member assignee, Priority priority, SizeStory size, StatusStory status,String boardName);
 
-    Feedback createFeedback(String title, String description, Member assignee, int rating);
+    Feedback createFeedbackInBoard(String title, String description, Member assignee, int rating,String boardName);
 
     Board createBoardInTeam(String name, String teamName);
 //MONIKA

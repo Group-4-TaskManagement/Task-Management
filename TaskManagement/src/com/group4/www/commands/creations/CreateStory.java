@@ -17,6 +17,7 @@ public class CreateStory implements Command {
     public static final String STORY_SIZE_ERR = "Size of story should be Small,Medium or Large!";
     public static final String STORY_STATUS_ERR = "Status should be Not Done, In Progress or Done!";
     public static final String STORY_CREATED = "Story with ID:%d was created";
+    public static final int EXPECTED_NUMBER_OF_ARGUMENTS = 7;
     private final Repository repository;
     private String title;
     private String description;
@@ -30,11 +31,11 @@ public class CreateStory implements Command {
 
     @Override
     public String execute(List<String> parameters) {
-        ValidationHelpers.validateArgumentsCount(parameters,6);
+        ValidationHelpers.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
 
         parseParameters(parameters);
 
-        Story story = repository.createStory(title, description, member, priority, sizeStory, statusStory);
+        Story story = repository.createStoryInBoard(title, description, member, priority, sizeStory, statusStory,parameters.get(6));
         return String.format(STORY_CREATED, story.getId());
     }
 

@@ -25,8 +25,8 @@ public class TeamImpl implements Team {
 
     private String name;
     private final List<Member> members;
-    private List<Board> boards;
-    private List<EventLog> teamActivity;
+    private final List<Board> boards;
+    private final List<EventLog> teamActivity;
 
 
     public TeamImpl(String name) {

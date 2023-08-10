@@ -81,22 +81,28 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
-    public Bug createBug(String title, String description,Member assignee, Priority priority, SeverityBug severity) {
+    public Bug createBugInBoard(String title, String description,Member assignee, Priority priority, SeverityBug severity,String boardName) {
         Bug bug=new BugImpl(++Id,title,description,assignee,priority,severity);
+        Board board = findBoard(boardName);
+        board.addTask(bug);
         this.bugs.add(bug);
         return bug;
     }
 
     @Override
-    public Story createStory(String title, String description, Member assignee, Priority priority, SizeStory size, StatusStory status) {
+    public Story createStoryInBoard(String title, String description, Member assignee, Priority priority, SizeStory size, StatusStory status,String boardname) {
         Story story = new StoryImpl(++Id, title, description, assignee, priority, size, status);
+        Board board = findBoard(boardname);
+        board.addTask(story);
         this.stories.add(story);
         return story;
     }
 
     @Override
-    public Feedback createFeedback(String title, String description, Member assignee, int rating) {
+    public Feedback createFeedbackInBoard(String title, String description, Member assignee, int rating,String boardName) {
         Feedback feedback = new FeedbackImpl(++Id, title, description, assignee, rating);
+        Board board = findBoard(boardName);
+        board.addTask(feedback);
         this.feedbacks.add(feedback);
         return feedback;
     }
@@ -158,23 +164,31 @@ public class RepositoryImpl implements Repository {
     @Override
     public String showAllTeamMembers(String teamName) {
         Team team=findTeam(teamName);
-        return team.getMembers().toString();
+        StringBuilder builder = new StringBuilder();
+        builder.append(String.format("----- Members in %s -----\n",team.getName()));
+        builder.append(showAll(team.getMembers(),"boards"));
+        builder.append("------------------------");
+        return builder.toString();
     }
 
     @Override
     public String showAllTeamBoards(String teamName) {
         Team team=findTeam(teamName);
         StringBuilder builder = new StringBuilder();
-        builder.append(String.format("----- Boards in %s -----\n",team.getName()));
+        builder.append(pad(String.format("Boards in %s",team.getName()),19,'-')).append("\n");
         builder.append(showAll(team.getBoards(),"boards"));
-        builder.append("------------------------");
+        builder.append(pad("",19,'-')).append("\n");
         return builder.toString();
     }
 
     @Override
     public String showBoardActivity(String boardName) {
-        Board board=findBoard(boardName);
-        return board.getHistory().toString();
+        Board board = findBoard(boardName);
+        StringBuilder builder = new StringBuilder();
+        builder.append(pad("Board Activity",19,'-')).append("\n");
+        builder.append(showAll(board.getHistory(),"activity"));
+        builder.append(pad("",19,'-')).append("\n");
+        return builder.toString();
     }
 
     @Override

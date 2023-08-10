@@ -12,7 +12,7 @@ import com.group4.www.models.utils.ValidationHelpers;
 import java.util.List;
 
 public class CreateBug implements Command {
-    public static final int EXPECTED_NUMBER_OF_PARAMETERS = 5;
+    public static final int EXPECTED_NUMBER_OF_PARAMETERS = 6;
     public static final String PARSE_PRIORITY_ERR = "Priority should be Low, Medium or High!";
     public static final String PARSE_SEVERITY_ERR = "Severity should be Minor, Major or Critical!";
     public static final String BUG_CREATED = "Bug with ID:%d was created";
@@ -20,6 +20,7 @@ public class CreateBug implements Command {
     private Member member;
     private Priority priority;
     private SeverityBug severityBug;
+    private String board;
 
     public CreateBug(Repository repository) { this.repository = repository; }
 
@@ -28,7 +29,7 @@ public class CreateBug implements Command {
         ValidationHelpers.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_PARAMETERS);
         parseParameters(parameters);
 
-        Bug bug = repository.createBug(parameters.get(0), parameters.get(1), member ,priority,severityBug);
+        Bug bug = repository.createBugInBoard(parameters.get(0), parameters.get(1), member ,priority,severityBug,parameters.get(5));
 
         return String.format(BUG_CREATED,bug.getId());
     }
