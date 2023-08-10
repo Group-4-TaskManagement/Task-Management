@@ -4,7 +4,7 @@ import com.group4.www.models.tasks.contracts.Task;
 
 import java.util.List;
 
-public interface Board {
+public interface Board extends Printable{
 
     void addTask(Task task);
 

@@ -4,7 +4,7 @@ import com.group4.www.models.tasks.contracts.Task;
 
 import java.util.List;
 
-public interface Member  {
+public interface Member extends Printable {
 
     String getName();
 
@@ -18,5 +18,6 @@ public interface Member  {
 
     void addActivityHistory(String message);
 
+    public String showMemberActivity();
 
 }

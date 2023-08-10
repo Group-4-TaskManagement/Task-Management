@@ -2,7 +2,7 @@ package com.group4.www.models.contracts;
 
 import java.util.List;
 
-public interface Team {
+public interface Team extends Printable{
     public String getName();
 
     public List<Member> getMembers();
@@ -15,4 +15,5 @@ public interface Team {
     void addBoard(Board board);
     void removeBoard(Board board);
 
+    List<Board> getBoards();
 }

@@ -85,4 +85,14 @@ public class TeamImpl implements Team {
         }
         boards.remove(board);
     }
+
+    @Override
+    public List<Board> getBoards() {
+        return new ArrayList<>(boards);
+    }
+
+    @Override
+    public String getAsString() {
+        return String.format("      %s\n",getName());
+    }
 }

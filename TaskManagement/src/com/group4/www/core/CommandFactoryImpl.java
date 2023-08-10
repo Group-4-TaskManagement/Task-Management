@@ -42,7 +42,7 @@ public class CommandFactoryImpl implements CommandFactory {
             case SHOWALLTEAMMEMBERS:
                 return null;
             case SHOWALLTEAMBOARDS:
-                return null;
+                return new ShowAllTeamBoards(repository);
             case SHOWBOARDACTIVITY:
                 return null;
             case ADVANCEBUGSTATUS:

@@ -7,6 +7,7 @@ import com.group4.www.models.utils.ValidationHelpers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class MemberImpl implements Member {
     public static final int NAME_MIN_LENGTH = 5;
@@ -17,7 +18,7 @@ public class MemberImpl implements Member {
     public static final String TASK_EXIST = "The Task really exist";
     public static final String TASK_NOT_EXIST = "The Task does not exist";
 
-    private static final String TASK_ADD = "Task with was assigned to %s.";
+    private static final String TASK_ADD = "Task with ID:%d was assigned to %s.";
     private static final String TASK_REMOVE = "The task was removed";
 
 
@@ -49,7 +50,7 @@ public class MemberImpl implements Member {
 
         }
         tasks.add(task);
-        addActivityHistory(String.format(TASK_ADD,getName()));
+        addActivityHistory(String.format(TASK_ADD,task.getId(),getName()));
 
 
     }
@@ -75,8 +76,19 @@ public class MemberImpl implements Member {
 
 
     }
-
-
+    @Override
+    public String showMemberActivity(){
+        StringBuilder builder = new StringBuilder();
+        int c = 0;
+        if(activityHistory.size()==0){
+            builder.append(String.format("%s does not have any activity yet.",getName()));
+            return builder.toString();
+        }
+        for(EventLog activity: activityHistory){
+            builder.append(String.format("%d. %s",++c,activity)).append(System.lineSeparator());
+        }
+        return builder.toString().trim();
+    }
 
 
     @Override
@@ -95,8 +107,8 @@ public class MemberImpl implements Member {
     }
 
     @Override
-    public String toString() {
-        return String.format("%s\n",getName());
+    public String getAsString() {
+        return String.format("      %s\n",getName());
     }
 }
 

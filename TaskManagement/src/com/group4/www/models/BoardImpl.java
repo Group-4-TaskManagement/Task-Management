@@ -57,4 +57,9 @@ public class BoardImpl implements Board {
     public List<EventLog> getHistory() {
         return new ArrayList<>(history);
     }
+
+    @Override
+    public String getAsString() {
+        return String.format("           %s \n",getName());
+    }
 }

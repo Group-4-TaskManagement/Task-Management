@@ -16,7 +16,6 @@ import com.group4.www.models.tasks.StoryImpl;
 import com.group4.www.models.tasks.contracts.Bug;
 import com.group4.www.models.tasks.contracts.Feedback;
 import com.group4.www.models.tasks.contracts.Story;
-import com.group4.www.models.tasks.contracts.Task;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,14 +35,12 @@ public class RepositoryImpl implements Repository {
     private List<Story> stories = new ArrayList<>();
     private List<Feedback> feedbacks = new ArrayList<>();
 
-    private List<Comment> comments = new ArrayList<>();
 
     public RepositoryImpl(){ Id = 0;}
 
     @Override
     public Comment createComment(String author, String message) {
         Comment comment = new CommentImpl(++Id,author,message);
-        comments.add(comment);
         return comment;
     }
 
@@ -115,40 +112,25 @@ public class RepositoryImpl implements Repository {
     @Override
     public String showAllMembers() {
         StringBuilder builder = new StringBuilder();
-        int c = 0;
-        builder.append("--- REGISTERED MEMBERS ---\n");
-        if(members.size()==0){
-            builder.append("There are not registered members yet!");
-            return builder.toString();
-        }
-        for (Member member : members) {
-            builder.append(String.format("%d. %s",++c,member));
-        }
-        builder.append("----------");
-        return builder.toString();
+        builder.append("------MEMBERS------\n");
+        builder.append(showAll(members,"members"));
+        builder.append("-------------------");
+        return builder.toString().trim();
     }
 
     @Override
     public String showPersonActivity(String memberName) {
-        StringBuilder builder = new StringBuilder();
-        int c = 0;
-        for (Member member : members) {
-            if (member.getName().equals(memberName)) {
-                if(member.getActivityHistory().size()==0){
-                    builder.append("This member does not have any activity yet.");
-                }
-                for(EventLog history: member.getActivityHistory()){
-                    builder.append(String.format("%d. %s",++c,history));
-                }
-                return builder.toString();
-            }
-        }
-        throw new IllegalArgumentException(String.format(MEMBER_NOT_EXIST, memberName));
+        Member member = findMember(memberName);
+        return member.showMemberActivity();
     }
 
     @Override
     public String showAllTeams() {
-        return new ArrayList<>(teams).toString();
+        StringBuilder builder = new StringBuilder();
+        builder.append("------TEAMS------\n");
+        builder.append(showAll(teams,"teams"));
+        builder.append("-------------------");
+        return builder.toString().trim();
     }
 
     @Override
@@ -182,9 +164,31 @@ public class RepositoryImpl implements Repository {
     @Override
     public String showAllTeamBoards(String teamName) {
         Team team=findTeam(teamName);
-        return team.showBoards().toString();
+        StringBuilder builder = new StringBuilder();
+        builder.append(String.format("----- Boards in %s -----\n",team.getName()));
+        builder.append(showAll(team.getBoards(),"boards"));
+        builder.append("------------------------");
+        return builder.toString();
     }
-
+// public static StringcenterPadding(String input, char ch, int L)
+//
+//    {
+//
+//
+//
+//        // Center pad the string
+//
+//        String result
+//
+//            = StringUtils.center(str, L, ch);
+//
+//
+//
+//        // Return the resultant string
+//
+//        return result;
+//
+//    }
     @Override
     public String showBoardActivity(String boardName) {
         Board board=findBoard(boardName);
@@ -415,5 +419,17 @@ public class RepositoryImpl implements Repository {
 
         }
         throw new IllegalArgumentException(TEAM_NOT_EXIST);
+    }
+
+    public <T extends Printable> String showAll(List<T> elements,String typeName){
+        StringBuilder builder = new StringBuilder();
+        if(elements.size()==0){
+            builder.append(String.format("There are no %s added yet.\n",typeName));
+            return builder.toString();
+        }
+        for(T element: elements){
+            builder.append(element.getAsString());
+        }
+        return builder.toString();
     }
 }
