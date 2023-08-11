@@ -8,11 +8,11 @@ import com.group4.www.models.utils.ValidationHelpers;
 
 import java.util.List;
 
-public class FilterTasksByAssignee implements Command {
-    public static final int EXPECTED_NUMBER_OF_ARGUMENTS = 1;
+public class SortAssignedTasksByTitle implements Command {
+    public static final int EXPECTED_NUMBER_OF_ARGUMENTS = 0;
     private final Repository repository;
 
-    public FilterTasksByAssignee(Repository repository) {
+    public SortAssignedTasksByTitle(Repository repository) {
         this.repository = repository;
     }
 
@@ -24,6 +24,6 @@ public class FilterTasksByAssignee implements Command {
                 repository.getStories(),
                 repository.getFeedbacks());
 
-        return repository.filterTaskByAssignee(ListingHelper.filterByAssignee(tasks,parameters.get(0)));
+        return repository.sortAssignedTaskByTitle(ListingHelper.sortByTitle(tasks));
     }
 }

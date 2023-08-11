@@ -3,6 +3,7 @@ package com.group4.www.commands.creations;
 import com.group4.www.commands.Command;
 import com.group4.www.commands.Listing.ListingHelper;
 import com.group4.www.core.contacts.Repository;
+import com.group4.www.models.tasks.contracts.Task;
 import com.group4.www.models.utils.ValidationHelpers;
 
 import java.util.List;
@@ -19,9 +20,12 @@ public class FilterTasksByStatusAndAssignee implements Command {
     public String execute(List<String> parameters) {
         ValidationHelpers.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
 
-        return repository.filterTaskByStatusAndAssignee(ListingHelper.filterByStatusAndAssignee(repository.getBugs(),
+        List<Task> tasks = ListingHelper.listOfTasksWithAssignee(repository.getBugs(),
                 repository.getStories(),
-                repository.getFeedbacks(),
+                repository.getFeedbacks());
+
+        return repository.filterTaskByStatusAndAssignee(ListingHelper.filterByStatusAndAssignee(
+                tasks,
                 parameters.get(0),
                 parameters.get(1)));
     }

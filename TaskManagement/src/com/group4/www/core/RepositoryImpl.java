@@ -377,6 +377,19 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
+    public String sortAssignedTaskByTitle(List<Task> tasks) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(FormattingHelpers.pad("TASKS",19,'-')).append("\n");
+        tasks.stream().forEach(task-> builder.append(
+                        FormattingHelpers.pad(
+                                String.format("ID:%d TITLE:%s",
+                                        task.getId(),task.getTitle()),19,' '))
+                .append("\n"));
+        builder.append(FormattingHelpers.pad("",20,'-'));
+        return builder.toString().trim();
+    }
+
+    @Override
     public List<Bug> getBugs() {
         return new ArrayList<>(bugs);
     }

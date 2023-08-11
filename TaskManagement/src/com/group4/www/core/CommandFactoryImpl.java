@@ -77,6 +77,8 @@ public class CommandFactoryImpl implements CommandFactory {
                 return new FilterTasksByAssignee(repository);
             case FILTERTASKSBYSTATUSANDASSIGNEE:
                 return new FilterTasksByStatusAndAssignee(repository);
+            case SORTASSIGNEDTASKSBYTITLE:
+                return new SortAssignedTasksByTitle(repository);
             default: throw new IllegalArgumentException(String.format(INVALID_COMMAND,commandTypeAsString));
         }
     }
