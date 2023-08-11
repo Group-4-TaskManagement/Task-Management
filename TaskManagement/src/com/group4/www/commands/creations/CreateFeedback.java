@@ -12,11 +12,10 @@ import java.util.List;
 
 public class CreateFeedback implements Command {
     private static final String FEEDBACK_CREATED = "Feedback with ID:%d was created";
-    public static final int EXPECTED_NUMBER_OF_PARAMETERS = 5;
+    public static final int EXPECTED_NUMBER_OF_PARAMETERS = 4;
     private final Repository repository;
     private String title;
     private String description;
-    private Member member;
     private int rating;
 
     public CreateFeedback(Repository repository) {
@@ -27,13 +26,12 @@ public class CreateFeedback implements Command {
     public String execute(List<String> parameters) {
         ValidationHelpers.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_PARAMETERS);
         parseParameters(parameters);
-        Feedback feedback = repository.createFeedbackInBoard(title, description, member ,rating,parameters.get(4));
+        Feedback feedback = repository.createFeedbackInBoard(title, description,rating,parameters.get(3));
         return String.format(FEEDBACK_CREATED,feedback.getId());
     }
     private void parseParameters(List<String> parameters){
         title = parameters.get(0);
         description = parameters.get(1);
-        member = repository.findMember(parameters.get(2));
-        rating= ParsingHelpers.tryParseInteger(parameters.get(3),"feedback rating");
+        rating= ParsingHelpers.tryParseInteger(parameters.get(2),"feedback rating");
     }
 }

@@ -17,11 +17,10 @@ public class CreateStory implements Command {
     public static final String STORY_SIZE_ERR = "Size of story should be Small,Medium or Large!";
     public static final String STORY_STATUS_ERR = "Status should be Not Done, In Progress or Done!";
     public static final String STORY_CREATED = "Story with ID:%d was created";
-    public static final int EXPECTED_NUMBER_OF_ARGUMENTS = 7;
+    public static final int EXPECTED_NUMBER_OF_ARGUMENTS = 6;
     private final Repository repository;
     private String title;
     private String description;
-    private Member member;
     private Priority priority;
     private SizeStory sizeStory;
     private StatusStory statusStory;
@@ -35,16 +34,15 @@ public class CreateStory implements Command {
 
         parseParameters(parameters);
 
-        Story story = repository.createStoryInBoard(title, description, member, priority, sizeStory, statusStory,parameters.get(6));
+        Story story = repository.createStoryInBoard(title, description,priority, sizeStory, statusStory,parameters.get(5));
         return String.format(STORY_CREATED, story.getId());
     }
 
     private void parseParameters(List<String> parameters){
         title = parameters.get(0);
         description = parameters.get(1);
-        member = repository.findMember(parameters.get(2));
-        priority = ParsingHelpers.tryParseEnum(parameters.get(3),Priority.class, STORY_PRIORITY_ERR);
-        sizeStory = ParsingHelpers.tryParseEnum(parameters.get(4),SizeStory.class, STORY_SIZE_ERR);
-        statusStory = ParsingHelpers.tryParseEnum(parameters.get(5),StatusStory.class, STORY_STATUS_ERR);
+        priority = ParsingHelpers.tryParseEnum(parameters.get(2),Priority.class, STORY_PRIORITY_ERR);
+        sizeStory = ParsingHelpers.tryParseEnum(parameters.get(3),SizeStory.class, STORY_SIZE_ERR);
+        statusStory = ParsingHelpers.tryParseEnum(parameters.get(4),StatusStory.class, STORY_STATUS_ERR);
     }
 }

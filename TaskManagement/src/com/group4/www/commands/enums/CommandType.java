@@ -1,5 +1,7 @@
 package com.group4.www.commands.enums;
 
+import com.group4.www.commands.creations.FilterTasksByTitle;
+
 public enum CommandType {
 
     CREATEPERSON,
@@ -27,5 +29,10 @@ public enum CommandType {
     CHANGESTORYSTATUS,
     CHANGESTORYPRIORITY,
     CHANGESTORYSIZE,
-    CHANGEFEEDBACKSTATUS;
+    CHANGEFEEDBACKSTATUS,
+    FILTERTASKSBYTITLE,
+    SORTTASKSBYTITLE,
+    FILTERTASKSBYSTATUS,
+    FILTERTASKSBYASSIGNEE,
+    FILTERTASKSBYSTATUSANDASSIGNEE;
 }

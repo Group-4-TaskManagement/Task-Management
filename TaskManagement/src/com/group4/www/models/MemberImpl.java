@@ -28,7 +28,6 @@ public class MemberImpl implements Member {
     private final List<Task> tasks;
     private final List<EventLog> activityHistory;
 
-
     public MemberImpl(String name) {
         setName(name);
         this.tasks = new ArrayList<>();

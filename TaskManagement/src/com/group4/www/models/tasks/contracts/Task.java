@@ -18,6 +18,8 @@ public interface Task extends Identifiable, Printable {
 
     void addLogChanges(String message);
 
+    void addAssignee(Member member);
 
+    String getStatus();
 
 }

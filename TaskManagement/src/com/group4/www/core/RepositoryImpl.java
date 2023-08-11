@@ -14,6 +14,7 @@ import com.group4.www.models.tasks.StoryImpl;
 import com.group4.www.models.tasks.contracts.Bug;
 import com.group4.www.models.tasks.contracts.Feedback;
 import com.group4.www.models.tasks.contracts.Story;
+import com.group4.www.models.tasks.contracts.Task;
 import com.group4.www.models.utils.FormattingHelpers;
 
 import java.util.ArrayList;
@@ -26,14 +27,13 @@ public class RepositoryImpl implements Repository {
     public static final String TASK_ADDED_TO_MEMBER = "Task with id %d has been added to %s task list";
     public static final String TASK_REMOVED_TO_MEMBER = "Task with id %d has been removed from %s's task list";
     public static final String COMMENT_ADDED_TO_TASK = "A comment with id %d has been added to the task with id %d";
-    private int Id;
-    private List<Team> teams = new ArrayList<>();
+    private static int Id;
+    private  List<Team> teams = new ArrayList<>();
     private List<Member> members = new ArrayList<>();
     private List<Board> boards = new ArrayList<>();
     private List<Bug> bugs = new ArrayList<>();
     private List<Story> stories = new ArrayList<>();
     private List<Feedback> feedbacks = new ArrayList<>();
-
 
     public RepositoryImpl(){ Id = 0;}
 
@@ -80,8 +80,8 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
-    public Bug createBugInBoard(String title, String description,Member assignee, Priority priority, SeverityBug severity,String boardName) {
-        Bug bug=new BugImpl(++Id,title,description,assignee,priority,severity);
+    public Bug createBugInBoard(String title, String description,Priority priority, SeverityBug severity,String boardName) {
+        Bug bug=new BugImpl(++Id,title,description,priority,severity);
         Board board = findBoard(boardName);
         board.addTask(bug);
         this.bugs.add(bug);
@@ -89,8 +89,8 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
-    public Story createStoryInBoard(String title, String description, Member assignee, Priority priority, SizeStory size, StatusStory status,String boardname) {
-        Story story = new StoryImpl(++Id, title, description, assignee, priority, size, status);
+    public Story createStoryInBoard(String title, String description,Priority priority, SizeStory size, StatusStory status,String boardname) {
+        Story story = new StoryImpl(++Id, title, description,priority, size, status);
         Board board = findBoard(boardname);
         board.addTask(story);
         this.stories.add(story);
@@ -98,8 +98,8 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
-    public Feedback createFeedbackInBoard(String title, String description, Member assignee, int rating,String boardName) {
-        Feedback feedback = new FeedbackImpl(++Id, title, description, assignee, rating);
+    public Feedback createFeedbackInBoard(String title, String description,int rating,String boardName) {
+        Feedback feedback = new FeedbackImpl(++Id, title, description,rating);
         Board board = findBoard(boardName);
         board.addTask(feedback);
         this.feedbacks.add(feedback);
@@ -175,16 +175,19 @@ public class RepositoryImpl implements Repository {
         for (Bug b:bugs) {
             if(b.getId()==taskID){
                 member.addTask(b);
+                b.addAssignee(member);
             }
         }
         for (Feedback b:feedbacks) {
             if(b.getId()==taskID){
                 member.addTask(b);
+                b.addAssignee(member);
             }
         }
         for (Story b:stories) {
             if(b.getId()==taskID){
                 member.addTask(b);
+                b.addAssignee(member);
             }
         }
 
@@ -310,6 +313,82 @@ public class RepositoryImpl implements Repository {
 
         }
         throw new IllegalArgumentException(TEAM_NOT_EXIST);
+    }
+
+    @Override
+    public String filterTasksByTitle(List<Task> tasks) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(FormattingHelpers.pad("TASKS",19,'-')).append("\n");
+        tasks.stream().forEach(task-> builder.append(
+                FormattingHelpers.pad(String.format("ID:%d",task.getId()),19,' '))
+                .append("\n"));
+        builder.append(FormattingHelpers.pad("",20,'-'));
+        return builder.toString().trim();
+    }
+
+    @Override
+    public String sortTasksByTitle(List<Task> tasks) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(FormattingHelpers.pad("TASKS",19,'-')).append("\n");
+        tasks.stream().forEach(task-> builder.append(
+                        FormattingHelpers.pad(String.format("ID:%d Title: %s",task.getId(),task.getTitle()),19,' '))
+                .append("\n"));
+        builder.append(FormattingHelpers.pad("",20,'-'));
+        return builder.toString().trim();
+    }
+
+    @Override
+    public String filterTaskByStatus(List<Task> tasks) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(FormattingHelpers.pad("TASKS",19,'-')).append("\n");
+        tasks.stream().forEach(task-> builder.append(
+                        FormattingHelpers.pad(String.format("ID:%d STATUS:%s",task.getId(),task.getStatus()),19,' '))
+                .append("\n"));
+        builder.append(FormattingHelpers.pad("",20,'-'));
+        return builder.toString().trim();
+    }
+
+    @Override
+    public String filterTaskByAssignee(List<Task> tasks) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(FormattingHelpers.pad("TASKS",19,'-')).append("\n");
+        tasks.stream().forEach(task-> builder.append(
+                        FormattingHelpers.pad(
+                                String.format("ID:%d ASSIGNEE:%s",
+                                        task.getId(),
+                                        task.getAssignee().getName()),19,' '))
+                .append("\n"));
+        builder.append(FormattingHelpers.pad("",20,'-'));
+        return builder.toString().trim();
+    }
+
+    @Override
+    public String filterTaskByStatusAndAssignee(List<Task> tasks) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(FormattingHelpers.pad("TASKS",19,'-')).append("\n");
+        tasks.stream().forEach(task-> builder.append(
+                        FormattingHelpers.pad(
+                                String.format("ID:%d STATUS:%s ASSIGNEE:%s",
+                                        task.getId(),task.getStatus(),
+                                        task.getAssignee().getName()),19,' '))
+                .append("\n"));
+        builder.append(FormattingHelpers.pad("",20,'-'));
+        return builder.toString().trim();
+    }
+
+    @Override
+    public List<Bug> getBugs() {
+        return new ArrayList<>(bugs);
+    }
+
+    @Override
+    public List<Story> getStories() {
+        return new ArrayList<>(stories);
+    }
+
+    @Override
+    public List<Feedback> getFeedbacks() {
+        return new ArrayList<>(feedbacks);
     }
 
     public <T extends Printable> String showAll(List<T> elements,String typeName){

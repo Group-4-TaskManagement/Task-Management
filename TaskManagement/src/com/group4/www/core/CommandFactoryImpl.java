@@ -26,7 +26,7 @@ public class CommandFactoryImpl implements CommandFactory {
             case CREATEFEEDBACKINBOARD:
                 return new CreateFeedback(repository);
             case CREATEBOARD:
-                return new CreateBord(repository);
+                return new CreateBoard(repository);
             case CREATEBOARDINTEAM:
                 return new CreateBoardInTeam(repository);
             case SHOWALLMEMBERS:
@@ -67,6 +67,16 @@ public class CommandFactoryImpl implements CommandFactory {
                 return null;
             case CHANGEFEEDBACKSTATUS:
                 return null;
+            case FILTERTASKSBYTITLE:
+                return new FilterTasksByTitle(repository);
+            case SORTTASKSBYTITLE:
+                return new SortTasksByTitle(repository);
+            case FILTERTASKSBYSTATUS:
+                return new FilterTasksByStatus(repository);
+            case FILTERTASKSBYASSIGNEE:
+                return new FilterTasksByAssignee(repository);
+            case FILTERTASKSBYSTATUSANDASSIGNEE:
+                return new FilterTasksByStatusAndAssignee(repository);
             default: throw new IllegalArgumentException(String.format(INVALID_COMMAND,commandTypeAsString));
         }
     }

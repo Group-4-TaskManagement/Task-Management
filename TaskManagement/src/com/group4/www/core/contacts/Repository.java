@@ -6,6 +6,7 @@ import com.group4.www.models.contracts.Board;
 import com.group4.www.models.tasks.contracts.Bug;
 import com.group4.www.models.tasks.contracts.Feedback;
 import com.group4.www.models.tasks.contracts.Story;
+import com.group4.www.models.tasks.contracts.Task;
 
 import java.util.List;
 
@@ -19,11 +20,11 @@ public interface Repository {
 
     Board createBoard(String name);
 
-    Bug createBugInBoard(String title, String description, Member assignee, Priority priority, SeverityBug severity,String boardName);
+    Bug createBugInBoard(String title, String description,Priority priority, SeverityBug severity,String boardName);
 
-    Story createStoryInBoard(String title, String description, Member assignee, Priority priority, SizeStory size, StatusStory status,String boardName);
+    Story createStoryInBoard(String title, String description,Priority priority, SizeStory size, StatusStory status,String boardName);
 
-    Feedback createFeedbackInBoard(String title, String description, Member assignee, int rating,String boardName);
+    Feedback createFeedbackInBoard(String title, String description,int rating,String boardName);
 
     Board createBoardInTeam(String name, String teamName);
 
@@ -68,6 +69,20 @@ public interface Repository {
 
     Team findTeam(String teamName);
 
+    String filterTasksByTitle(List<Task> tasks);
 
+    String sortTasksByTitle(List<Task> tasks);
+
+    String filterTaskByStatus(List<Task> tasks);
+
+    String filterTaskByAssignee(List<Task> tasks);
+
+    String filterTaskByStatusAndAssignee(List<Task> tasks);
+
+    List<Bug> getBugs();
+
+    List<Story> getStories();
+
+    List<Feedback> getFeedbacks();
 
 }

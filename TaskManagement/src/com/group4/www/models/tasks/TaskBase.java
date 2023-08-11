@@ -31,11 +31,10 @@ abstract class TaskBase implements Task {
     private final List<Comment> comments;
     private final List<EventLog> logChanges;
 
-    public TaskBase(int id,String title, String description, Member assignee) {
+    public TaskBase(int id,String title, String description) {
         this.id = id;
         setTitle(title);
         setDescription(description);
-        this.assignee = assignee;
         this.comments = new ArrayList<>();
         this.logChanges = new ArrayList<>();
     }
@@ -73,6 +72,10 @@ abstract class TaskBase implements Task {
         logChanges.add(eventLog);
     }
 
+    @Override
+    public void addAssignee(Member member) {
+        this.assignee=member;
+    }
 
     @Override
     public String getTitle() {
@@ -98,6 +101,7 @@ abstract class TaskBase implements Task {
     public String getAsString() {
         return String.format("%s",getTitle());
     }
+
 }
 
 

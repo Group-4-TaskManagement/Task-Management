@@ -31,8 +31,8 @@ public class StoryImpl extends TaskBase implements Story {
 
 
 
-    public StoryImpl(int id,String title, String description, Member assignee,Priority priority, SizeStory size,StatusStory status) {
-        super(id,title, description, assignee);
+    public StoryImpl(int id,String title, String description,Priority priority, SizeStory size,StatusStory status) {
+        super(id,title, description);
         this.priority = priority;
         this.size = size;
         this.status = status;
@@ -40,77 +40,8 @@ public class StoryImpl extends TaskBase implements Story {
     }
 
     @Override
-    public void revertPriority() {
-        if (getPriority() != Priority.LOW) {
-            String currentPriority = getPriority().toString();
-            status = (StatusStory.values()[getPriority().ordinal() - 1]);
-            addLogChanges(String.format(PRIORITY_CHANGE,currentPriority,getPriority()));
-        } else {
-            addLogChanges(String.format(PRIORITY_ERROR, getPriority()));
-        }
-    }
-
-
-    @Override
-    public void advancePriority() {
-        if (getPriority() != Priority.HIGH) {
-            String currentPriority = getPriority().toString();
-            status = (StatusStory.values()[getPriority().ordinal() + 1]);
-            addLogChanges(String.format(PRIORITY_CHANGE,currentPriority,getPriority()));
-        } else {
-            addLogChanges(String.format(PRIORITY_ERROR, getPriority()));
-        }
-
-    }
-
-
-    public  void revertStatus() {
-        if (getStatus() != StatusStory.NOT_DONE) {
-            String currentStatus = getStatus().toString();
-            status = (StatusStory.values()[getStatus().ordinal() - 1]);
-            addLogChanges(String.format(STATUS_CHANGE,currentStatus,getStatus()));
-        } else {
-            addLogChanges(String.format(STATUS_ERROR, getStatus()));
-        }
-    }
-
-    public void advanceStatus() {
-        if (getStatus() != StatusStory.DONE) {
-            String currentStatus = getStatus().toString();
-            status = (StatusStory.values()[getStatus().ordinal() + 1]);
-            addLogChanges(String.format(STATUS_CHANGE,currentStatus,getStatus()));
-        } else {
-            addLogChanges(String.format(STATUS_ERROR, getStatus()));
-        }
-    }
-
-    public  void revertSize(){
-        if(getSize() != SizeStory.SMALL){
-            String currentSize = getSize().toString();
-            size = (SizeStory.values()[getSize().ordinal() -1]);
-            addLogChanges(String.format(SIZE_CHANGE,currentSize,getSize()));
-        }
-        else {
-            addLogChanges(String.format(SIZE_ERROR,getSize()));
-        }
-
-    }
-    public void advanceSize(){
-        if(getSize() != SizeStory.LARGE){
-            String currentSize = getSize().toString();
-            size = (SizeStory.values()[getSize().ordinal()  + 1]);
-            addLogChanges(String.format(SIZE_CHANGE,currentSize,getSize()));
-        }
-        else {
-            addLogChanges(String.format(SIZE_ERROR,getSize()));
-        }
-    }
-
-
-
-
-    public StatusStory getStatus() {
-        return status;
+    public String getStatus() {
+        return status.toString();
     }
 
     public SizeStory getSize() {

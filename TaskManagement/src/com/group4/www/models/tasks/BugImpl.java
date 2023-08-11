@@ -35,8 +35,8 @@ public class BugImpl extends TaskBase implements Bug {
 
 
 
-    public BugImpl(int id,String title, String description, Member assignee, Priority priority, SeverityBug severity) {
-        super(id,title, description, assignee);
+    public BugImpl(int id,String title, String description,Priority priority, SeverityBug severity) {
+        super(id,title, description);
         this.priority = priority;
         this.severity = severity;
         addStepsToReproduce();
@@ -55,13 +55,13 @@ public class BugImpl extends TaskBase implements Bug {
     }
 
     @Override
-    public StatusBug getStatus() {
-        return status;
+    public String getStatus() {
+        return status.toString();
     }
 
     @Override
     public void setStatus(StatusBug statusBug) {
-        if(statusBug==getStatus()) {
+        if(statusBug==status) {
             throw new IllegalArgumentException(String.format(BUG_CHANGE_STATUS_ERR, getStatus()));
         }else {
             System.out.printf(BUG_CHANGE_STATUS_MESS,getId(), getStatus(), statusBug);

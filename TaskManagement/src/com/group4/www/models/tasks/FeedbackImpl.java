@@ -15,18 +15,13 @@ public class FeedbackImpl extends TaskBase implements Feedback {
     private  static  final int  RATING_MAX = 10;
     private  static  final String  RATING_ERROR = "Rating must be between %d and %d";
     private int rating;
-    int id;
     private StatusFeedback statusFeedback;
-    public FeedbackImpl(int id,String title, String description, Member assignee,int rating) {
-        super(id,title, description, assignee);
+    public FeedbackImpl(int id,String title, String description,int rating) {
+        super(id,title, description);
         setRating(rating);
         this.statusFeedback=StatusFeedback.NEW;
     }
 
-    @Override
-    public int getId() {
-        return id;
-    }
 
    private void setRating(int rating) {
         ValidationHelpers.validateIntRange(rating,
@@ -34,35 +29,34 @@ public class FeedbackImpl extends TaskBase implements Feedback {
         this.rating = rating;
     }
 
-    public void setStatusFeedback(StatusFeedback statusFeedback) {
+    public void statusFeedback(StatusFeedback statusFeedback) {
         this.statusFeedback = statusFeedback;
     }
     @Override
-    public StatusFeedback getStatusFeedback() {
-        return statusFeedback;
+    public String getStatus() {
+        return statusFeedback.toString();
     }
-
 
 
 
 
     public  void revertStatusFeedback() {
-        if (getStatusFeedback() != StatusFeedback.NEW) {
-            String currentStatus = getStatusFeedback().toString();
-            statusFeedback = (StatusFeedback.values()[getStatusFeedback().ordinal() - 1]);
-            addLogChanges(String.format(STATUS_CHANGE,currentStatus,getStatusFeedback()));
+        if (statusFeedback != StatusFeedback.NEW) {
+            String currentStatus = statusFeedback.toString();
+            statusFeedback = (StatusFeedback.values()[statusFeedback.ordinal() - 1]);
+            addLogChanges(String.format(STATUS_CHANGE,currentStatus,statusFeedback));
         } else {
-            addLogChanges(String.format(STATUS_ERROR, getStatusFeedback()));
+            addLogChanges(String.format(STATUS_ERROR, statusFeedback));
         }
     }
 
     public void advanceStatus() {
-        if (getStatusFeedback() != StatusFeedback.DONE) {
-            String currentStatus = getStatusFeedback().toString();
-            statusFeedback = (StatusFeedback.values()[getStatusFeedback().ordinal() + 1]);
-            addLogChanges(String.format(STATUS_CHANGE,currentStatus,getStatusFeedback()));
+        if (statusFeedback != StatusFeedback.DONE) {
+            String currentStatus = statusFeedback.toString();
+            statusFeedback = (StatusFeedback.values()[statusFeedback.ordinal() + 1]);
+            addLogChanges(String.format(STATUS_CHANGE,currentStatus,statusFeedback));
         } else {
-            addLogChanges(String.format(STATUS_ERROR, getStatusFeedback()));
+            addLogChanges(String.format(STATUS_ERROR, statusFeedback));
         }
     }
 
