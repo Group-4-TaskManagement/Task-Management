@@ -390,6 +390,32 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
+    public String filterBugsByStatus(List<Bug> bugs) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(FormattingHelpers.pad("TASKS",19,'-')).append("\n");
+        bugs.stream().forEach(bug-> builder.append(
+                        FormattingHelpers.pad(
+                                String.format("ID:%d STATUS:%s",
+                                        bug.getId(),bug.getStatus()),19,' '))
+                .append("\n"));
+        builder.append(FormattingHelpers.pad("",20,'-'));
+        return builder.toString().trim();
+    }
+
+    @Override
+    public String filterBugsByAssignee(List<Bug> bugs) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(FormattingHelpers.pad("TASKS",19,'-')).append("\n");
+        bugs.stream().forEach(bug-> builder.append(
+                        FormattingHelpers.pad(
+                                String.format("ID:%d ASSIGNEE:%s",
+                                        bug.getId(),bug.getAssignee().getName()),19,' '))
+                .append("\n"));
+        builder.append(FormattingHelpers.pad("",20,'-'));
+        return builder.toString().trim();
+    }
+
+    @Override
     public List<Bug> getBugs() {
         return new ArrayList<>(bugs);
     }

@@ -81,6 +81,10 @@ public interface Repository {
 
     String sortAssignedTaskByTitle(List<Task> tasks);
 
+    String filterBugsByStatus(List<Bug> bugs);
+
+    String filterBugsByAssignee(List<Bug> bugs);
+
     List<Bug> getBugs();
 
     List<Story> getStories();

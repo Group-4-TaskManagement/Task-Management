@@ -45,16 +45,15 @@ public class ListingHelper {
         return result;
     }
 
-    public static List<Task> filterByStatus(List<Task> tasks, String status){
-        return tasks.stream().filter(task -> task.getStatus().equalsIgnoreCase(status)).collect(Collectors.toList());
+    public static <T extends Task> List<T> filterByStatus(List<T> tasks, String status){
+        return tasks.stream().filter(e -> e.getStatus().equalsIgnoreCase(status)).collect(Collectors.toList());
     }
-    public static List<Task> filterByAssignee(List<Task> tasks, String assignee){
-        return tasks.stream().filter(task -> task.getAssignee().getName().equals(assignee)).collect(Collectors.toList());
+    public static <T extends Task> List<T> filterByAssignee(List<T> tasks, String assignee){
+        return tasks.stream().filter(e -> e.getAssignee().getName().equals(assignee)).collect(Collectors.toList());
     }
-    public static List<Task> filterByStatusAndAssignee(List<Task> tasks, String status, String assignee){
+
+    public static <T extends Task> List<T> filterByStatusAndAssignee(List<T> tasks, String status, String assignee){
         return tasks.stream().filter(task -> task.getStatus().equalsIgnoreCase(status)&&task.getAssignee().getName().equals(assignee)).collect(Collectors.toList());
     }
-
-
 
 }
