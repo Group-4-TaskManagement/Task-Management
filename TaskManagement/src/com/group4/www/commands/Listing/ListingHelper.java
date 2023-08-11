@@ -49,7 +49,7 @@ public class ListingHelper {
         return tasks.stream().filter(e -> e.getStatus().equalsIgnoreCase(status)).collect(Collectors.toList());
     }
     public static <T extends Task> List<T> filterByAssignee(List<T> tasks, String assignee){
-        return tasks.stream().filter(e -> e.getAssignee().getName().equals(assignee)).collect(Collectors.toList());
+        return tasks.stream().filter(task -> task.getAssignee().getName().equals(assignee)).collect(Collectors.toList());
     }
 
     public static <T extends Task> List<T> filterByStatusAndAssignee(List<T> tasks, String status, String assignee){

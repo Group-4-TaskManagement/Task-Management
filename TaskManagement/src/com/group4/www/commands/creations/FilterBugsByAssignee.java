@@ -20,6 +20,8 @@ public class FilterBugsByAssignee implements Command {
     public String execute(List<String> parameters) {
         ValidationHelpers.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
 
+        parseParameters(parameters);
+
         return repository.filterBugsByAssignee(ListingHelper.filterByAssignee(repository.getBugs(),member.getName()));
     }
 
