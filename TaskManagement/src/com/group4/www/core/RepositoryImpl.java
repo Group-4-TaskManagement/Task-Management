@@ -1,6 +1,5 @@
 package com.group4.www.core;
 
-import com.group4.www.commands.creations.ShowAllMembers;
 import com.group4.www.core.contacts.Repository;
 import com.group4.www.models.BoardImpl;
 import com.group4.www.models.CommentImpl;
@@ -22,10 +21,10 @@ import java.util.List;
 
 public class RepositoryImpl implements Repository {
     private static final String MEMBER_NOT_EXIST = "A member with name %s does not exist";
-    private static final String BOARD_NOT_EXIST = "The board does not exist";
-    private static final String TEAM_NOT_EXIST = "The team does not exist";
-    public static final String TASK_ADDED_TO_MEMBER = "Task with id %d has been added to %s task list";
-    public static final String TASK_REMOVED_TO_MEMBER = "Task with id %d has been removed from %s's task list";
+    private static final String BOARD_NOT_EXIST = "This board does not exist";
+    private static final String TEAM_NOT_EXIST = "This team does not exist";
+    public static final String TASK_ADDED_TO_MEMBER = "Task with ID:%d has been added to %s's task list";
+    public static final String TASK_REMOVED_TO_MEMBER = "Task with ID:%d has been removed from %s's task list";
     public static final String COMMENT_ADDED_TO_TASK = "A comment with id %d has been added to the task with id %d";
     private static int Id;
     private  List<Team> teams = new ArrayList<>();
@@ -393,7 +392,7 @@ public class RepositoryImpl implements Repository {
     @Override
     public String filterBugsByStatus(List<Bug> bugs) {
         StringBuilder builder = new StringBuilder();
-        builder.append(FormattingHelpers.pad("TASKS",19,'-')).append("\n");
+        builder.append(FormattingHelpers.pad("BUGS",19,'-')).append("\n");
         bugs.stream().forEach(bug-> builder.append(
                         FormattingHelpers.pad(
                                 String.format("ID:%d STATUS:%s",
@@ -406,11 +405,63 @@ public class RepositoryImpl implements Repository {
     @Override
     public String filterBugsByAssignee(List<Bug> bugs) {
         StringBuilder builder = new StringBuilder();
-        builder.append(FormattingHelpers.pad("TASKS",19,'-')).append("\n");
+        builder.append(FormattingHelpers.pad("BUGS",19,'-')).append("\n");
         bugs.stream().forEach(bug-> builder.append(
                         FormattingHelpers.pad(
                                 String.format("ID:%d ASSIGNEE:%s",
                                         bug.getId(),bug.getAssignee().getName()),19,' '))
+                .append("\n"));
+        builder.append(FormattingHelpers.pad("",20,'-'));
+        return builder.toString().trim();
+    }
+
+    @Override
+    public String filterBugsByStatusAndAssignee(List<Bug> bugs) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(FormattingHelpers.pad("BUGS",19,'-')).append("\n");
+        bugs.stream().forEach(bug-> builder.append(
+                        FormattingHelpers.pad(
+                                String.format("ID:%d STATUS:%s ASSIGNEE:%s",
+                                        bug.getId(),bug.getStatus(),bug.getAssignee().getName()),19,' '))
+                .append("\n"));
+        builder.append(FormattingHelpers.pad("",20,'-'));
+        return builder.toString().trim();
+    }
+
+    @Override
+    public <T extends Task> String sortBugsByTitle(List<T> bugs) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(FormattingHelpers.pad("TASKS",19,'-')).append("\n");
+        bugs.stream().forEach(t-> builder.append(
+                        FormattingHelpers.pad(
+                                String.format("ID:%d TITLE:%s",
+                                        t.getId(),t.getTitle()),19,' '))
+                .append("\n"));
+        builder.append(FormattingHelpers.pad("",20,'-'));
+        return builder.toString().trim();
+    }
+
+    @Override
+    public String sortBugsByPriority(List<Bug> bugs) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(FormattingHelpers.pad("BUGS",19,'-')).append("\n");
+        bugs.stream().forEach(bug-> builder.append(
+                        FormattingHelpers.pad(
+                                String.format("ID:%d PRIORITY:%s",
+                                        bug.getId(),bug.getPriority()),19,' '))
+                .append("\n"));
+        builder.append(FormattingHelpers.pad("",20,'-'));
+        return builder.toString().trim();
+    }
+
+    @Override
+    public String sortBugsBySeverity(List<Bug> bugs) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(FormattingHelpers.pad("BUGS",19,'-')).append("\n");
+        bugs.stream().forEach(bug-> builder.append(
+                        FormattingHelpers.pad(
+                                String.format("ID:%d SEVERITY:%s",
+                                        bug.getId(),bug.getSeverity()),19,' '))
                 .append("\n"));
         builder.append(FormattingHelpers.pad("",20,'-'));
         return builder.toString().trim();

@@ -5,9 +5,6 @@ public enum Priority {
     MEDIUM,
     HIGH;
 
-    ;
-    //TODO Override to string!
-
 
     @Override
     public String toString() {

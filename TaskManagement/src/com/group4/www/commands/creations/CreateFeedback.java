@@ -1,9 +1,7 @@
 package com.group4.www.commands.creations;
 
-import com.group4.www.commands.Command;
+import com.group4.www.commands.contracts.Command;
 import com.group4.www.core.contacts.Repository;
-import com.group4.www.models.contracts.Member;
-import com.group4.www.models.tasks.contracts.Bug;
 import com.group4.www.models.tasks.contracts.Feedback;
 import com.group4.www.models.utils.ParsingHelpers;
 import com.group4.www.models.utils.ValidationHelpers;

@@ -1,8 +1,11 @@
 package com.group4.www.core;
 
-import com.group4.www.commands.Command;
+import com.group4.www.commands.*;
+import com.group4.www.commands.contracts.Command;
 import com.group4.www.commands.creations.*;
-import com.group4.www.commands.enums.CommandType;
+import com.group4.www.core.enums.CommandType;
+import com.group4.www.commands.listings.*;
+import com.group4.www.commands.show.*;
 import com.group4.www.core.contacts.CommandFactory;
 import com.group4.www.core.contacts.Repository;
 import com.group4.www.models.utils.ParsingHelpers;
@@ -83,6 +86,14 @@ public class CommandFactoryImpl implements CommandFactory {
                 return new FilterBugsByStatus(repository);
             case FILTERBUGSBYASSIGNEE:
                 return new FilterBugsByAssignee(repository);
+            case FILTERBUGSBYSTATUSANDASSIGNEE:
+                return new FilterBugsByStatusAndAssignee(repository);
+            case SORTBUGSBYTITLE:
+                return new SortBugsByTitle(repository);
+            case SORTBUGSBYPRIORITY:
+                return new SortBugsByPriority(repository);
+            case SORTBUGSBYSEVERITY:
+                return new SortBugsBySeverity(repository);
             default: throw new IllegalArgumentException(String.format(INVALID_COMMAND,commandTypeAsString));
         }
     }

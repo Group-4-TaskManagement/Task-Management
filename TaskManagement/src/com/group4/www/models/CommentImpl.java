@@ -13,6 +13,7 @@ public class CommentImpl implements Comment, Identifiable {
 
 
     public CommentImpl(int id,String author, String message) {
+        //TODO check if author is a member
         this.id = id;
         this.author = author;
         this.message = message;

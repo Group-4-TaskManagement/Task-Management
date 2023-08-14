@@ -13,15 +13,7 @@ import java.util.Scanner;
 
 public class BugImpl extends TaskBase implements Bug {
     public static final String REPRODUCE_STEPS = "Please enter steps, separated by ';', for the reproduction of the bug: \n";
-    public static final String CHANGE_STATUS = "The status of the bug was changed from %s to %s. ";
-    public static final String ADV_STATUS_ERR = "The status of the bug can not be advanced, it is already at %s!";
-    public static final String REV_STATUS_ERR = "The status of the bug can not be reverted, it is already at %s!";
     public static final String BUG_CHANGE_PRIORITY_MESS = "The priority of bug with ID:%d was changed from %s to %s.";
-    public static final String ADV_PRIORITY_ERR = "The priority of the bug can not be advanced, it is already at %s!";
-    public static final String REV_PRIORITY_ERR = "The priority of the bug can not be reverted, it is already at %s!";
-    public static final String CHANGE_SEVERITY = "The severity of the bug was changed from %s to %s.";
-    public static final String ADV_SEVERITY_ERR = "The severity of the bug can not be advanced, it is already at %s!";
-    public static final String REV_SEVERITY_ERR = "The severity of the bug can not be changed, it is already at %s!";
     public static final String BUG_CHANGE_STATUS_ERR = "Can not change the status of the bug. It is already at %s.";
     public static final String BUG_CHANGE_STATUS_MESS = "The status of bug with ID:%d was changed from %s to %s.";
     public static final String BUG_CHANGE_PRIORITY_ERR = "Can not change the priority of the bug. It is already at %s.";
@@ -103,6 +95,7 @@ public class BugImpl extends TaskBase implements Bug {
         Scanner scn = new Scanner(System.in);
         String steps = scn.nextLine();
         this.steps = Arrays.asList(steps.split(";"));
+        //TODO command to show the steps?
     }
 
 }

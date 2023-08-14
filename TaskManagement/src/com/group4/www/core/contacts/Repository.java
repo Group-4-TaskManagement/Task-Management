@@ -11,7 +11,6 @@ import com.group4.www.models.tasks.contracts.Task;
 import java.util.List;
 
 public interface Repository {
-//MARIAN
 
     Comment createComment(String author, String message);
     Member createPerson(String name);
@@ -85,10 +84,20 @@ public interface Repository {
 
     String filterBugsByAssignee(List<Bug> bugs);
 
+    String filterBugsByStatusAndAssignee(List<Bug> bugs);
+
+    <T extends Task> String sortBugsByTitle(List<T> task); //TODO TRY GENERIC METHOD
+
+    String sortBugsByPriority(List<Bug> bugs);
+
+    String sortBugsBySeverity(List<Bug> bugs);
+
     List<Bug> getBugs();
 
     List<Story> getStories();
 
     List<Feedback> getFeedbacks();
     String changeFeedbackStatus(String command, int taskID);
+
+    //TODO SHow history of given task;
 }

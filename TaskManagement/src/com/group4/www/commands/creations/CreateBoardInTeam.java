@@ -1,6 +1,6 @@
 package com.group4.www.commands.creations;
 
-import com.group4.www.commands.Command;
+import com.group4.www.commands.contracts.Command;
 import com.group4.www.core.contacts.Repository;
 import com.group4.www.models.contracts.Board;
 import com.group4.www.models.contracts.Team;
