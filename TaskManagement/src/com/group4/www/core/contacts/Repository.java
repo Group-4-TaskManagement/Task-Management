@@ -90,5 +90,5 @@ public interface Repository {
     List<Story> getStories();
 
     List<Feedback> getFeedbacks();
-
+    String changeFeedbackStatus(String command, int taskID);
 }

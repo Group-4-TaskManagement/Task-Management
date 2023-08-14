@@ -28,10 +28,11 @@ public class FeedbackImpl extends TaskBase implements Feedback {
                 RATING_MIN,RATING_MAX,String.format(RATING_ERROR,RATING_MIN,RATING_MAX));
         this.rating = rating;
     }
+//    @Override
+//    public void statusFeedback(StatusFeedback statusFeedback) {
+//        this.statusFeedback = statusFeedback;
+//    }
 
-    public void statusFeedback(StatusFeedback statusFeedback) {
-        this.statusFeedback = statusFeedback;
-    }
     @Override
     public String getStatus() {
         return statusFeedback.toString();
@@ -71,6 +72,10 @@ public class FeedbackImpl extends TaskBase implements Feedback {
         return rating;
     }
 
+    @Override
+    public void setStatusFeedback(StatusFeedback statusFeedback) {
+        this.statusFeedback=statusFeedback;
+    }
 
 
 }

@@ -251,6 +251,7 @@ public class RepositoryImpl implements Repository {
         bug.setSeverity(severityBug);
     }
 
+
     @Override
     public Bug findBugByID(int id) {
         for (Bug bug : bugs) {
@@ -430,7 +431,36 @@ public class RepositoryImpl implements Repository {
         return new ArrayList<>(feedbacks);
     }
 
-    public <T extends Printable> String showAll(List<T> elements,String typeName){
+    @Override
+    public String changeFeedbackStatus(String command, int taskID) {
+        Feedback feedback = findFeedbackByID(taskID);
+        switch (command) {
+            case "NEW":
+                feedback.setStatusFeedback(StatusFeedback.NEW);
+                break;
+            case "UNSCHEDULED":
+                feedback.setStatusFeedback(StatusFeedback.UNSCHEDULED);
+                break;
+            case "SCHEDULED":
+                feedback.setStatusFeedback(StatusFeedback.SCHEDULED);
+                break;
+            case "DONE":
+                feedback.setStatusFeedback(StatusFeedback.DONE);
+                break;
+            case "Advance":
+                feedback.advanceStatus();
+                break;
+            case "Revert":
+                feedback.revertStatusFeedback();
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid command or status name!");
+        }
+        return String.format(
+                "Feedback status changed to %s!\n",feedback.getStatus());
+    }
+
+    public <T extends Printable> String showAll(List<T> elements, String typeName){
         StringBuilder builder = new StringBuilder();
         builder.append(FormattingHelpers.pad(typeName.toUpperCase(),19,'-')).append("\n");
         if(elements.size()==0){

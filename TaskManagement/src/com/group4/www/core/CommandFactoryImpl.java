@@ -66,7 +66,7 @@ public class CommandFactoryImpl implements CommandFactory {
             case CHANGESTORYSIZE:
                 return null;
             case CHANGEFEEDBACKSTATUS:
-                return null;
+                return new ChangeFeedbackStatus(repository);
             case FILTERTASKSBYTITLE:
                 return new FilterTasksByTitle(repository);
             case SORTTASKSBYTITLE:
