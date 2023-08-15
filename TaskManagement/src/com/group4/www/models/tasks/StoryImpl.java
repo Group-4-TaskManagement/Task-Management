@@ -51,6 +51,13 @@ public class StoryImpl extends TaskBase implements Story {
     public Priority getPriority() {
         return priority;
     }
+
+    @Override
+    public String getAsString() {
+        return String.format("%s" +
+                "PRIORITY:%s\n" +
+                "SIZE:%s\n",super.getAsString(),getPriority(),getSize());
+    }
 }
 
 

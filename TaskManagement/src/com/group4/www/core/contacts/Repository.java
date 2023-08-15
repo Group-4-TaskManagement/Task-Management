@@ -86,7 +86,7 @@ public interface Repository {
 
     String filterBugsByStatusAndAssignee(List<Bug> bugs);
 
-    <T extends Task> String sortBugsByTitle(List<T> task); //TODO TRY GENERIC METHOD
+    String sortBugsByTitle(List<Bug> bugs);
 
     String sortBugsByPriority(List<Bug> bugs);
 

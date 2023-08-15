@@ -26,6 +26,8 @@ public class RepositoryImpl implements Repository {
     public static final String TASK_ADDED_TO_MEMBER = "Task with ID:%d has been added to %s's task list";
     public static final String TASK_REMOVED_TO_MEMBER = "Task with ID:%d has been removed from %s's task list";
     public static final String COMMENT_ADDED_TO_TASK = "A comment with id %d has been added to the task with id %d";
+    public static final String TASKS_HEADER = "TASKS";
+    public static final String BUGS_HEADER = "BUGS";
     private static int Id;
     private  List<Team> teams = new ArrayList<>();
     private List<Member> members = new ArrayList<>();
@@ -317,148 +319,62 @@ public class RepositoryImpl implements Repository {
 
     @Override
     public String filterTasksByTitle(List<Task> tasks) {
-        StringBuilder builder = new StringBuilder();
-        builder.append(FormattingHelpers.pad("TASKS",19,'-')).append("\n");
-        tasks.stream().forEach(task-> builder.append(
-                FormattingHelpers.pad(String.format("ID:%d",task.getId()),19,' '))
-                .append("\n"));
-        builder.append(FormattingHelpers.pad("",20,'-'));
-        return builder.toString().trim();
+        return FormattingHelpers.listingFormatted(tasks, TASKS_HEADER);
     }
 
     @Override
     public String sortTasksByTitle(List<Task> tasks) {
-        return FormattingHelpers.listingFormatted(tasks,"TASK");
+        return FormattingHelpers.listingFormatted(tasks, TASKS_HEADER);
     }
 
     @Override
     public String filterTaskByStatus(List<Task> tasks) {
-        StringBuilder builder = new StringBuilder();
-        builder.append(FormattingHelpers.pad("TASKS",19,'-')).append("\n");
-        tasks.stream().forEach(task-> builder.append(
-                        FormattingHelpers.pad(String.format("ID:%d STATUS:%s",task.getId(),task.getStatus()),19,' '))
-                .append("\n"));
-        builder.append(FormattingHelpers.pad("",20,'-'));
-        return builder.toString().trim();
+        return FormattingHelpers.listingFormatted(tasks, TASKS_HEADER);
     }
 
     @Override
     public String filterTaskByAssignee(List<Task> tasks) {
-        StringBuilder builder = new StringBuilder();
-        builder.append(FormattingHelpers.pad("TASKS",19,'-')).append("\n");
-        tasks.stream().forEach(task-> builder.append(
-                        FormattingHelpers.pad(
-                                String.format("ID:%d ASSIGNEE:%s",
-                                        task.getId(),
-                                        task.getAssignee().getName()),19,' '))
-                .append("\n"));
-        builder.append(FormattingHelpers.pad("",20,'-'));
-        return builder.toString().trim();
+        return FormattingHelpers.listingFormatted(tasks, TASKS_HEADER);
     }
 
     @Override
     public String filterTaskByStatusAndAssignee(List<Task> tasks) {
-        StringBuilder builder = new StringBuilder();
-        builder.append(FormattingHelpers.pad("TASKS",19,'-')).append("\n");
-        tasks.stream().forEach(task-> builder.append(
-                        FormattingHelpers.pad(
-                                String.format("ID:%d STATUS:%s ASSIGNEE:%s",
-                                        task.getId(),task.getStatus(),
-                                        task.getAssignee().getName()),19,' '))
-                .append("\n"));
-        builder.append(FormattingHelpers.pad("",20,'-'));
-        return builder.toString().trim();
+        return FormattingHelpers.listingFormatted(tasks, TASKS_HEADER);
     }
 
     @Override
     public String sortAssignedTaskByTitle(List<Task> tasks) {
-        StringBuilder builder = new StringBuilder();
-        builder.append(FormattingHelpers.pad("TASKS",19,'-')).append("\n");
-        tasks.stream().forEach(task-> builder.append(
-                        FormattingHelpers.pad(
-                                String.format("ID:%d TITLE:%s",
-                                        task.getId(),task.getTitle()),19,' '))
-                .append("\n"));
-        builder.append(FormattingHelpers.pad("",20,'-'));
-        return builder.toString().trim();
+        return FormattingHelpers.listingFormatted(tasks, TASKS_HEADER);
     }
 
     @Override
     public String filterBugsByStatus(List<Bug> bugs) {
-        StringBuilder builder = new StringBuilder();
-        builder.append(FormattingHelpers.pad("BUGS",19,'-')).append("\n");
-        bugs.stream().forEach(bug-> builder.append(
-                        FormattingHelpers.pad(
-                                String.format("ID:%d STATUS:%s",
-                                        bug.getId(),bug.getStatus()),19,' '))
-                .append("\n"));
-        builder.append(FormattingHelpers.pad("",20,'-'));
-        return builder.toString().trim();
+        return FormattingHelpers.listingFormatted(bugs, BUGS_HEADER);
     }
 
     @Override
     public String filterBugsByAssignee(List<Bug> bugs) {
-        StringBuilder builder = new StringBuilder();
-        builder.append(FormattingHelpers.pad("BUGS",19,'-')).append("\n");
-        bugs.stream().forEach(bug-> builder.append(
-                        FormattingHelpers.pad(
-                                String.format("ID:%d ASSIGNEE:%s",
-                                        bug.getId(),bug.getAssignee().getName()),19,' '))
-                .append("\n"));
-        builder.append(FormattingHelpers.pad("",20,'-'));
-        return builder.toString().trim();
+        return FormattingHelpers.listingFormatted(bugs, BUGS_HEADER);
     }
 
     @Override
     public String filterBugsByStatusAndAssignee(List<Bug> bugs) {
-        StringBuilder builder = new StringBuilder();
-        builder.append(FormattingHelpers.pad("BUGS",19,'-')).append("\n");
-        bugs.stream().forEach(bug-> builder.append(
-                        FormattingHelpers.pad(
-                                String.format("ID:%d STATUS:%s ASSIGNEE:%s",
-                                        bug.getId(),bug.getStatus(),bug.getAssignee().getName()),19,' '))
-                .append("\n"));
-        builder.append(FormattingHelpers.pad("",20,'-'));
-        return builder.toString().trim();
+        return FormattingHelpers.listingFormatted(bugs, BUGS_HEADER);
     }
 
     @Override
-    public <T extends Task> String sortBugsByTitle(List<T> bugs) {
-        StringBuilder builder = new StringBuilder();
-        builder.append(FormattingHelpers.pad("TASKS",19,'-')).append("\n");
-        bugs.stream().forEach(t-> builder.append(
-                        FormattingHelpers.pad(
-                                String.format("ID:%d TITLE:%s",
-                                        t.getId(),t.getTitle()),19,' '))
-                .append("\n"));
-        builder.append(FormattingHelpers.pad("",20,'-'));
-        return builder.toString().trim();
+    public String sortBugsByTitle(List<Bug> bugs) {
+        return FormattingHelpers.listingFormatted(bugs, BUGS_HEADER);
     }
 
     @Override
     public String sortBugsByPriority(List<Bug> bugs) {
-        StringBuilder builder = new StringBuilder();
-        builder.append(FormattingHelpers.pad("BUGS",19,'-')).append("\n");
-        bugs.stream().forEach(bug-> builder.append(
-                        FormattingHelpers.pad(
-                                String.format("ID:%d PRIORITY:%s",
-                                        bug.getId(),bug.getPriority()),19,' '))
-                .append("\n"));
-        builder.append(FormattingHelpers.pad("",20,'-'));
-        return builder.toString().trim();
+        return FormattingHelpers.listingFormatted(bugs, BUGS_HEADER);
     }
 
     @Override
     public String sortBugsBySeverity(List<Bug> bugs) {
-        StringBuilder builder = new StringBuilder();
-        builder.append(FormattingHelpers.pad("BUGS",19,'-')).append("\n");
-        bugs.stream().forEach(bug-> builder.append(
-                        FormattingHelpers.pad(
-                                String.format("ID:%d SEVERITY:%s",
-                                        bug.getId(),bug.getSeverity()),19,' '))
-                .append("\n"));
-        builder.append(FormattingHelpers.pad("",20,'-'));
-        return builder.toString().trim();
+        return FormattingHelpers.listingFormatted(bugs, BUGS_HEADER);
     }
 
     @Override

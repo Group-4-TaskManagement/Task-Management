@@ -79,6 +79,7 @@ public class FeedbackImpl extends TaskBase implements Feedback {
 
     @Override
     public String getAsString() {
-        return String.format("%s \n RATING:%d",super.getAsString(),getRating());
+        return String.format("%s" +
+                "RATING:%d\n",super.getAsString(),getRating());
     }
 }

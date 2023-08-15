@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FormattingHelpers {
+
     public static <T extends Printable> String showAll(List<T> elements, String typeName){
         StringBuilder builder = new StringBuilder();
         builder.append(FormattingHelpers.pad(typeName.toUpperCase(),19,'-')).append("\n");
