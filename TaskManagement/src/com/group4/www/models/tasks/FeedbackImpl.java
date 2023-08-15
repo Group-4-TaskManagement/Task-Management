@@ -77,5 +77,8 @@ public class FeedbackImpl extends TaskBase implements Feedback {
         this.statusFeedback=statusFeedback;
     }
 
-
+    @Override
+    public String getAsString() {
+        return String.format("%s \n RATING:%d",super.getAsString(),getRating());
+    }
 }

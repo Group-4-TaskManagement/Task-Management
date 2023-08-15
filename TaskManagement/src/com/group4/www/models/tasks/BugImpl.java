@@ -100,6 +100,7 @@ public class BugImpl extends TaskBase implements Bug {
 
     @Override
     public String getAsString() {
-        return String.format("%s | PRIORITY:%s | SEVERITY:%s",super.getAsString(),getPriority(),getSeverity());
+        return String.format("%s | PRIORITY:%s | SEVERITY:%s",
+                super.getAsString(),getPriority(),getSeverity());
     }
 }
