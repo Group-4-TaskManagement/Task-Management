@@ -98,4 +98,8 @@ public class BugImpl extends TaskBase implements Bug {
         //TODO command to show the steps?
     }
 
+    @Override
+    public String getAsString() {
+        return String.format("%s | PRIORITY:%s | SEVERITY:%s",super.getAsString(),getPriority(),getSeverity());
+    }
 }

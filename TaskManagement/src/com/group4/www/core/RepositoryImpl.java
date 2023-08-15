@@ -115,24 +115,24 @@ public class RepositoryImpl implements Repository {
 
     @Override
     public String showAllMembers() {
-        return showAll(members,"members");
+        return FormattingHelpers.showAll(members,"members");
     }
 
     @Override
     public String showPersonActivity(String memberName) {
         Member member = findMember(memberName);
-        return showAll(member.getActivityHistory(),"activity");
+        return FormattingHelpers.showAll(member.getActivityHistory(),"activity");
     }
 
     @Override
     public String showAllTeams() {
-        return showAll(teams,"teams");
+        return FormattingHelpers.showAll(teams,"teams");
     }
 
     @Override
     public String showTeamActivity(String teamName) {
        Team team = findTeam(teamName);
-       return showAll(team.getTeamActivity(),"activity");
+       return FormattingHelpers.showAll(team.getTeamActivity(),"activity");
     }
 
 
@@ -146,19 +146,19 @@ public class RepositoryImpl implements Repository {
     @Override
     public String showAllTeamMembers(String teamName) {
         Team team=findTeam(teamName);
-        return showAll(team.getMembers(),"members");
+        return FormattingHelpers.showAll(team.getMembers(),"members");
     }
 
     @Override
     public String showAllTeamBoards(String teamName) {
         Team team=findTeam(teamName);
-        return showAll(team.getBoards(),"boards");
+        return FormattingHelpers.showAll(team.getBoards(),"boards");
     }
 
     @Override
     public String showBoardActivity(String boardName) {
         Board board = findBoard(boardName);
-        return showAll(board.getHistory(),"activity");
+        return FormattingHelpers.showAll(board.getHistory(),"activity");
     }
 
     @Override
@@ -328,13 +328,7 @@ public class RepositoryImpl implements Repository {
 
     @Override
     public String sortTasksByTitle(List<Task> tasks) {
-        StringBuilder builder = new StringBuilder();
-        builder.append(FormattingHelpers.pad("TASKS",19,'-')).append("\n");
-        tasks.stream().forEach(task-> builder.append(
-                        FormattingHelpers.pad(String.format("ID:%d Title: %s",task.getId(),task.getTitle()),19,' '))
-                .append("\n"));
-        builder.append(FormattingHelpers.pad("",20,'-'));
-        return builder.toString().trim();
+        return FormattingHelpers.listingFormatted(tasks,"TASK");
     }
 
     @Override
@@ -511,19 +505,5 @@ public class RepositoryImpl implements Repository {
                 "Feedback status changed to %s!\n",feedback.getStatus());
     }
 
-    public <T extends Printable> String showAll(List<T> elements, String typeName){
-        StringBuilder builder = new StringBuilder();
-        builder.append(FormattingHelpers.pad(typeName.toUpperCase(),19,'-')).append("\n");
-        if(elements.size()==0){
-            builder.append(String.format("There are no %s added yet.\n",typeName));
-            builder.append(FormattingHelpers.pad("",19,'-')).append("\n");
-            return builder.toString();
-        }
-        for(T element: elements){
-            builder.append(FormattingHelpers.pad(element.getAsString(),19, ' '));
-            builder.append("\n");
-        }
-        builder.append(FormattingHelpers.pad("",19,'-'));
-        return builder.toString();
-    }
+
 }

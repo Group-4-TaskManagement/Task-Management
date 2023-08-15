@@ -99,7 +99,10 @@ abstract class TaskBase implements Task {
 
     @Override
     public String getAsString() {
-        return String.format("%s",getTitle());
+        if(getAssignee()==null){
+            return String.format("ID:%d | TITLE:%s | ASSIGNEE:Not Assigned yet | STATUS:%s ",getId(),getTitle(),getStatus());
+        }
+        return String.format("ID:%d | TITLE:%s | ASSIGNEE:%s | STATUS:%s ",getId(),getTitle(),getAssignee().getAsString(),getStatus());
     }
 
 }
