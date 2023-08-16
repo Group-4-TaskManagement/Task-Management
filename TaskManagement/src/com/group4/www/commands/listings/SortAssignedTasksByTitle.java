@@ -20,10 +20,8 @@ public class SortAssignedTasksByTitle implements Command {
     public String execute(List<String> parameters) {
         ValidationHelpers.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
 
-        List<Task> tasks = ListingHelper.listOfTasksWithAssignee(repository.getBugs(),
-                repository.getStories(),
-                repository.getFeedbacks());
+        List<Task> tasks = ListingHelper.listOfTasksWithAssignee(repository.getTasks());
 
-        return repository.sortAssignedTaskByTitle(ListingHelper.sortByTitle(tasks));
+        return repository.listTasksByGivenCondition(ListingHelper.sortByTitle(tasks));
     }
 }

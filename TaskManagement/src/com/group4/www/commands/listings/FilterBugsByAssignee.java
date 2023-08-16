@@ -22,7 +22,7 @@ public class FilterBugsByAssignee implements Command {
 
         parseParameters(parameters);
 
-        return repository.filterBugsByAssignee(ListingHelper.filterByAssignee(repository.getBugs(),member.getName()));
+        return repository.listBugsByGivenCondition(ListingHelper.filterByAssignee(repository.getBugs(),member.getName()));
     }
 
     private void parseParameters(List<String> parameters){

@@ -1,20 +1,18 @@
 package com.group4.www.models.utils;
 
+import com.group4.www.models.enums.Priority;
 import com.group4.www.models.tasks.contracts.Bug;
 import com.group4.www.models.tasks.contracts.Feedback;
 import com.group4.www.models.tasks.contracts.Story;
 import com.group4.www.models.tasks.contracts.Task;
 
+import javax.swing.text.html.Option;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class ListingHelper {
 
-    public static List<Task> mergeToTasks(List<Bug> bugs, List<Story> stories, List<Feedback> feedbacks) {
-        List<Task> task = Stream.of(bugs, stories).flatMap(Collection::stream).collect(Collectors.toList());
-        return Stream.of(task, feedbacks).flatMap(Collection::stream).collect(Collectors.toList());
-    }
 
     public static List<Task> filterByTitle(List<Task> tasks, String title) {
         return tasks.stream().filter(task -> task.getTitle().equals(title)).collect(Collectors.toList());
@@ -24,20 +22,6 @@ public class ListingHelper {
         return tasks.stream().sorted(Comparator.comparing(Task::getTitle)).collect(Collectors.toList());
     }
 
-    public static List<Task> listOfTasksWithAssignee(List<Bug> bugs, List<Story> stories, List<Feedback> feedbacks) {
-        List<Task> tasks = mergeToTasks(bugs, stories, feedbacks);
-        List<Task> result = new ArrayList<>();
-        int i = 0;
-        try {
-            for (; i < tasks.size(); i++) {
-                if (tasks.get(i).getAssignee().getName() != null) {
-                    result.add(tasks.get(i));
-                }
-            }
-        } catch (NullPointerException ig) {}
-
-        return result;
-    }
 
     public static <T extends Task> List<T> filterByStatus(List<T> tasks, String status) {
         return tasks.stream().filter(e -> e.getStatus().equalsIgnoreCase(status)).collect(Collectors.toList());
@@ -56,16 +40,7 @@ public class ListingHelper {
     }
 
     public static <T extends Task> List<T> listOfTasksWithAssignee(List<T> tasks) {
-        List<T> result = new ArrayList<>();
-        int i = 0;
-        try {
-            for (; i < tasks.size(); i++) {
-                if (tasks.get(i).getAssignee().getName() != null) {
-                    result.add(tasks.get(i));
-                }
-            }
-        } catch (NullPointerException ig) {}
-        return result;
+        return tasks.stream().filter(t -> t.getAssignee()!=null).collect(Collectors.toList());
     }
 
     public static List<Bug> sortBugsByPriority(List<Bug> bugs){

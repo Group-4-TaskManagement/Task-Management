@@ -18,10 +18,7 @@ public class FilterTasksByTitle implements Command {
     public String execute(List<String> parameters) {
         ValidationHelpers.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
 
-        List<Task> tasks = ListingHelper.mergeToTasks(repository.getBugs(),
-                repository.getStories(),
-                repository.getFeedbacks());
 
-        return repository.filterTasksByTitle(ListingHelper.filterByTitle(tasks,parameters.get(0)));
+        return repository.listTasksByGivenCondition(ListingHelper.filterByTitle(repository.getTasks(),parameters.get(0)));
     }
 }

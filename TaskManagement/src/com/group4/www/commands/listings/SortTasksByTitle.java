@@ -20,10 +20,7 @@ public class SortTasksByTitle implements Command {
     public String execute(List<String> parameters) {
         ValidationHelpers.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
 
-        List<Task> tasks = ListingHelper.mergeToTasks(repository.getBugs(),
-                repository.getStories(),
-                repository.getFeedbacks());
 
-        return repository.sortTasksByTitle(ListingHelper.sortByTitle(tasks));
+        return repository.listTasksByGivenCondition(ListingHelper.sortByTitle(repository.getTasks()));
     }
 }

@@ -5,24 +5,19 @@ import com.group4.www.models.contracts.Identifiable;
 
 import java.util.Objects;
 
-public class CommentImpl implements Comment, Identifiable {
+public class CommentImpl implements Comment {
 
-    private int id;
     private String author;
     private String message;
 
 
-    public CommentImpl(int id,String author, String message) {
-        //TODO check if author is a member
-        this.id = id;
+    public CommentImpl(String author, String message) {
         this.author = author;
         this.message = message;
     }
 
 
     private void setAuthor(String author) {
-
-        // TODO проверка за съществуващ автор в репозиторито;
         this.author = author;
     }
 
@@ -32,10 +27,6 @@ public class CommentImpl implements Comment, Identifiable {
 
     public String getMessage() {
         return message;
-    }
-    @Override
-    public int getId() {
-        return id;
     }
 
     @Override

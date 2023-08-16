@@ -18,6 +18,7 @@ import com.group4.www.models.utils.FormattingHelpers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class RepositoryImpl implements Repository {
     private static final String MEMBER_NOT_EXIST = "A member with name %s does not exist";
@@ -25,7 +26,7 @@ public class RepositoryImpl implements Repository {
     private static final String TEAM_NOT_EXIST = "This team does not exist";
     public static final String TASK_ADDED_TO_MEMBER = "Task with ID:%d has been added to %s's task list";
     public static final String TASK_REMOVED_TO_MEMBER = "Task with ID:%d has been removed from %s's task list";
-    public static final String COMMENT_ADDED_TO_TASK = "A comment with id %d has been added to the task with id %d";
+    public static final String COMMENT_ADDED_TO_TASK = "A comment has been added to the task with id %d";
     public static final String TASKS_HEADER = "TASKS";
     public static final String BUGS_HEADER = "BUGS";
     private static int Id;
@@ -35,12 +36,12 @@ public class RepositoryImpl implements Repository {
     private List<Bug> bugs = new ArrayList<>();
     private List<Story> stories = new ArrayList<>();
     private List<Feedback> feedbacks = new ArrayList<>();
-
+    private List<Task> tasks = new ArrayList<>();
     public RepositoryImpl(){ Id = 0;}
 
     @Override
     public Comment createComment(String author, String message) {
-        Comment comment = new CommentImpl(++Id,author,message);
+        Comment comment = new CommentImpl(author,message);
         return comment;
     }
 
@@ -86,6 +87,7 @@ public class RepositoryImpl implements Repository {
         Board board = findBoard(boardName);
         board.addTask(bug);
         this.bugs.add(bug);
+        this.tasks.add(bug);
         return bug;
     }
 
@@ -95,6 +97,7 @@ public class RepositoryImpl implements Repository {
         Board board = findBoard(boardname);
         board.addTask(story);
         this.stories.add(story);
+        this.tasks.add(story);
         return story;
     }
 
@@ -104,6 +107,7 @@ public class RepositoryImpl implements Repository {
         Board board = findBoard(boardName);
         board.addTask(feedback);
         this.feedbacks.add(feedback);
+        this.tasks.add(feedback);
         return feedback;
     }
 
@@ -230,7 +234,7 @@ public class RepositoryImpl implements Repository {
         if(!addComment){
             throw new IllegalArgumentException(String.format("There is no task with ID:%d", taskID));
         }
-        return String.format(COMMENT_ADDED_TO_TASK,comment.getId(),taskID);
+        return String.format(COMMENT_ADDED_TO_TASK,taskID);
 
     }
 
@@ -255,11 +259,9 @@ public class RepositoryImpl implements Repository {
 
     @Override
     public Bug findBugByID(int id) {
-        for (Bug bug : bugs) {
-            if (bug.getId() == id)
-                return bug;
-        }
-        throw new IllegalArgumentException(String.format("There is no bug with ID:%d", id));
+        return bugs.stream()
+                .filter(bug -> bug.getId()==id)
+                .findAny().orElseThrow(()-> new IllegalArgumentException(String.format("There is no bug with ID:%d", id)));
     }
 
     @Override
@@ -297,83 +299,26 @@ public class RepositoryImpl implements Repository {
 
     @Override
     public Board findBoard(String boardName) {
-        for (Board board : boards) {
-            if (board.getName().equals(boardName)) {
-                return board;
-            }
-
-        }
-        throw new IllegalArgumentException(BOARD_NOT_EXIST);
+        return boards.stream()
+                .filter(board->board.getName().equals(boardName))
+                .findAny().orElseThrow(()-> new IllegalArgumentException(BOARD_NOT_EXIST));
     }
 
     @Override
     public Team findTeam(String teamName) {
-        for (Team team : teams) {
-            if (team.getName().equals(teamName)) {
-                return team;
-            }
+        return teams.stream()
+                .filter(team -> team.getName().equals(teamName))
+                .findAny().orElseThrow(() -> new IllegalArgumentException(TEAM_NOT_EXIST));
 
-        }
-        throw new IllegalArgumentException(TEAM_NOT_EXIST);
     }
 
     @Override
-    public String filterTasksByTitle(List<Task> tasks) {
+    public String listTasksByGivenCondition(List<Task> tasks) {
         return FormattingHelpers.listingFormatted(tasks, TASKS_HEADER);
     }
 
     @Override
-    public String sortTasksByTitle(List<Task> tasks) {
-        return FormattingHelpers.listingFormatted(tasks, TASKS_HEADER);
-    }
-
-    @Override
-    public String filterTaskByStatus(List<Task> tasks) {
-        return FormattingHelpers.listingFormatted(tasks, TASKS_HEADER);
-    }
-
-    @Override
-    public String filterTaskByAssignee(List<Task> tasks) {
-        return FormattingHelpers.listingFormatted(tasks, TASKS_HEADER);
-    }
-
-    @Override
-    public String filterTaskByStatusAndAssignee(List<Task> tasks) {
-        return FormattingHelpers.listingFormatted(tasks, TASKS_HEADER);
-    }
-
-    @Override
-    public String sortAssignedTaskByTitle(List<Task> tasks) {
-        return FormattingHelpers.listingFormatted(tasks, TASKS_HEADER);
-    }
-
-    @Override
-    public String filterBugsByStatus(List<Bug> bugs) {
-        return FormattingHelpers.listingFormatted(bugs, BUGS_HEADER);
-    }
-
-    @Override
-    public String filterBugsByAssignee(List<Bug> bugs) {
-        return FormattingHelpers.listingFormatted(bugs, BUGS_HEADER);
-    }
-
-    @Override
-    public String filterBugsByStatusAndAssignee(List<Bug> bugs) {
-        return FormattingHelpers.listingFormatted(bugs, BUGS_HEADER);
-    }
-
-    @Override
-    public String sortBugsByTitle(List<Bug> bugs) {
-        return FormattingHelpers.listingFormatted(bugs, BUGS_HEADER);
-    }
-
-    @Override
-    public String sortBugsByPriority(List<Bug> bugs) {
-        return FormattingHelpers.listingFormatted(bugs, BUGS_HEADER);
-    }
-
-    @Override
-    public String sortBugsBySeverity(List<Bug> bugs) {
+    public String listBugsByGivenCondition(List<Bug> bugs) {
         return FormattingHelpers.listingFormatted(bugs, BUGS_HEADER);
     }
 
@@ -386,6 +331,9 @@ public class RepositoryImpl implements Repository {
     public List<Story> getStories() {
         return new ArrayList<>(stories);
     }
+
+    @Override
+    public List<Task> getTasks() {return new ArrayList<>(tasks);}
 
     @Override
     public List<Feedback> getFeedbacks() {

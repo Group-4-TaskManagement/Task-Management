@@ -24,7 +24,7 @@ public class FilterBugsByStatusAndAssignee implements Command {
 
         parseParameters(parameters);
 
-        return repository.filterBugsByStatusAndAssignee(ListingHelper.filterByStatusAndAssignee(
+        return repository.listBugsByGivenCondition(ListingHelper.filterByStatusAndAssignee(
                 repository.getBugs(),
                 parameters.get(0),
                 parameters.get(1)));

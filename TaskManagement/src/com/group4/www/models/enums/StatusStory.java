@@ -5,7 +5,7 @@ public enum StatusStory {
     IN_PROGRESS,
     DONE;
 
-    //TODO Override to string!
+
 
 
     @Override

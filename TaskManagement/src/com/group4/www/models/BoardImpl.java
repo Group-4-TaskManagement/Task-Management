@@ -24,7 +24,7 @@ public class BoardImpl implements Board {
         this.tasks = new ArrayList<>();
         this.history = new ArrayList<>();
     }
-    //TODO When task from board is assigned to member, the task should be removed from the board tasklist;
+
     public void setName(String name) {
         ValidationHelpers.validateIntRange(name.length(), MIN_BOARD_NAME, MAX_BOARD_NAME, NAME_LENGTH_ERROR);
         this.name = name;

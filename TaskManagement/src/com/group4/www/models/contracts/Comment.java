@@ -6,6 +6,4 @@ public interface Comment extends Printable{
 
     String getMessage();
 
-    int getId();
-
 }

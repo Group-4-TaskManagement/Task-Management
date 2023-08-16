@@ -68,34 +68,14 @@ public interface Repository {
 
     Team findTeam(String teamName);
 
-    String filterTasksByTitle(List<Task> tasks);
+    String listTasksByGivenCondition(List<Task> tasks);
 
-    String sortTasksByTitle(List<Task> tasks);
-
-    String filterTaskByStatus(List<Task> tasks);
-
-    String filterTaskByAssignee(List<Task> tasks);
-
-    String filterTaskByStatusAndAssignee(List<Task> tasks);
-
-    String sortAssignedTaskByTitle(List<Task> tasks);
-
-    String filterBugsByStatus(List<Bug> bugs);
-
-    String filterBugsByAssignee(List<Bug> bugs);
-
-    String filterBugsByStatusAndAssignee(List<Bug> bugs);
-
-    String sortBugsByTitle(List<Bug> bugs);
-
-    String sortBugsByPriority(List<Bug> bugs);
-
-    String sortBugsBySeverity(List<Bug> bugs);
+    String listBugsByGivenCondition(List<Bug> bugs);
 
     List<Bug> getBugs();
 
     List<Story> getStories();
-
+    List<Task> getTasks();
     List<Feedback> getFeedbacks();
     String changeFeedbackStatus(String command, int taskID);
 

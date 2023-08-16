@@ -19,6 +19,6 @@ public class SortBugsByPriority implements Command {
     public String execute(List<String> parameters) {
         ValidationHelpers.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
 
-        return repository.sortBugsByPriority(ListingHelper.sortBugsByPriority(repository.getBugs()));
+        return repository.listBugsByGivenCondition(ListingHelper.sortBugsByPriority(repository.getBugs()));
     }
 }

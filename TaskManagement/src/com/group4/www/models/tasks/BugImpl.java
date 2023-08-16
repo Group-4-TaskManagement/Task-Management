@@ -95,7 +95,6 @@ public class BugImpl extends TaskBase implements Bug {
         Scanner scn = new Scanner(System.in);
         String steps = scn.nextLine();
         this.steps = Arrays.asList(steps.split(";"));
-        //TODO command to show the steps?
     }
 
     @Override

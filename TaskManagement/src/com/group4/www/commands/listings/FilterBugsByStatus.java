@@ -23,9 +23,8 @@ public class FilterBugsByStatus implements Command {
         ValidationHelpers.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
         parseParameters(parameters);
 
-        return repository.filterBugsByStatus(ListingHelper.filterByStatus(repository.getBugs(),parameters.get(0)));
+        return repository.listBugsByGivenCondition(ListingHelper.filterByStatus(repository.getBugs(),parameters.get(0)));
     }
-
     private void parseParameters(List<String> parameters){
         status = ParsingHelpers.tryParseEnum(parameters.get(0), StatusBug.class, PARSING_BUG_STATUS_ERR);
     }

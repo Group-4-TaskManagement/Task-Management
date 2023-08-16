@@ -18,6 +18,6 @@ public class SortBugsByTitle implements Command {
     @Override
     public String execute(List<String> parameters) {
         ValidationHelpers.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
-        return repository.sortBugsByTitle(ListingHelper.sortByTitle(repository.getBugs()));
+        return repository.listBugsByGivenCondition(ListingHelper.sortByTitle(repository.getBugs()));
     }
 }

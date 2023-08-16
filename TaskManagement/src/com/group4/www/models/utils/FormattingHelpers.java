@@ -6,6 +6,7 @@ import com.group4.www.models.tasks.contracts.Task;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FormattingHelpers {
 
@@ -33,9 +34,10 @@ public class FormattingHelpers {
             builder.append(FormattingHelpers.pad("",20,'-'));
             return builder.toString().trim();
         }
-        tasks.stream().forEach(task-> builder.append(
-                        FormattingHelpers.pad(task.getAsString(),19,' '))
+        tasks.stream().forEach(task-> builder
+                .append(FormattingHelpers.pad(task.getAsString(),19,' '))
                 .append("\n"));
+                builder.deleteCharAt(builder.length()-1);
         builder.append(FormattingHelpers.pad("",20,'-'));
         return builder.toString().trim();
     }

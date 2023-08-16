@@ -19,6 +19,6 @@ public class SortBugsBySeverity implements Command {
     public String execute(List<String> parameters) {
         ValidationHelpers.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
 
-        return repository.sortBugsBySeverity(ListingHelper.sortBugsBySeverity(repository.getBugs()));
+        return repository.listBugsByGivenCondition(ListingHelper.sortBugsBySeverity(repository.getBugs()));
     }
 }
