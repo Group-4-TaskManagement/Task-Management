@@ -30,14 +30,18 @@ public class RepositoryImpl implements Repository {
     public static final String TASKS_HEADER = "TASKS";
     public static final String BUGS_HEADER = "BUGS";
     public static final String FEEDBACK_NOT_EXIST = "There is no feedback with ID:%d";
+    public static final String FIND_BUG_BY_ID_ERROR = "There is no bug with ID:%d";
+    public static final String BUG_NOT_EXIST = FIND_BUG_BY_ID_ERROR;
+    public static final String FIND_STORY_BY_ID_ERROR = "There is no story with ID:%d";
+    public static final String STORY_NOT_EXIST = FIND_STORY_BY_ID_ERROR;
     private static int Id;
-    private  List<Team> teams = new ArrayList<>();
-    private List<Member> members = new ArrayList<>();
-    private List<Board> boards = new ArrayList<>();
-    private List<Bug> bugs = new ArrayList<>();
-    private List<Story> stories = new ArrayList<>();
-    private List<Feedback> feedbacks = new ArrayList<>();
-    private List<Task> tasks = new ArrayList<>();
+    private final List<Team> teams = new ArrayList<>();
+    private final List<Member> members = new ArrayList<>();
+    private final List<Board> boards = new ArrayList<>();
+    private final List<Bug> bugs = new ArrayList<>();
+    private final List<Story> stories = new ArrayList<>();
+    private final List<Feedback> feedbacks = new ArrayList<>();
+    private final List<Task> tasks = new ArrayList<>();
     public RepositoryImpl(){ Id = 0;}
 
     @Override
@@ -262,18 +266,14 @@ public class RepositoryImpl implements Repository {
     public Bug findBugByID(int id) {
         return bugs.stream()
                 .filter(bug -> bug.getId()==id)
-                .findAny().orElseThrow(()-> new IllegalArgumentException(String.format("There is no bug with ID:%d", id)));
+                .findAny().orElseThrow(()-> new IllegalArgumentException(String.format(BUG_NOT_EXIST, id)));
     }
 
     @Override
     public Story findStoryByID(int id) {
-        for (Story story : stories) {
-            if (story.getId() == id)
-                return story;
-        }
-        throw new IllegalArgumentException(String.format("There is no story with ID:%d", id));
-
-
+       return stories.stream()
+               .filter(story -> story.getId()== story.getId())
+               .findAny().orElseThrow(()-> new IllegalArgumentException(String.format(STORY_NOT_EXIST, id)));
     }
 
     @Override
@@ -321,9 +321,6 @@ public class RepositoryImpl implements Repository {
     public String sortFeedbackByRating(List<Feedback> feedbacks){
         return FormattingHelpers.listingFormatted(feedbacks,"FEEDBACKS");
     }
-
-
-
 
     @Override
     public List<Bug> getBugs() {
