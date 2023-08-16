@@ -29,6 +29,7 @@ public class RepositoryImpl implements Repository {
     public static final String COMMENT_ADDED_TO_TASK = "A comment has been added to the task with id %d";
     public static final String TASKS_HEADER = "TASKS";
     public static final String BUGS_HEADER = "BUGS";
+    public static final String FEEDBACK_NOT_EXIST = "There is no feedback with ID:%d";
     private static int Id;
     private  List<Team> teams = new ArrayList<>();
     private List<Member> members = new ArrayList<>();
@@ -277,24 +278,16 @@ public class RepositoryImpl implements Repository {
 
     @Override
     public Feedback findFeedbackByID(int id) {
-        for (Feedback feedback : feedbacks) {
-            if (feedback.getId() == id) {
-                return feedback;
-            }
-        }
-        throw new IllegalArgumentException(String.format("There is no feedback with ID:%d", id));
+        return feedbacks.stream()
+                .filter(feedback -> feedback.getId()==id)
+                .findAny().orElseThrow(()->new IllegalArgumentException(String.format(FEEDBACK_NOT_EXIST, id)));
     }
 
     @Override
     public Member findMember(String memberName) {
-
-        for (Member member : members) {
-            if (member.getName().equals(memberName)) {
-                return member;
-            }
-
-        }
-        throw new IllegalArgumentException(String.format(MEMBER_NOT_EXIST, memberName));
+        return members.stream()
+                .filter(member->member.getName().equals(memberName))
+                .findAny().orElseThrow(()-> new IllegalArgumentException(MEMBER_NOT_EXIST));
     }
 
     @Override
@@ -321,6 +314,16 @@ public class RepositoryImpl implements Repository {
     public String listBugsByGivenCondition(List<Bug> bugs) {
         return FormattingHelpers.listingFormatted(bugs, BUGS_HEADER);
     }
+
+    public String sortFeedbackByTitle(List<Feedback> feedbacks){
+        return FormattingHelpers.listingFormatted(feedbacks,"FEEDBACKS");
+    }
+    public String sortFeedbackByRating(List<Feedback> feedbacks){
+        return FormattingHelpers.listingFormatted(feedbacks,"FEEDBACKS");
+    }
+
+
+
 
     @Override
     public List<Bug> getBugs() {
