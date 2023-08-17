@@ -1,9 +1,8 @@
 package com.group4.www.models.tasks.contracts;
 
-import com.group4.www.models.contracts.Comment;
-import com.group4.www.models.contracts.Identifiable;
-import com.group4.www.models.contracts.Member;
-import com.group4.www.models.contracts.Printable;
+import com.group4.www.models.contracts.*;
+
+import java.util.List;
 
 public interface Task extends Identifiable, Printable {
     String getTitle();
@@ -21,5 +20,7 @@ public interface Task extends Identifiable, Printable {
     void addAssignee(Member member);
 
     String getStatus();
+
+    public List<EventLog> getTaskActivity();
 
 }

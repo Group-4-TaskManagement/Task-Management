@@ -17,12 +17,12 @@ public class BoardImpl implements Board {
     public static final String TASK_REMOVED_FROM_BOARD_MESS = "Task with ID:%d was removed from board %s";
     private String name;
     private final List<Task> tasks;
-    private final List<EventLog> history;
+    private final List<EventLog> boardActivity;
 
     public BoardImpl(String name) {
         setName(name);
         this.tasks = new ArrayList<>();
-        this.history = new ArrayList<>();
+        this.boardActivity = new ArrayList<>();
     }
 
     public void setName(String name) {
@@ -47,7 +47,7 @@ public class BoardImpl implements Board {
     }
     @Override
     public void logEvent(String event) {
-        history.add(new EventLogImpl(event));
+        boardActivity.add(new EventLogImpl(event));
     }
 
     @Override
@@ -59,8 +59,8 @@ public class BoardImpl implements Board {
         return new ArrayList<>(tasks);
     }
     @Override
-    public List<EventLog> getHistory() {
-        return new ArrayList<>(history);
+    public List<EventLog> getBoardActivity() {
+        return new ArrayList<>(boardActivity);
     }
 
     @Override

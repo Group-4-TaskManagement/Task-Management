@@ -1,5 +1,6 @@
 package com.group4.www.models.tasks;
 
+import com.group4.www.models.contracts.EventLog;
 import com.group4.www.models.tasks.contracts.Bug;
 import com.group4.www.models.contracts.Member;
 import com.group4.www.models.enums.Priority;
@@ -24,7 +25,6 @@ public class BugImpl extends TaskBase implements Bug {
     private Priority priority;
     private SeverityBug severity;
     private StatusBug status;
-
 
 
     public BugImpl(int id,String title, String description,Priority priority, SeverityBug severity) {
@@ -52,12 +52,17 @@ public class BugImpl extends TaskBase implements Bug {
     }
 
     @Override
+    public List<EventLog> getTaskActivity() {
+        return super.getTaskActivity();
+    }
+
+    @Override
     public void setStatus(StatusBug statusBug) {
         if(statusBug==status) {
             throw new IllegalArgumentException(String.format(BUG_CHANGE_STATUS_ERR, getStatus()));
         }else {
             System.out.printf(BUG_CHANGE_STATUS_MESS,getId(), getStatus(), statusBug);
-            addLogChanges(String.format(BUG_CHANGE_STATUS_MESS,getId(),getStatus(),statusBug));
+            super.addLogChanges(String.format(BUG_CHANGE_STATUS_MESS,getId(),getStatus(),statusBug));
             this.status = statusBug;
         }
     }
@@ -68,7 +73,7 @@ public class BugImpl extends TaskBase implements Bug {
             throw new IllegalArgumentException(String.format(BUG_CHANGE_PRIORITY_ERR, getPriority()));
         }else {
             System.out.printf(BUG_CHANGE_PRIORITY_MESS,getId(), getPriority(), priorityBug);
-            addLogChanges(String.format(BUG_CHANGE_PRIORITY_MESS,getId(),getPriority(),priorityBug));
+            super.addLogChanges(String.format(BUG_CHANGE_PRIORITY_MESS,getId(),getPriority(),priorityBug));
             this.priority = priorityBug;
         }
     }

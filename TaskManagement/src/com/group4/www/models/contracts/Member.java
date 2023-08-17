@@ -10,7 +10,7 @@ public interface Member extends Printable {
 
     List<Task> getTasks();
 
-    List<EventLog> getActivityHistory();
+    List<EventLog> getMemberActivity();
 
     void addTask(Task task);
 

@@ -43,6 +43,8 @@ public interface Repository {
 
     String showBoardActivity(String boardName);
 
+    String showTaskActivity(int id);
+
     void changeFeedbackRating(int newRating, int taskID);
 
     String assignTaskToMember(int taskID, String memberName);
@@ -62,6 +64,8 @@ public interface Repository {
 
     Feedback findFeedbackByID(int id);
 
+    Task findTaskByID(int id);
+
     Member findMember(String memberName);
 
     Board findBoard(String boardName);
@@ -75,8 +79,11 @@ public interface Repository {
     List<Bug> getBugs();
 
     List<Story> getStories();
+
     List<Task> getTasks();
+
     List<Feedback> getFeedbacks();
+
     String changeFeedbackStatus(String command, int taskID);
 
     //TODO SHow history of given task;

@@ -2,6 +2,7 @@ package com.group4.www.models;
 
 import com.group4.www.models.contracts.Comment;
 import com.group4.www.models.contracts.Identifiable;
+import com.group4.www.models.contracts.Member;
 
 import java.util.Objects;
 
@@ -16,10 +17,6 @@ public class CommentImpl implements Comment {
         this.message = message;
     }
 
-
-    private void setAuthor(String author) {
-        this.author = author;
-    }
 
     public String getAuthor() {
         return author;

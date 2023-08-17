@@ -7,7 +7,6 @@ import com.group4.www.models.utils.ValidationHelpers;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class MemberImpl implements Member {
     public static final int NAME_MIN_LENGTH = 5;
@@ -26,12 +25,12 @@ public class MemberImpl implements Member {
 
     private String name;
     private final List<Task> tasks;
-    private final List<EventLog> activityHistory;
+    private final List<EventLog> memberActivity;
 
     public MemberImpl(String name) {
         setName(name);
         this.tasks = new ArrayList<>();
-        this.activityHistory = new ArrayList<>();
+        this.memberActivity = new ArrayList<>();
     }
 
 
@@ -70,7 +69,7 @@ public class MemberImpl implements Member {
 
     public void addActivityHistory(String massage){
         EventLog eventLog = new EventLogImpl(massage);
-        activityHistory.add(eventLog);
+        memberActivity.add(eventLog);
 
 
 
@@ -88,8 +87,8 @@ public class MemberImpl implements Member {
     }
 
     @Override
-    public List<EventLog> getActivityHistory() {
-        return new ArrayList<>(activityHistory);
+    public List<EventLog> getMemberActivity() {
+        return new ArrayList<>(memberActivity);
     }
 
     @Override

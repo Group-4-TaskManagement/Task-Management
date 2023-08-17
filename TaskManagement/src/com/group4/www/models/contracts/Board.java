@@ -16,5 +16,5 @@ public interface Board extends Printable{
 
     public List<Task> getTasks();
 
-    public List<EventLog> getHistory();
+    public List<EventLog> getBoardActivity();
 }

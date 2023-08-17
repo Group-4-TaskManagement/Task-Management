@@ -94,6 +94,8 @@ public class CommandFactoryImpl implements CommandFactory {
                 return new SortBugsByPriority(repository);
             case SORTBUGSBYSEVERITY:
                 return new SortBugsBySeverity(repository);
+            case SHOWTASKACTIVITY:
+                return new ShowTaskActivity(repository);
             default: throw new IllegalArgumentException(String.format(INVALID_COMMAND,commandTypeAsString));
         }
     }

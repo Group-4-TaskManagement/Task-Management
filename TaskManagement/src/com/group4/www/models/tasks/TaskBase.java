@@ -19,7 +19,7 @@ abstract class TaskBase implements Task {
             String.format("Description must be between %d and %d symbols", DESCR_MIN_LENGTH, DESCR_MAX_LENGTH);
 
     private static final String COMMENT_NOT_EXIST = "Comment does not exist";
-    private static final String COMMENT_ADD = "The comment was added";
+    private static final String COMMENT_ADD = "A comment was added: \"%s\"";
     private static final String COMMENT_REMOVE = "The comment was removed";
 
 
@@ -29,14 +29,14 @@ abstract class TaskBase implements Task {
     private String description;
     private Member assignee;
     private final List<Comment> comments;
-    private final List<EventLog> logChanges;
+    private final List<EventLog> taskActivity;
 
     public TaskBase(int id,String title, String description) {
         this.id = id;
         setTitle(title);
         setDescription(description);
         this.comments = new ArrayList<>();
-        this.logChanges = new ArrayList<>();
+        this.taskActivity = new ArrayList<>();
     }
 
     private void setTitle(String title) {
@@ -52,7 +52,7 @@ abstract class TaskBase implements Task {
 
     public void addComment(Comment comment){
         comments.add(comment);
-        addLogChanges(COMMENT_ADD);
+        addLogChanges(String.format(COMMENT_ADD,comment.getMessage()));
     }
 
 
@@ -69,7 +69,7 @@ abstract class TaskBase implements Task {
 
     public void addLogChanges(String message){
         EventLog eventLog = new EventLogImpl(message);
-        logChanges.add(eventLog);
+        taskActivity.add(eventLog);
     }
 
     @Override
@@ -98,6 +98,11 @@ abstract class TaskBase implements Task {
     }
 
     @Override
+    public List<EventLog> getTaskActivity() {
+        return new ArrayList<>(taskActivity);
+    }
+
+    @Override
     public String getAsString() {
         if(getAssignee()==null){
             return String.format("ID:%d\n" +
@@ -110,6 +115,8 @@ abstract class TaskBase implements Task {
                 "ASSIGNEE:%s\n" +
                 "STATUS:%s\n",getId(),getTitle(),getAssignee().getAsString(),getStatus());
     }
+
+
 
 }
 

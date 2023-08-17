@@ -18,7 +18,6 @@ import com.group4.www.models.utils.FormattingHelpers;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class RepositoryImpl implements Repository {
     private static final String MEMBER_NOT_EXIST = "A member with name %s does not exist";
@@ -26,7 +25,7 @@ public class RepositoryImpl implements Repository {
     private static final String TEAM_NOT_EXIST = "This team does not exist";
     public static final String TASK_ADDED_TO_MEMBER = "Task with ID:%d has been added to %s's task list";
     public static final String TASK_REMOVED_TO_MEMBER = "Task with ID:%d has been removed from %s's task list";
-    public static final String COMMENT_ADDED_TO_TASK = "A comment has been added to the task with id %d";
+    public static final String COMMENT_ADDED_TO_TASK = "A comment has been added to the task with ID:%d";
     public static final String TASKS_HEADER = "TASKS";
     public static final String BUGS_HEADER = "BUGS";
     public static final String FEEDBACK_NOT_EXIST = "There is no feedback with ID:%d";
@@ -34,6 +33,7 @@ public class RepositoryImpl implements Repository {
     public static final String BUG_NOT_EXIST = FIND_BUG_BY_ID_ERROR;
     public static final String FIND_STORY_BY_ID_ERROR = "There is no story with ID:%d";
     public static final String STORY_NOT_EXIST = FIND_STORY_BY_ID_ERROR;
+    public static final String TASK_NOT_EXIST = "There is no task with ID:%d";
     private static int Id;
     private final List<Team> teams = new ArrayList<>();
     private final List<Member> members = new ArrayList<>();
@@ -57,6 +57,7 @@ public class RepositoryImpl implements Repository {
             if(b.getName().equals(name)){
                 throw new IllegalArgumentException("Member with this name, already exist.");
             }
+            //TODO STREAM
         }
         this.members.add(member);
         return member;
@@ -68,6 +69,7 @@ public class RepositoryImpl implements Repository {
             if(b.getName().equals(name)){
                 throw new IllegalArgumentException("Team with this name, already exist.");
             }
+            //TODO Stream
         }
         Team team=new TeamImpl(name);
         this.teams.add(team);
@@ -80,6 +82,7 @@ public class RepositoryImpl implements Repository {
             if(b.getName().equals(name)){
                 throw new IllegalArgumentException("Board with this name, already exist.");
             }
+            //TODO Stream
         }
         Board board = new BoardImpl(name);
         this.boards.add(board);
@@ -132,7 +135,7 @@ public class RepositoryImpl implements Repository {
     @Override
     public String showPersonActivity(String memberName) {
         Member member = findMember(memberName);
-        return FormattingHelpers.showAll(member.getActivityHistory(),"activity");
+        return FormattingHelpers.showAll(member.getMemberActivity(),"activity");
     }
 
     @Override
@@ -169,7 +172,13 @@ public class RepositoryImpl implements Repository {
     @Override
     public String showBoardActivity(String boardName) {
         Board board = findBoard(boardName);
-        return FormattingHelpers.showAll(board.getHistory(),"activity");
+        return FormattingHelpers.showAll(board.getBoardActivity(),"activity");
+    }
+
+    @Override
+    public String showTaskActivity(int id) {
+        Task task = findTaskByID(id);
+        return FormattingHelpers.showAll(task.getTaskActivity(),"activity");
     }
 
     @Override
@@ -200,7 +209,7 @@ public class RepositoryImpl implements Repository {
                 b.addAssignee(member);
             }
         }
-
+        //TODO only 1 stream for Task
         return String.format(TASK_ADDED_TO_MEMBER, taskID,memberName);
 
     }
@@ -235,9 +244,9 @@ public class RepositoryImpl implements Repository {
                 addComment = true;
             }
         }
-
+        //TODO only 1 stream for Task
         if(!addComment){
-            throw new IllegalArgumentException(String.format("There is no task with ID:%d", taskID));
+            throw new IllegalArgumentException(String.format(TASK_NOT_EXIST, taskID));
         }
         return String.format(COMMENT_ADDED_TO_TASK,taskID);
 
@@ -284,10 +293,17 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
+    public Task findTaskByID(int id) {
+        return tasks.stream()
+                .filter(task -> task.getId()==id)
+                .findAny().orElseThrow(() -> new IllegalArgumentException(String.format(TASK_NOT_EXIST, id)));
+    }
+
+    @Override
     public Member findMember(String memberName) {
         return members.stream()
                 .filter(member->member.getName().equals(memberName))
-                .findAny().orElseThrow(()-> new IllegalArgumentException(MEMBER_NOT_EXIST));
+                .findAny().orElseThrow(()-> new IllegalArgumentException(String.format(MEMBER_NOT_EXIST,memberName)));
     }
 
     @Override
