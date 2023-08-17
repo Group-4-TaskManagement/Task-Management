@@ -1,0 +1,2 @@
+public class TaskBaseTest {
+}
