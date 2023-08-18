@@ -56,8 +56,7 @@ public class CommandFactoryImpl implements CommandFactory {
                 return new UnAssignTaskToMember(repository);
             case ADDCOMMENTTOTASK:
                 return new AddCommentToTask(repository);
-            case CHANGEBUGSTATUS:
-                return new ChangeBugStatus(repository);
+
             case CHANGEBUGPRIORITY:
                 return new ChangeBugPriority(repository);
             case CHANGEBUGSEVERITY:
@@ -68,8 +67,7 @@ public class CommandFactoryImpl implements CommandFactory {
                 return new ChangeStoryPriority(repository);
             case CHANGESTORYSIZE:
                 return new ChangeStorySize(repository);
-            case CHANGEFEEDBACKSTATUS:
-                return new ChangeFeedbackStatus(repository);
+
             case FILTERTASKSBYTITLE:
                 return new FilterTasksByTitle(repository);
             case SORTTASKSBYTITLE:
@@ -114,6 +112,9 @@ public class CommandFactoryImpl implements CommandFactory {
                 return new FilterFeedbacksByStatus(repository);
             case SORTFEEDBACKBYRATING:
                 return  new SortFeedbackByRating(repository);
+
+            case CHANGESTATUS:
+                return new ChangeStatus(repository);
             default: throw new IllegalArgumentException(String.format(INVALID_COMMAND,commandTypeAsString));
         }
     }

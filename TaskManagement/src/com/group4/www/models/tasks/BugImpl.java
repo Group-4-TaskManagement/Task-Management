@@ -1,11 +1,13 @@
 package com.group4.www.models.tasks;
 
 import com.group4.www.models.contracts.EventLog;
+import com.group4.www.models.enums.StatusStory;
 import com.group4.www.models.tasks.contracts.Bug;
 import com.group4.www.models.contracts.Member;
 import com.group4.www.models.enums.Priority;
 import com.group4.www.models.enums.SeverityBug;
 import com.group4.www.models.enums.StatusBug;
+import com.group4.www.models.utils.ParsingHelpers;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,6 +19,7 @@ public class BugImpl extends TaskBase implements Bug {
     public static final String BUG_CHANGE_PRIORITY_MESS = "The priority of bug with ID:%d was changed from %s to %s.";
     public static final String BUG_CHANGE_STATUS_ERR = "Can not change the status of the bug. It is already at %s.";
     public static final String BUG_CHANGE_STATUS_MESS = "The status of bug with ID:%d was changed from %s to %s.";
+    public static final String BUG_PARSE_ERROR = "Status of bug can be Active or Fixed!";
     public static final String BUG_CHANGE_PRIORITY_ERR = "Can not change the priority of the bug. It is already at %s.";
     public static final String BUG_CHANGE_SEVERITY_ERR = "Can not change the severity of the bug. It is already at %s.";
     public static final String BUG_CHANGE_SEVERITY_MESS = "The severity of bug with ID:%d was changed from %s to %s. ";
@@ -52,12 +55,8 @@ public class BugImpl extends TaskBase implements Bug {
     }
 
     @Override
-    public List<EventLog> getTaskActivity() {
-        return super.getTaskActivity();
-    }
-
-    @Override
-    public void setStatus(StatusBug statusBug) {
+    public void changeStatus( String statusChange) {
+        StatusBug statusBug = ParsingHelpers.tryParseEnum(statusChange,StatusBug.class,BUG_PARSE_ERROR);
         if(statusBug==status) {
             throw new IllegalArgumentException(String.format(BUG_CHANGE_STATUS_ERR, getStatus()));
         }else {
@@ -65,7 +64,15 @@ public class BugImpl extends TaskBase implements Bug {
             super.addLogChanges(String.format(BUG_CHANGE_STATUS_MESS,getId(),getStatus(),statusBug));
             this.status = statusBug;
         }
+
     }
+
+    @Override
+    public List<EventLog> getTaskActivity() {
+        return super.getTaskActivity();
+    }
+
+
 
     @Override
     public void setPriority(Priority priorityBug) {

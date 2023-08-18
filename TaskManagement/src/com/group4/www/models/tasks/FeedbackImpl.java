@@ -38,8 +38,10 @@ public class FeedbackImpl extends TaskBase implements Feedback {
     }
 
 
+
+
     @Override
-    public void changeFeedbackStatus(String status, String command) {
+    public void changeStatus(String command) {
         switch (command) {
             case "New":
                 print(command);

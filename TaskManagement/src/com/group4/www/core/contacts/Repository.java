@@ -54,7 +54,8 @@ public interface Repository {
 
     String addCommentToTask(Comment comment, int taskID);
 
-    void changeBugStatus(int id, StatusBug statusBug);
+
+    void changeStatus(int id, String status);
 
     void changeBugPriority(int id, Priority priorityBug);
 
@@ -96,7 +97,7 @@ public interface Repository {
 
     List<Feedback> getFeedbacks();
 
-    void changeFeedbackStatus(int id, String command);
+
 
     //TODO SHow history of given task;
 }

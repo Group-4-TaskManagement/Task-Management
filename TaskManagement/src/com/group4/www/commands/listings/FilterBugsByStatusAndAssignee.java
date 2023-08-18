@@ -1,6 +1,7 @@
 package com.group4.www.commands.listings;
 
 import com.group4.www.commands.contracts.Command;
+import com.group4.www.models.utils.FormattingHelpers;
 import com.group4.www.models.utils.ListingHelper;
 import com.group4.www.core.contacts.Repository;
 import com.group4.www.models.enums.StatusBug;
@@ -12,6 +13,7 @@ import java.util.List;
 public class FilterBugsByStatusAndAssignee implements Command {
 
     public static final int EXPECTED_NUMBER_OF_ARGUMENTS = 2;
+    public static final String BUGS_HEADER = "BUGS";
     private final Repository repository;
 
     private StatusBug statusBug;
@@ -24,10 +26,11 @@ public class FilterBugsByStatusAndAssignee implements Command {
 
         parseParameters(parameters);
 
-        return repository.listBugsByGivenCondition(ListingHelper.filterByStatusAndAssignee(
-                repository.getBugs(),
-                parameters.get(0),
-                parameters.get(1)));
+
+      return   FormattingHelpers.listingFormatted( ListingHelper.filterByStatusAndAssignee(
+              repository.getBugs(),
+              parameters.get(0),
+              parameters.get(1)), BUGS_HEADER);
     }
 
     private void parseParameters(List<String> parameters){

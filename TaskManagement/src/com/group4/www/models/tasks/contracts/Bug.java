@@ -13,7 +13,7 @@ public interface Bug extends Task {
 
     public SeverityBug getSeverity();
 
-    void setStatus(StatusBug statusBug);
+
 
     void setPriority(Priority priorityBug);
 

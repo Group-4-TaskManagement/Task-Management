@@ -5,6 +5,8 @@ import com.group4.www.models.enums.Priority;
 import com.group4.www.models.enums.SizeStory;
 import com.group4.www.models.enums.StatusStory;
 import com.group4.www.models.tasks.contracts.Story;
+import com.group4.www.models.utils.ParsingHelpers;
+import com.group4.www.models.utils.ValidationHelpers;
 
 public class StoryImpl extends TaskBase implements Story {
 
@@ -15,6 +17,7 @@ public class StoryImpl extends TaskBase implements Story {
 
     public static final String STATUS_CHANGE = "The status of story with ID:%d was changed from %s to %s.";
     public static final String STATUS_ERROR = "The status of the story can not be changed, it is already at %s!";
+    public static final String STATUS_PARSE_ERROR = "Status of bug can be Not_Done, Done or InProgress!";
 
     public static final String SIZE_CHANGE =
             "The size of story with ID:%d was changed from %s to %s.";
@@ -43,6 +46,22 @@ public class StoryImpl extends TaskBase implements Story {
     public String getStatus() {
         return status.toString();
     }
+
+    @Override
+    public void changeStatus(String statusChange) {
+        StatusStory statusStory = ParsingHelpers.tryParseEnum(statusChange,StatusStory.class,STATUS_PARSE_ERROR);
+
+        if(statusStory==status) {
+            throw new IllegalArgumentException(String.format(STATUS_ERROR, getStatus()));
+        }else {
+
+
+            super.addLogChanges(String.format(STATUS_CHANGE,getId(),getStatus(),statusStory));
+            this.status = statusStory;
+        }
+
+    }
+
     @Override
     public SizeStory getSize() {
         return size;

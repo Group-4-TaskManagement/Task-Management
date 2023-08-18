@@ -9,7 +9,7 @@ public interface Feedback extends Task {
 
 
 
-    void changeFeedbackStatus(String status, String command);
+
 
     void revertStatusFeedback();
 
