@@ -35,6 +35,7 @@ public class RepositoryImpl implements Repository {
     public static final String STORY_NOT_EXIST = FIND_STORY_BY_ID_ERROR;
     public static final String TASK_NOT_EXIST = "There is no task with ID:%d";
     public static final String STORIES_HEADER = "STORIES";
+    public static final String FEEDBACKS_HEADER = "FEEDBACKS";
     private static int Id;
     private final List<Team> teams = new ArrayList<>();
     private final List<Member> members = new ArrayList<>();
@@ -191,26 +192,9 @@ public class RepositoryImpl implements Repository {
 
     @Override
     public String assignTaskToMember(int taskID, String memberName) {
-        Member member=findMember(memberName);
-        for (Bug b:bugs) {
-            if(b.getId()==taskID){
-                member.addTask(b);
-                b.addAssignee(member);
-            }
-        }
-        for (Feedback b:feedbacks) {
-            if(b.getId()==taskID){
-                member.addTask(b);
-                b.addAssignee(member);
-            }
-        }
-        for (Story b:stories) {
-            if(b.getId()==taskID){
-                member.addTask(b);
-                b.addAssignee(member);
-            }
-        }
-        //TODO only 1 stream for Task
+        Member member = findMember(memberName);
+        Task task = findTaskByID(taskID);
+        member.addTask(task);
         return String.format(TASK_ADDED_TO_MEMBER, taskID,memberName);
 
     }
@@ -225,30 +209,8 @@ public class RepositoryImpl implements Repository {
 
     @Override
     public String addCommentToTask(Comment comment, int taskID) {
-
-        boolean addComment = false;
-        for (Bug b:bugs) {
-            if(b.getId()==taskID){
-                b.addComment(comment);
-                addComment = true;
-            }
-        }
-        for (Feedback b:feedbacks) {
-            if(b.getId()==taskID){
-                b.addComment(comment);
-                addComment = true;
-            }
-        }
-        for (Story b:stories) {
-            if(b.getId()==taskID){
-                b.addComment(comment);
-                addComment = true;
-            }
-        }
-        //TODO only 1 stream for Task
-        if(!addComment){
-            throw new IllegalArgumentException(String.format(TASK_NOT_EXIST, taskID));
-        }
+        Task task = findTaskByID(taskID);
+        task.addComment(comment);
         return String.format(COMMENT_ADDED_TO_TASK,taskID);
 
     }
@@ -354,12 +316,9 @@ public class RepositoryImpl implements Repository {
     public String listStoriesByGivenCondition(List<Story> stories) {
         return FormattingHelpers.listingFormatted(stories, STORIES_HEADER);
     }
-
-    public String sortFeedbackByTitle(List<Feedback> feedbacks){
-        return FormattingHelpers.listingFormatted(feedbacks,"FEEDBACKS");
-    }
-    public String sortFeedbackByRating(List<Feedback> feedbacks){
-        return FormattingHelpers.listingFormatted(feedbacks,"FEEDBACKS");
+    @Override
+    public String listFeedbackByGivenCondition(List<Feedback> feedbacks){
+        return FormattingHelpers.listingFormatted(feedbacks, FEEDBACKS_HEADER);
     }
 
     @Override

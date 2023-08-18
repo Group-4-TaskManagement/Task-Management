@@ -86,6 +86,8 @@ public interface Repository {
 
     String listStoriesByGivenCondition(List<Story> stories);
 
+    String listFeedbackByGivenCondition(List<Feedback> feedbacks);
+
     List<Bug> getBugs();
 
     List<Story> getStories();
