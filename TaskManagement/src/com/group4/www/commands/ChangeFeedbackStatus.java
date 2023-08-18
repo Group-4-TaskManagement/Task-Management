@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ChangeFeedbackStatus implements Command {
     public static final int EXPECTED_NUMBER_OF_ARGUMENTS = 2;
-    public static final String STATUS_CHANGED_MESSAGE = "Status changed!";
+    public static final String STATUS_CHANGED_MESSAGE = " Status of feedback was changed successfully!";
     private String command;
     private int id;
     private final Repository repository;
@@ -23,12 +23,12 @@ public class ChangeFeedbackStatus implements Command {
             ValidationHelpers.validateArgumentsCount
                     (parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
         parseParameters(parameters);
-        repository.changeFeedbackStatus(command,id);
+        repository.changeFeedbackStatus(id,command);
         return String.format(STATUS_CHANGED_MESSAGE);
     }
     private void parseParameters(List<String> parameters)
     {
-        command= parameters.get(0);
-        id= ParsingHelpers.tryParseInteger(parameters.get(1),"task id");
+        command= parameters.get(1);
+        id= ParsingHelpers.tryParseInteger(parameters.get(0),"task id");
     }
 }

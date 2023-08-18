@@ -94,7 +94,7 @@ public interface Repository {
 
     List<Feedback> getFeedbacks();
 
-    String changeFeedbackStatus(String command, int taskID);
+    void changeFeedbackStatus(int id, String command);
 
     //TODO SHow history of given task;
 }

@@ -381,32 +381,33 @@ public class RepositoryImpl implements Repository {
     }
     //COMMENT
     @Override
-    public String changeFeedbackStatus(String command, int taskID) {
-        Feedback feedback = findFeedbackByID(taskID);
-        switch (command) {
-            case "NEW":
-                feedback.setStatusFeedback(StatusFeedback.NEW);
-                break;
-            case "UNSCHEDULED":
-                feedback.setStatusFeedback(StatusFeedback.UNSCHEDULED);
-                break;
-            case "SCHEDULED":
-                feedback.setStatusFeedback(StatusFeedback.SCHEDULED);
-                break;
-            case "DONE":
-                feedback.setStatusFeedback(StatusFeedback.DONE);
-                break;
-            case "Advance":
-                feedback.advanceStatus();
-                break;
-            case "Revert":
-                feedback.revertStatusFeedback();
-                break;
-            default:
-                throw new IllegalArgumentException("Invalid command or status name!");
-        }
-        return String.format(
-                "Feedback status changed to %s!\n",feedback.getStatus());
+    public void changeFeedbackStatus(int id,String command ) {
+        Feedback feedback = findFeedbackByID(id);
+        feedback.changeFeedbackStatus(feedback.getStatus(),command);
+//        switch (command) {
+//            case "NEW":
+//                feedback.setStatusFeedback(StatusFeedback.NEW);
+//                break;
+//            case "UNSCHEDULED":
+//                feedback.setStatusFeedback(StatusFeedback.UNSCHEDULED);
+//                break;
+//            case "SCHEDULED":
+//                feedback.setStatusFeedback(StatusFeedback.SCHEDULED);
+//                break;
+//            case "DONE":
+//                feedback.setStatusFeedback(StatusFeedback.DONE);
+//                break;
+//            case "Advance":
+//                feedback.advanceStatus();
+//                break;
+//            case "Revert":
+//                feedback.revertStatusFeedback();
+//                break;
+//            default:
+//                throw new IllegalArgumentException("Invalid command or status name!");
+//        }
+//        return String.format(
+//                "Feedback status changed to %s!\n",feedback.getStatus());
     }
 
 
