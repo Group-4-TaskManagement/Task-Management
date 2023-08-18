@@ -12,7 +12,7 @@ import java.util.List;
 public class ChangeBugStatus implements Command {
     public static final int EXPECTED_NUMBER_OF_ARGUMENTS = 2;
     public static final String STATUS_PARSE_ERROR = "Status of bug can be Active or Fixed!";
-    public static final String BUG_STATUS_CHANGED = " Status of bug was changed successfully";
+    public static final String BUG_STATUS_CHANGED = " Status of bug was changed successfully.";
     private final Repository repository;
     private int id;
     private StatusBug statusBug;

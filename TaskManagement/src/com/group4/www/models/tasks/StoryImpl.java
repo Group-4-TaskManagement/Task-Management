@@ -9,15 +9,15 @@ import com.group4.www.models.tasks.contracts.Story;
 public class StoryImpl extends TaskBase implements Story {
 
     public static final String PRIORITY_CHANGE =
-            "The priority of the story was changed from %s to %s.";
+            "The priority of story with ID:%d was changed from %s to %s.";
     public static final String PRIORITY_ERROR =
             "The priority of the story can not be changed, it is already at %s!";
 
-    public static final String STATUS_CHANGE = "The status of the story was changed from %s to %s.";
+    public static final String STATUS_CHANGE = "The status of story with ID:%d was changed from %s to %s.";
     public static final String STATUS_ERROR = "The status of the story can not be changed, it is already at %s!";
 
     public static final String SIZE_CHANGE =
-            "The size of the story was changed from %s to %s.";
+            "The size of story with ID:%d was changed from %s to %s.";
     public static final String SIZE_ERROR =
             "The size of the story can not be changed, it is already at %s!";
 
@@ -43,13 +43,47 @@ public class StoryImpl extends TaskBase implements Story {
     public String getStatus() {
         return status.toString();
     }
-
+    @Override
     public SizeStory getSize() {
         return size;
     }
 
+    @Override
     public Priority getPriority() {
         return priority;
+    }
+
+    @Override
+    public void setStatus(StatusStory statusStory) {
+        if(statusStory==status) {
+            throw new IllegalArgumentException(String.format(STATUS_ERROR, getStatus()));
+        }else {
+            System.out.printf(STATUS_CHANGE,getId(), getStatus(), statusStory);
+            super.addLogChanges(String.format(STATUS_CHANGE,getId(),getStatus(),statusStory));
+            this.status = statusStory;
+        }
+    }
+
+    @Override
+    public void setPriority(Priority priorityStory) {
+        if(priorityStory==priority) {
+            throw new IllegalArgumentException(String.format(PRIORITY_ERROR, getPriority()));
+        }else {
+            System.out.printf(PRIORITY_CHANGE,getId(), getPriority(), priorityStory);
+            super.addLogChanges(String.format(PRIORITY_CHANGE,getId(),getPriority(),priorityStory));
+            this.priority = priorityStory;
+        }
+    }
+
+    @Override
+    public void setSize(SizeStory sizeStory) {
+        if(sizeStory==size) {
+            throw new IllegalArgumentException(String.format(SIZE_ERROR, getSize()));
+        }else {
+            System.out.printf(SIZE_CHANGE, getId(), getSize(), sizeStory);
+            super.addLogChanges(String.format(SIZE_CHANGE,getId(),getSize(),sizeStory));
+            this.size = sizeStory;
+        }
     }
 
     @Override

@@ -34,6 +34,7 @@ public class RepositoryImpl implements Repository {
     public static final String FIND_STORY_BY_ID_ERROR = "There is no story with ID:%d";
     public static final String STORY_NOT_EXIST = FIND_STORY_BY_ID_ERROR;
     public static final String TASK_NOT_EXIST = "There is no task with ID:%d";
+    public static final String STORIES_HEADER = "STORIES";
     private static int Id;
     private final List<Team> teams = new ArrayList<>();
     private final List<Member> members = new ArrayList<>();
@@ -270,6 +271,24 @@ public class RepositoryImpl implements Repository {
         bug.setSeverity(severityBug);
     }
 
+    @Override
+    public void changeStoryStatus(int id, StatusStory statusStory) {
+        Story story = findStoryByID(id);
+        story.setStatus(statusStory);
+    }
+
+    @Override
+    public void changeStoryPriority(int id, Priority priorityStory) {
+        Story story = findStoryByID(id);
+        story.setPriority(priorityStory);
+    }
+
+    @Override
+    public void changeStorySize(int id, SizeStory sizeStory) {
+        Story story = findStoryByID(id);
+        story.setSize(sizeStory);
+    }
+
 
     @Override
     public Bug findBugByID(int id) {
@@ -329,6 +348,11 @@ public class RepositoryImpl implements Repository {
     @Override
     public String listBugsByGivenCondition(List<Bug> bugs) {
         return FormattingHelpers.listingFormatted(bugs, BUGS_HEADER);
+    }
+
+    @Override
+    public String listStoriesByGivenCondition(List<Story> stories) {
+        return FormattingHelpers.listingFormatted(stories, STORIES_HEADER);
     }
 
     public String sortFeedbackByTitle(List<Feedback> feedbacks){

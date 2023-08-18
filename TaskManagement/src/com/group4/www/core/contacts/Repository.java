@@ -13,6 +13,7 @@ import java.util.List;
 public interface Repository {
 
     Comment createComment(String author, String message);
+
     Member createPerson(String name);
 
     Team createTeam(String name);
@@ -58,6 +59,13 @@ public interface Repository {
     void changeBugPriority(int id, Priority priorityBug);
 
     void changeBugSeverity(int id, SeverityBug severityBug);
+
+    void changeStoryStatus(int id, StatusStory statusStory);
+
+    void changeStoryPriority(int id, Priority priorityStory);
+
+    void changeStorySize(int id, SizeStory sizeStory);
+
     Bug findBugByID(int id);
 
     Story findStoryByID(int id);
@@ -75,6 +83,8 @@ public interface Repository {
     String listTasksByGivenCondition(List<Task> tasks);
 
     String listBugsByGivenCondition(List<Bug> bugs);
+
+    String listStoriesByGivenCondition(List<Story> stories);
 
     List<Bug> getBugs();
 

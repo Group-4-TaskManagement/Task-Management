@@ -63,11 +63,11 @@ public class CommandFactoryImpl implements CommandFactory {
             case CHANGEBUGSEVERITY:
                 return new ChangeBugSeverity(repository);
             case CHANGESTORYSTATUS:
-                return null;
+                return new ChangeStoryStatus(repository);
             case CHANGESTORYPRIORITY:
-                return null;
+                return new ChangeStoryPriority(repository);
             case CHANGESTORYSIZE:
-                return null;
+                return new ChangeStorySize(repository);
             case CHANGEFEEDBACKSTATUS:
                 return new ChangeFeedbackStatus(repository);
             case FILTERTASKSBYTITLE:
@@ -96,6 +96,18 @@ public class CommandFactoryImpl implements CommandFactory {
                 return new SortBugsBySeverity(repository);
             case SHOWTASKACTIVITY:
                 return new ShowTaskActivity(repository);
+            case FILTERSTORIESBYSTATUS:
+                return new FilterStoriesByStatus(repository);
+            case FILTERSTORIESBYSTATUSANDASSIGNEE:
+                return new FilterStoriesByStatusAndAssignee(repository);
+            case FILTERSTORIESBYASSIGNEE:
+                return new FilterStoriesByAssignee(repository);
+            case SORTSTORIESBYTITLE:
+                return new SortStoriesByTitle(repository);
+            case SORTSTORIESBYPRIORITY:
+                return new SortStoriesByPriority(repository);
+            case SORTSTORIESBYSIZE:
+                return new SortStoriesBySize(repository);
             default: throw new IllegalArgumentException(String.format(INVALID_COMMAND,commandTypeAsString));
         }
     }

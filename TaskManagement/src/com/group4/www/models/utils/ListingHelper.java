@@ -50,4 +50,12 @@ public class ListingHelper {
     public static List<Bug> sortBugsBySeverity(List<Bug> bugs){
         return bugs.stream().sorted(Comparator.comparing(Bug::getSeverity)).collect(Collectors.toList());
     }
+
+    public static List<Story> sortStoriesByPriority(List<Story> stories){
+        return stories.stream().sorted(Comparator.comparing(Story::getPriority)).collect(Collectors.toList());
+    }
+
+    public static List<Story> sortStoriesBySize(List<Story> stories){
+        return stories.stream().sorted(Comparator.comparing(Story::getSize)).collect(Collectors.toList());
+    }
 }
