@@ -1,5 +1,7 @@
 package com.group4.www.core.enums;
 
+import com.group4.www.commands.listings.FilterFeedbacksByStatus;
+
 public enum CommandType {
 
     CREATEPERSON,
@@ -46,6 +48,9 @@ public enum CommandType {
     FILTERSTORIESBYSTATUSANDASSIGNEE,
     SORTSTORIESBYTITLE,
     SORTSTORIESBYPRIORITY,
-    SORTSTORIESBYSIZE;
+    SORTSTORIESBYSIZE,
+    FILTERFEEDBACKBYSTATUS,
+    SORTFEEDBACKBYRATING,
+    SORTFEEDBACKBYTITLE;
 
 }

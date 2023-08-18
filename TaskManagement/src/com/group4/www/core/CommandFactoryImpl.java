@@ -108,6 +108,12 @@ public class CommandFactoryImpl implements CommandFactory {
                 return new SortStoriesByPriority(repository);
             case SORTSTORIESBYSIZE:
                 return new SortStoriesBySize(repository);
+            case SORTFEEDBACKBYTITLE:
+                return new SortFeedbackByTitle(repository);
+            case FILTERFEEDBACKBYSTATUS:
+                return new FilterFeedbacksByStatus(repository);
+            case SORTFEEDBACKBYRATING:
+                return  new SortFeedbackByRating(repository);
             default: throw new IllegalArgumentException(String.format(INVALID_COMMAND,commandTypeAsString));
         }
     }

@@ -58,4 +58,7 @@ public class ListingHelper {
     public static List<Story> sortStoriesBySize(List<Story> stories){
         return stories.stream().sorted(Comparator.comparing(Story::getSize)).collect(Collectors.toList());
     }
+    public static List<Feedback>sortFeedbackByRating(List<Feedback> feedbacks){
+        return feedbacks.stream().sorted(Comparator.comparing(Feedback::getRating)).collect(Collectors.toList());
+    }
 }
