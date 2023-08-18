@@ -36,6 +36,12 @@ public class RepositoryImpl implements Repository {
     public static final String TASK_NOT_EXIST = "There is no task with ID:%d";
     public static final String STORIES_HEADER = "STORIES";
     public static final String FEEDBACKS_HEADER = "FEEDBACKS";
+    public static final String TEAMS_HEADER = "teams";
+    public static final String ACTIVITY_HEADER = "activity";
+    public static final String MEMBERS_HEADER = "members";
+    public static final String BOARDS_HEADER = "boards";
+    public static final String BOARD_EXISTS = "Board with this name, already exist.";
+    public static final String TEAM_EXISTS = "Team with this name, already exist.";
     private static int Id;
     private final List<Team> teams = new ArrayList<>();
     private final List<Member> members = new ArrayList<>();
@@ -44,6 +50,7 @@ public class RepositoryImpl implements Repository {
     private final List<Story> stories = new ArrayList<>();
     private final List<Feedback> feedbacks = new ArrayList<>();
     private final List<Task> tasks = new ArrayList<>();
+
     public RepositoryImpl(){ Id = 0;}
 
     @Override
@@ -54,38 +61,34 @@ public class RepositoryImpl implements Repository {
 
     @Override
     public Member createPerson(String name) {
-        Member member = new MemberImpl(name);
-        for(Member b : members){
-            if(b.getName().equals(name)){
-                throw new IllegalArgumentException("Member with this name, already exist.");
+        members.stream().forEach((member) -> {
+            if (member.getName().equals(name)) {
+                throw new IllegalArgumentException(BOARD_EXISTS);
             }
-            //TODO STREAM
-        }
+        });
+        Member member = new MemberImpl(name);
         this.members.add(member);
         return member;
     }
 
     @Override
     public Team createTeam(String name) {
-        for(Team b : teams){
-            if(b.getName().equals(name)){
-                throw new IllegalArgumentException("Team with this name, already exist.");
+        teams.stream().forEach((team) -> {
+            if (team.getName().equals(name)) {
+                throw new IllegalArgumentException(TEAM_EXISTS);
             }
-            //TODO Stream
-        }
+        });
         Team team=new TeamImpl(name);
         this.teams.add(team);
         return team;
     }
-
     @Override
     public Board createBoard(String name) {
-        for(Board b : boards){
-            if(b.getName().equals(name)){
-                throw new IllegalArgumentException("Board with this name, already exist.");
+        boards.stream().forEach((board) -> {
+            if (board.getName().equals(name)) {
+                throw new IllegalArgumentException(BOARD_EXISTS);
             }
-            //TODO Stream
-        }
+        });
         Board board = new BoardImpl(name);
         this.boards.add(board);
         return board;
@@ -131,24 +134,24 @@ public class RepositoryImpl implements Repository {
 
     @Override
     public String showAllMembers() {
-        return FormattingHelpers.showAll(members,"members");
+        return FormattingHelpers.showAll(members, MEMBERS_HEADER);
     }
 
     @Override
     public String showPersonActivity(String memberName) {
         Member member = findMember(memberName);
-        return FormattingHelpers.showAll(member.getMemberActivity(),"activity");
+        return FormattingHelpers.showAll(member.getMemberActivity(), ACTIVITY_HEADER);
     }
 
     @Override
     public String showAllTeams() {
-        return FormattingHelpers.showAll(teams,"teams");
+        return FormattingHelpers.showAll(teams, TEAMS_HEADER);
     }
 
     @Override
     public String showTeamActivity(String teamName) {
        Team team = findTeam(teamName);
-       return FormattingHelpers.showAll(team.getTeamActivity(),"activity");
+       return FormattingHelpers.showAll(team.getTeamActivity(),ACTIVITY_HEADER);
     }
 
 
@@ -162,25 +165,25 @@ public class RepositoryImpl implements Repository {
     @Override
     public String showAllTeamMembers(String teamName) {
         Team team=findTeam(teamName);
-        return FormattingHelpers.showAll(team.getMembers(),"members");
+        return FormattingHelpers.showAll(team.getMembers(),MEMBERS_HEADER);
     }
 
     @Override
     public String showAllTeamBoards(String teamName) {
         Team team=findTeam(teamName);
-        return FormattingHelpers.showAll(team.getBoards(),"boards");
+        return FormattingHelpers.showAll(team.getBoards(), BOARDS_HEADER);
     }
 
     @Override
     public String showBoardActivity(String boardName) {
         Board board = findBoard(boardName);
-        return FormattingHelpers.showAll(board.getBoardActivity(),"activity");
+        return FormattingHelpers.showAll(board.getBoardActivity(),ACTIVITY_HEADER);
     }
 
     @Override
     public String showTaskActivity(int id) {
         Task task = findTaskByID(id);
-        return FormattingHelpers.showAll(task.getTaskActivity(),"activity");
+        return FormattingHelpers.showAll(task.getTaskActivity(),ACTIVITY_HEADER);
     }
 
     @Override
@@ -332,41 +335,19 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
-    public List<Task> getTasks() {return new ArrayList<>(tasks);}
+    public List<Task> getTasks() {
+        return new ArrayList<>(tasks);
+    }
 
     @Override
     public List<Feedback> getFeedbacks() {
         return new ArrayList<>(feedbacks);
     }
-    //COMMENT
+
     @Override
     public void changeFeedbackStatus(int id,String command ) {
         Feedback feedback = findFeedbackByID(id);
         feedback.changeFeedbackStatus(feedback.getStatus(),command);
-//        switch (command) {
-//            case "NEW":
-//                feedback.setStatusFeedback(StatusFeedback.NEW);
-//                break;
-//            case "UNSCHEDULED":
-//                feedback.setStatusFeedback(StatusFeedback.UNSCHEDULED);
-//                break;
-//            case "SCHEDULED":
-//                feedback.setStatusFeedback(StatusFeedback.SCHEDULED);
-//                break;
-//            case "DONE":
-//                feedback.setStatusFeedback(StatusFeedback.DONE);
-//                break;
-//            case "Advance":
-//                feedback.advanceStatus();
-//                break;
-//            case "Revert":
-//                feedback.revertStatusFeedback();
-//                break;
-//            default:
-//                throw new IllegalArgumentException("Invalid command or status name!");
-//        }
-//        return String.format(
-//                "Feedback status changed to %s!\n",feedback.getStatus());
     }
 
 
