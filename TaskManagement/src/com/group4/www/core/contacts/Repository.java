@@ -20,7 +20,7 @@ public interface Repository {
 
     Board createBoard(String name);
 
-    Bug createBugInBoard(String title, String description,Priority priority, SeverityBug severity,String boardName);
+    Bug createBugInBoard(String title, String description,Priority priority, SeverityBug severity,List<String> steps,String boardName);
 
     Story createStoryInBoard(String title, String description,Priority priority, SizeStory size, StatusStory status,String boardName);
 

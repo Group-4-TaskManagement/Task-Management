@@ -91,8 +91,8 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
-    public Bug createBugInBoard(String title, String description,Priority priority, SeverityBug severity,String boardName) {
-        Bug bug=new BugImpl(++Id,title,description,priority,severity);
+    public Bug createBugInBoard(String title, String description,Priority priority, SeverityBug severity,List<String> steps, String boardName) {
+        Bug bug=new BugImpl(++Id,title,description,priority,severity, steps);
         Board board = findBoard(boardName);
         board.addTask(bug);
         this.bugs.add(bug);

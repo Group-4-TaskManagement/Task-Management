@@ -21,18 +21,18 @@ public class BugImpl extends TaskBase implements Bug {
     public static final String BUG_CHANGE_SEVERITY_ERR = "Can not change the severity of the bug. It is already at %s.";
     public static final String BUG_CHANGE_SEVERITY_MESS = "The severity of bug with ID:%d was changed from %s to %s. ";
 
-    private List<String> steps;
+    private final List<String> steps;
     private Priority priority;
     private SeverityBug severity;
     private StatusBug status;
 
 
-    public BugImpl(int id,String title, String description,Priority priority, SeverityBug severity) {
+    public BugImpl(int id,String title, String description,Priority priority,SeverityBug severity, List<String> steps) {
         super(id,title, description);
         this.priority = priority;
         this.severity = severity;
-        addStepsToReproduce();
         this.status = StatusBug.ACTIVE;
+        this.steps = new ArrayList<>();
     }
 
 
@@ -94,13 +94,13 @@ public class BugImpl extends TaskBase implements Bug {
         return new ArrayList<>(steps);
     }
 
-    private void addStepsToReproduce() {
-        steps = new ArrayList<>();
-        System.out.print(REPRODUCE_STEPS);
-        Scanner scn = new Scanner(System.in);
-        String steps = scn.nextLine();
-        this.steps = Arrays.asList(steps.split(";"));
-    }
+//    private void addStepsToReproduce() {
+//        steps = new ArrayList<>();
+//        System.out.print(REPRODUCE_STEPS);
+//        Scanner scn = new Scanner(System.in);
+//        String steps = scn.nextLine();
+//        this.steps = Arrays.asList(steps.split(";"));
+//    }
 
     @Override
     public String getAsString() {
