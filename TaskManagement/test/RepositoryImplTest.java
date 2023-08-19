@@ -1,5 +1,3 @@
-package core;
-
 import com.group4.www.core.RepositoryImpl;
 import com.group4.www.core.contacts.Repository;
 import com.group4.www.models.CommentImpl;
