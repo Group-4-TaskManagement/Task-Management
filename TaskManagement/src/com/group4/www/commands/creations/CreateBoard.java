@@ -22,8 +22,8 @@ public class CreateBoard implements Command {
     public String execute(List<String> parameters) {
         ValidationHelpers.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
         parseParameters(parameters);
-        Board board= repository.createBoard(name);
-        return String.format(CREATED_BOARD,board.getName());
+        repository.createBoard(name);
+        return String.format(CREATED_BOARD,name);
     }
     private void parseParameters(List<String> parameters){
         name=parameters.get(0);

@@ -3,12 +3,10 @@ package com.group4.www.core.contacts;
 import com.group4.www.models.contracts.*;
 import com.group4.www.models.enums.*;
 import com.group4.www.models.contracts.Board;
-import com.group4.www.models.tasks.contracts.Bug;
-import com.group4.www.models.tasks.contracts.Feedback;
-import com.group4.www.models.tasks.contracts.Story;
-import com.group4.www.models.tasks.contracts.Task;
+import com.group4.www.models.tasks.contracts.*;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 public interface Repository {
 
@@ -48,12 +46,11 @@ public interface Repository {
 
     void changeFeedbackRating(int newRating, int taskID);
 
-    String assignTaskToMember(int taskID, String memberName);
+    void assignTaskToMember(int taskID, String memberName);
 
-    String unAssignTaskToMember(int taskID, String memberName);
+    void unAssignTaskToMember(int taskID, String memberName);
 
-    String addCommentToTask(Comment comment, int taskID);
-
+    void addCommentToTask(Comment comment, int taskID);
 
     void changeStatus(int id, String status);
 
@@ -67,19 +64,9 @@ public interface Repository {
 
     void changeStorySize(int id, SizeStory sizeStory);
 
-    Bug findBugByID(int id);
+    <T> T findElement(List<T> list, Predicate<T> condition, String message);
 
-    Story findStoryByID(int id);
-
-    Feedback findFeedbackByID(int id);
-
-    Task findTaskByID(int id);
-
-    Member findMember(String memberName);
-
-    Board findBoard(String boardName);
-
-    Team findTeam(String teamName);
+    String listAssignableTasksByGivenCondition(List<AssignableTask> assignableTasks);
 
     String listTasksByGivenCondition(List<Task> tasks);
 
@@ -95,9 +82,10 @@ public interface Repository {
 
     List<Task> getTasks();
 
+    List<AssignableTask> getAssignableTasks();
+
     List<Feedback> getFeedbacks();
 
+    List<Member> getMembers();
 
-
-    //TODO SHow history of given task;
 }

@@ -1,4 +1,4 @@
-package com.group4.www.commands.creations;
+package com.group4.www.commands;
 
 import com.group4.www.commands.contracts.Command;
 import com.group4.www.core.contacts.Repository;

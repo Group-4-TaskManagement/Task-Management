@@ -6,7 +6,7 @@ import com.group4.www.models.enums.Priority;
 import com.group4.www.models.enums.SizeStory;
 import com.group4.www.models.enums.StatusStory;
 
-public interface Story extends Task {
+public interface Story extends AssignableTask {
 
 
     void addComment(Comment comment);

@@ -40,7 +40,6 @@ public class MemberImpl implements Member {
     }
 
     public void addTask(Task task){
-
         for (Task task1:tasks) {
             if(task1.getId()== task.getId()){
                 throw  new IllegalArgumentException(TASK_EXIST);
@@ -53,25 +52,19 @@ public class MemberImpl implements Member {
 
     }
 
-    public  void removeTask(int id) {
-        boolean isRemove = false;
-        for (Task task : tasks) {
-            if (id== task.getId()) {
-                tasks.remove(task);
-                isRemove =  true;
-                addActivityHistory(TASK_REMOVE);
+    public  void removeTask(Task task) {
+        for (Task task1:tasks) {
+            if(task1.getId()== task.getId()){
+                throw  new IllegalArgumentException(TASK_EXIST);
             }
-        }
-        if(!isRemove){
-            throw new IllegalArgumentException(TASK_NOT_EXIST);
+            tasks.remove(task);
+            addActivityHistory(String.format(TASK_REMOVE,task.getId(),getName()));
         }
     }
 
     public void addActivityHistory(String massage){
         EventLog eventLog = new EventLogImpl(massage);
         memberActivity.add(eventLog);
-
-
 
     }
 

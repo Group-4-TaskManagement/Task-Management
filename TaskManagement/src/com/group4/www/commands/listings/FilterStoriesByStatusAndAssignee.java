@@ -12,9 +12,12 @@ import java.util.List;
 
 public class FilterStoriesByStatusAndAssignee implements Command {
     public static final int EXPECTED_NUMBER_OF_ARGUMENTS = 2;
+    public static final String MEMBER_DOES_NOT_EXIST = "Member with name %s does not exist";
     public static final String PARSE_STORY_STATUS_ERROR = "Status of story can be Not Done, InProgress and Done!";
+    private Member member;
     private final Repository repository;
     private StatusStory statusStory;
+
     public FilterStoriesByStatusAndAssignee(Repository repository) {
         this.repository = repository;
     }
@@ -26,11 +29,13 @@ public class FilterStoriesByStatusAndAssignee implements Command {
         parseParameters(parameters);
 
         return repository.listStoriesByGivenCondition
-                (ListingHelper.filterByStatusAndAssignee(repository.getStories(), parameters.get(0), parameters.get(1)));
+                (ListingHelper.filterByStatusAndAssignee(repository.getStories()
+                        ,statusStory.toString(),member.getName()));
     }
 
     private void parseParameters(List<String> parameters){
         statusStory = ParsingHelpers.tryParseEnum(parameters.get(0), StatusStory.class, PARSE_STORY_STATUS_ERROR);
-        Member member = repository.findMember(parameters.get(1));
+        member = repository.findElement(repository.getMembers(),member1 -> member1.getName().equals(parameters.get(1))
+                ,String.format(MEMBER_DOES_NOT_EXIST,parameters.get(1)));
     }
 }

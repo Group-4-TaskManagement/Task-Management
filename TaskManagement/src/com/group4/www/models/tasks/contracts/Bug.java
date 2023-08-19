@@ -7,7 +7,7 @@ import com.group4.www.models.enums.StatusBug;
 
 import java.util.List;
 
-public interface Bug extends Task {
+public interface Bug extends AssignableTask {
 
     public Priority getPriority();
 

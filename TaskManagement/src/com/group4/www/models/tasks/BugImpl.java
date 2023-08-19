@@ -14,8 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-public class BugImpl extends TaskBase implements Bug {
-    public static final String REPRODUCE_STEPS = "Please enter steps, separated by ';', for the reproduction of the bug: \n";
+public class BugImpl extends AssignableTaskBase implements Bug {
     public static final String BUG_CHANGE_PRIORITY_MESS = "The priority of bug with ID:%d was changed from %s to %s.";
     public static final String BUG_CHANGE_STATUS_ERR = "Can not change the status of the bug. It is already at %s.";
     public static final String BUG_CHANGE_STATUS_MESS = "The status of bug with ID:%d was changed from %s to %s.";
@@ -29,7 +28,6 @@ public class BugImpl extends TaskBase implements Bug {
     private SeverityBug severity;
     private StatusBug status;
 
-
     public BugImpl(int id,String title, String description,Priority priority,SeverityBug severity, List<String> steps) {
         super(id,title, description);
         this.priority = priority;
@@ -37,7 +35,6 @@ public class BugImpl extends TaskBase implements Bug {
         this.status = StatusBug.ACTIVE;
         this.steps = new ArrayList<>();
     }
-
 
     @Override
     public Priority getPriority() {
@@ -72,8 +69,6 @@ public class BugImpl extends TaskBase implements Bug {
         return super.getTaskActivity();
     }
 
-
-
     @Override
     public void setPriority(Priority priorityBug) {
         if(priorityBug==getPriority()) {
@@ -101,18 +96,15 @@ public class BugImpl extends TaskBase implements Bug {
         return new ArrayList<>(steps);
     }
 
-//    private void addStepsToReproduce() {
-//        steps = new ArrayList<>();
-//        System.out.print(REPRODUCE_STEPS);
-//        Scanner scn = new Scanner(System.in);
-//        String steps = scn.nextLine();
-//        this.steps = Arrays.asList(steps.split(";"));
-//    }
-
     @Override
     public String getAsString() {
         return String.format("%s" +
                 "PRIORITY:%s\n" +
                 "SEVERITY:%s\n",super.getAsString(),getPriority(),getSeverity());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
     }
 }

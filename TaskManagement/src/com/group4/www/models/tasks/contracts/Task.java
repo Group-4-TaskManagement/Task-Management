@@ -9,15 +9,11 @@ public interface Task extends Identifiable, Printable {
 
     String getDescription();
 
-    Member getAssignee();
-
     void addComment(Comment comment);
 
     void removeComment(Comment comment);
 
     void addLogChanges(String message);
-
-    void addAssignee(Member member);
 
     String getStatus();
 

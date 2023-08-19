@@ -1,6 +1,7 @@
 package com.group4.www.commands.listings;
 
 import com.group4.www.commands.contracts.Command;
+import com.group4.www.models.tasks.contracts.AssignableTask;
 import com.group4.www.models.utils.ListingHelper;
 import com.group4.www.core.contacts.Repository;
 import com.group4.www.models.tasks.contracts.Task;
@@ -20,9 +21,9 @@ public class FilterTasksByStatusAndAssignee implements Command {
     public String execute(List<String> parameters) {
         ValidationHelpers.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
 
-        List<Task> tasks = ListingHelper.listOfTasksWithAssignee(repository.getTasks());
+        List<AssignableTask> tasks = ListingHelper.listOfTasksWithAssignee(repository.getAssignableTasks());
 
-        return repository.listTasksByGivenCondition(ListingHelper.filterByStatusAndAssignee(
+        return repository.listAssignableTasksByGivenCondition(ListingHelper.filterByStatusAndAssignee(
                 tasks,
                 parameters.get(0),
                 parameters.get(1)));

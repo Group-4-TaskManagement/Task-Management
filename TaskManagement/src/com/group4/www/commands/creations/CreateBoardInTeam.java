@@ -12,9 +12,8 @@ public class CreateBoardInTeam implements Command {
     public static final String BOARD_CREATED_IN_TEAM_MESS = "Board with name %s was created and added to team %s.";
     public static final int EXPECTED_NUMBER_OF_ARGUMENTS = 2;
     private final Repository repository;
-
     private String boardName;
-    private Team team;
+    private String teamName;
 
     public CreateBoardInTeam(Repository repository) {this.repository = repository;}
 
@@ -22,15 +21,12 @@ public class CreateBoardInTeam implements Command {
     public String execute(List<String> parameters) {
         ValidationHelpers.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
 
-        parseParameters(parameters);
+        boardName=parameters.get(0);
+        teamName = parameters.get(1);
 
-        Board board = repository.createBoardInTeam(boardName,team.getName());
-        return String.format(BOARD_CREATED_IN_TEAM_MESS,boardName,team.getName());
+        repository.createBoardInTeam(boardName,teamName);
+
+        return String.format(BOARD_CREATED_IN_TEAM_MESS,boardName,teamName);
     }
 
-
-    private void parseParameters(List<String> parameters){
-        boardName = parameters.get(0);
-        team = repository.findTeam(parameters.get(1));
-    }
 }

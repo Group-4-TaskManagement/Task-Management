@@ -14,7 +14,7 @@ public interface Member extends Printable {
 
     void addTask(Task task);
 
-    void removeTask(int id);
+    void removeTask(Task task);
 
     void addActivityHistory(String message);
 

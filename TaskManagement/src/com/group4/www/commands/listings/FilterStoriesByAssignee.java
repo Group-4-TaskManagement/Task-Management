@@ -10,6 +10,8 @@ import java.util.List;
 
 public class FilterStoriesByAssignee implements Command {
     public static final int EXPECTED_NUMBER_OF_ARGUMENTS = 1;
+    public static final String MEMBER_DOES_NOT_EXIST = "Member with name %s does not exist";
+    private Member member;
     private final Repository repository;
 
     public FilterStoriesByAssignee(Repository repository) {
@@ -23,10 +25,12 @@ public class FilterStoriesByAssignee implements Command {
         parseParameters(parameters);
 
         return repository.listStoriesByGivenCondition
-                (ListingHelper.filterByAssignee(repository.getStories(),parameters.get(0)));
+                (ListingHelper.filterByAssignee(repository.getStories(),member.getName()));
     }
 
     private void parseParameters(List<String> parameters){
-        Member member = repository.findMember(parameters.get(0));
+        member = repository.findElement(repository.getMembers(),
+                member1 -> member1.getName().equals(parameters.get(0)),
+                String.format(MEMBER_DOES_NOT_EXIST,parameters.get(0)));
     }
 }

@@ -27,7 +27,6 @@ abstract class TaskBase implements Task {
     private int id;
     private String title;
     private String description;
-    private Member assignee;
     private final List<Comment> comments;
     private final List<EventLog> taskActivity;
 
@@ -73,11 +72,6 @@ abstract class TaskBase implements Task {
     }
 
     @Override
-    public void addAssignee(Member member) {
-        this.assignee=member;
-    }
-
-    @Override
     public String getTitle() {
         return title;
     }
@@ -85,11 +79,6 @@ abstract class TaskBase implements Task {
     @Override
     public String getDescription() {
         return description;
-    }
-
-    @Override
-    public Member getAssignee() {
-        return assignee;
     }
 
     @Override
@@ -104,16 +93,9 @@ abstract class TaskBase implements Task {
 
     @Override
     public String getAsString() {
-        if(getAssignee()==null){
-            return String.format("ID:%d\n" +
-                    "TITLE:%s\n" +
-                    "ASSIGNEE:Not Assigned yet\n" +
-                    "STATUS:%s \n",getId(),getTitle(),getStatus());
-        }
         return String.format("ID:%d\n" +
                 "TITLE:%s\n" +
-                "ASSIGNEE:%s\n" +
-                "STATUS:%s\n",getId(),getTitle(),getAssignee().getAsString(),getStatus());
+                "STATUS:%s\n",getId(),getTitle(),getStatus());
     }
 
 
