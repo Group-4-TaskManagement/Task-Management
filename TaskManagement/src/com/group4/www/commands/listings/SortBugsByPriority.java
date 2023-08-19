@@ -2,6 +2,7 @@ package com.group4.www.commands.listings;
 
 import com.group4.www.commands.contracts.Command;
 import com.group4.www.models.tasks.contracts.Bug;
+import com.group4.www.models.tasks.contracts.Story;
 import com.group4.www.models.utils.ListingHelper;
 import com.group4.www.core.contacts.Repository;
 import com.group4.www.models.utils.ValidationHelpers;

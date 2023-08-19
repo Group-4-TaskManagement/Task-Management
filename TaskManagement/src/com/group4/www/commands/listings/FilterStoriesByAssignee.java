@@ -25,7 +25,9 @@ public class FilterStoriesByAssignee implements Command {
         parseParameters(parameters);
 
         return repository.listStoriesByGivenCondition
-                (ListingHelper.filterByAssignee(repository.getStories(),member.getName()));
+                (ListingHelper.filterByCondition
+                        (ListingHelper.listOfTasksWithAssignee(repository.getStories())
+                                ,story -> story.getAssignee().getName().equals(member.getName())));
     }
 
     private void parseParameters(List<String> parameters){

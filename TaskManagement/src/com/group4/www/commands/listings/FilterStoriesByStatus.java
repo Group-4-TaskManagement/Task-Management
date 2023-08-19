@@ -25,7 +25,8 @@ public class FilterStoriesByStatus implements Command {
         parseParameters(parameters);
 
         return repository.listStoriesByGivenCondition
-                (ListingHelper.filterByStatus(repository.getStories(), parameters.get(0)));
+                (ListingHelper.filterByCondition
+                        (repository.getStories(),story -> story.getStatus().equals(statusStory.toString())));
     }
 
     private void parseParameters(List<String> parameters){
