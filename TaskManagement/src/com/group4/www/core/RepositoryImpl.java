@@ -31,6 +31,7 @@ public class RepositoryImpl implements Repository {
     public static final String MEMBERS_HEADER = "members";
     public static final String BOARDS_HEADER = "boards";
     public static final String BOARD_EXISTS = "Board with this name, already exist.";
+    public static final String MEMBER_EXISTS = "Member with this name, already exist.";
     public static final String TEAM_EXISTS = "Team with this name, already exist.";
 
     private static int Id;
@@ -53,7 +54,7 @@ public class RepositoryImpl implements Repository {
     public Member createPerson(String name) {
         members.stream().forEach((member) -> {
             if (member.getName().equals(name)) {
-                throw new IllegalArgumentException(BOARD_EXISTS);
+                throw new IllegalArgumentException(MEMBER_EXISTS);
             }
         });
         Member member = new MemberImpl(name);
@@ -253,4 +254,11 @@ public class RepositoryImpl implements Repository {
     @Override
     public List<Member> getMembers() {return new ArrayList<>(members);}
 
+    public List<Team> getTeams() {
+        return teams;
+    }
+
+    public List<Board> getBoards() {
+        return boards;
+    }
 }

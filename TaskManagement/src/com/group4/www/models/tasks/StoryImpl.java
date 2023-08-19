@@ -66,25 +66,6 @@ public class StoryImpl extends AssignableTaskBase implements Story {
     }
 
 
-
-    @Override
-    public String changeStatus(StatusStory statusStory) {
-        String currentStatus = status.toString();
-
-        if(statusStory==status) {
-            throw new IllegalArgumentException(String.format(STATUS_ERROR, getStatus()));
-        }else {
-
-            super.addLogChanges(String.format(STATUS_CHANGE,getId(),getStatus(),statusStory));
-            this.status = statusStory;
-            return String.format(STATUS_CHANGE,getId(), currentStatus, statusStory);
-        }
-    }
-
-
-
-
-    @Override
     public String changeSize(SizeStory sizeStory) {
         String currentSize  = size.toString();
         if(sizeStory==size) {

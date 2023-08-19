@@ -69,6 +69,9 @@ public interface Repository {
     List<Story> getStories();
 
     List<Task> getTasks();
+    public List<Team> getTeams();
+
+    public List<Board> getBoards();
 
     List<AssignableTask> getAssignableTasks();
 

@@ -19,9 +19,12 @@ public class BugImpl extends AssignableTaskBase implements Bug {
     public static final String BUG_CHANGE_STATUS_ERR = "Can not change the status of the bug. It is already at %s.";
     public static final String BUG_CHANGE_STATUS_MESS = "The status of item with ID:%d switched from %s to %s.";
     public static final String BUG_PARSE_ERROR = "Status of bug can be Active or Fixed!";
+
     public static final String BUG_CHANGE_SEVERITY_ERR = "Can not change the severity of the bug. It is already at %s.";
     public static final String BUG_CHANGE_SEVERITY_MESS = "The severity of bug with ID:%d was changed from %s to %s. ";
+
     private final List<String> steps;
+
     private SeverityBug severity;
     private StatusBug status;
 
@@ -31,6 +34,9 @@ public class BugImpl extends AssignableTaskBase implements Bug {
         this.status = StatusBug.ACTIVE;
         this.steps = steps;
     }
+
+
+
 
     @Override
     public SeverityBug getSeverity() {
@@ -61,6 +67,9 @@ public class BugImpl extends AssignableTaskBase implements Bug {
         return super.getTaskActivity();
     }
 
+
+
+
     @Override
     public String setSeverity(SeverityBug severityBug) {
         String currentSeverity = this.severity.toString();
@@ -82,6 +91,11 @@ public class BugImpl extends AssignableTaskBase implements Bug {
     public String getAsString() {
         return String.format("%s" +
                 "PRIORITY:%s\n" +
-                "SEVERITY:%s\n", super.getAsString(), getPriority(), getSeverity());
+                "SEVERITY:%s\n",super.getAsString(),getPriority(),getSeverity());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
     }
 }

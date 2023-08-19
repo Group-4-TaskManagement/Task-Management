@@ -8,13 +8,15 @@ import java.util.Objects;
 
 public class CommentImpl implements Comment {
 
+    public static final String MESSAGE_ERROR = "Тhe message can not be empty";
+    public static final String AUTHOR_ERROR = "Тhe author can not be empty";
     private String author;
     private String message;
 
 
     public CommentImpl(String author, String message) {
-        this.author = author;
-        this.message = message;
+        setAuthor(author);
+        setMessage(message);
     }
 
 
@@ -26,19 +28,21 @@ public class CommentImpl implements Comment {
         return message;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CommentImpl comment = (CommentImpl) o;
-        return Objects.equals(author, comment.author) && Objects.equals(message, comment.message);
+
+
+    private void setAuthor(String author) {
+        if(author.trim().isEmpty()){
+            throw new IllegalArgumentException(AUTHOR_ERROR);
+        }
+        this.author = author;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(author, message);
+    private void setMessage(String message) {
+        if(message.trim().isEmpty()){
+            throw new IllegalArgumentException(MESSAGE_ERROR);
+        }
+        this.message = message;
     }
-
 
     @Override
     public String getAsString() {

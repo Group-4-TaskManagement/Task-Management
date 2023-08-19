@@ -17,7 +17,7 @@ public interface Story extends AssignableTask {
 
     public Priority getPriority();
 
-    String changeStatus(StatusStory statusStory);
+
 
 
 

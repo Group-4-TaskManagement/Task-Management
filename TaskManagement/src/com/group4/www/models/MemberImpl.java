@@ -15,7 +15,8 @@ public class MemberImpl implements Member {
             "Name must be between %d and %d symbols", NAME_MIN_LENGTH, NAME_MAX_LENGTH);
 
     public static final String TASK_EXIST = "The Task really exist";
-    public static final String TASK_NOT_EXIST = "The Task does not exist";
+    public static final String TASK_NOT_EXIST = "The Task not exist";
+
 
     private static final String TASK_ADD = "Task with ID:%d was assigned to %s.";
     private static final String TASK_REMOVE = "The task was removed";
@@ -55,11 +56,13 @@ public class MemberImpl implements Member {
     public  void removeTask(Task task) {
         for (Task task1:tasks) {
             if(task1.getId()== task.getId()){
-                throw  new IllegalArgumentException(TASK_EXIST);
+                tasks.remove(task1);
+                addActivityHistory(String.format(TASK_REMOVE,task.getId(),getName()));
+                return;
             }
-            tasks.remove(task);
-            addActivityHistory(String.format(TASK_REMOVE,task.getId(),getName()));
+
         }
+        throw  new IllegalArgumentException(TASK_NOT_EXIST);
     }
 
     public void addActivityHistory(String massage){
