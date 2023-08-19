@@ -52,17 +52,13 @@ public interface Repository {
 
     void addCommentToTask(Comment comment, int taskID);
 
-    void changeStatus(int id, String status);
 
-    void changeBugPriority(int id, Priority priorityBug);
 
-    void changeBugSeverity(int id, SeverityBug severityBug);
 
-    void changeStoryStatus(int id, StatusStory statusStory);
+    String changeBugSeverity(int id, SeverityBug severityBug);
 
-    void changeStoryPriority(int id, Priority priorityStory);
 
-    void changeStorySize(int id, SizeStory sizeStory);
+    String changeStorySize(int id, SizeStory sizeStory);
 
     <T> T findElement(List<T> list, Predicate<T> condition, String message);
 

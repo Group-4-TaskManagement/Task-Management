@@ -17,7 +17,7 @@ public interface Task extends Identifiable, Printable {
 
     String getStatus();
 
-    void changeStatus(String Status);
+    String changeStatus(String Status);
 
     public List<EventLog> getTaskActivity();
 

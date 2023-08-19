@@ -11,7 +11,8 @@ public class ChangeStatus implements Command {
 
 
     public static final int EXPECTED_NUMBER_OF_ARGUMENTS = 2;
-    public static final String STATUS_CHANGED = "Status of item was changed successfully.";
+    public static final String TASK_NOT_EXIST = "Task does not exist";
+
 
     private final Repository repository;
     private int id;
@@ -28,10 +29,12 @@ public class ChangeStatus implements Command {
 
         parseParameters(parameters);
         status = parameters.get(1);
-        repository.changeStatus(id, status);
 
 
-        return STATUS_CHANGED;
+
+
+        return repository.findElement(repository.getTasks(),(task -> task.getId()==id),TASK_NOT_EXIST)
+                .changeStatus(status);
     }
 
     private void parseParameters(List<String> parameters) {

@@ -6,25 +6,26 @@ import com.group4.www.models.utils.ValidationHelpers;
 
 public class FeedbackImpl extends TaskBase implements Feedback {
     public static final String STATUS_CHANGE =
-            "The status of the feedback with ID:%d was changed from %s to %s.";
+            "The status of item with ID:%d switched from %s to %s.";
     public static final String STATUS_ERROR =
             "The status of the feedback can not be changed, it is already at %s!";
 
-    private  static  final int  RATING_MIN = 1;
-    private  static  final int  RATING_MAX = 10;
-    private  static  final String  RATING_ERROR = "Rating must be between %d and %d";
+    private static final int RATING_MIN = 1;
+    private static final int RATING_MAX = 10;
+    private static final String RATING_ERROR = "Rating must be between %d and %d";
     private int rating;
     private StatusFeedback statusFeedback;
-    public FeedbackImpl(int id,String title, String description,int rating) {
-        super(id,title, description);
+
+    public FeedbackImpl(int id, String title, String description, int rating) {
+        super(id, title, description);
         setRating(rating);
-        this.statusFeedback=StatusFeedback.NEW;
+        this.statusFeedback = StatusFeedback.NEW;
     }
 
 
-   private void setRating(int rating) {
+    private void setRating(int rating) {
         ValidationHelpers.validateIntRange(rating,
-                RATING_MIN,RATING_MAX,String.format(RATING_ERROR,RATING_MIN,RATING_MAX));
+                RATING_MIN, RATING_MAX, String.format(RATING_ERROR, RATING_MIN, RATING_MAX));
         this.rating = rating;
     }
 //    @Override
@@ -38,72 +39,68 @@ public class FeedbackImpl extends TaskBase implements Feedback {
     }
 
 
-
-
     @Override
-    public void changeStatus(String command) {
+    public String changeStatus(String command) {
+        String currentStatus = statusFeedback.toString();
         switch (command) {
             case "New":
-                print(command);
-                this.statusFeedback=StatusFeedback.NEW;
-                break;
+                this.statusFeedback = StatusFeedback.NEW;
+                return print(currentStatus);
             case "Unscheduled":
-                print(command);
-                this.statusFeedback=StatusFeedback.UNSCHEDULED;
-                break;
+                this.statusFeedback = StatusFeedback.UNSCHEDULED;
+                return print(currentStatus);
             case "Scheduled":
-                print(command);
-                this.statusFeedback=StatusFeedback.SCHEDULED;
-                break;
+                this.statusFeedback = StatusFeedback.SCHEDULED;
+                return print(currentStatus);
             case "Done":
-                print(command);
-                this.statusFeedback=StatusFeedback.DONE;
-                break;
+                this.statusFeedback = StatusFeedback.DONE;
+                return print(currentStatus);
             case "Advance":
-                advanceStatus();
-                break;
+               return advanceStatus();
+
             case "Revert":
-                revertStatusFeedback();
-                break;
+               return revertStatusFeedback();
+
             default:
-                throw new IllegalArgumentException("Invalid command or status name!");
+                throw new IllegalArgumentException("Status of feedback can be New, Unscheduled, Scheduled or Done!");
         }
 //        System.out.printf("Feedback status changed to %s!\n",statusFeedback);
     }
-    void print(String statusPrint) {
-        System.out.printf(STATUS_CHANGE, getId(), getStatus(), statusPrint);
-        super.addLogChanges(String.format(STATUS_CHANGE, getId(), getStatus(), statusPrint));
+
+    String print(String statusPrint) {
+
+        super.addLogChanges(String.format(STATUS_CHANGE, getId(), statusPrint, getStatus()));
+        return String.format(STATUS_CHANGE, getId(), statusPrint, getStatus());
     }
 
 
-
-    public  void revertStatusFeedback() {
+    public String revertStatusFeedback() {
         if (statusFeedback != StatusFeedback.NEW) {
             String currentStatus = statusFeedback.toString();
             statusFeedback = (StatusFeedback.values()[statusFeedback.ordinal() - 1]);
-            addLogChanges(String.format(STATUS_CHANGE,getId(),currentStatus,statusFeedback));
-            System.out.printf(STATUS_CHANGE,getId(),currentStatus,statusFeedback);
+            addLogChanges(String.format(STATUS_CHANGE, getId(), currentStatus, statusFeedback));
+            return String.format(STATUS_CHANGE, getId(), currentStatus, statusFeedback);
         } else {
             addLogChanges(String.format(STATUS_ERROR, statusFeedback));
-            System.out.printf(STATUS_ERROR, statusFeedback);
+            return String.format(STATUS_ERROR, statusFeedback);
         }
     }
 
-    public void advanceStatus() {
+    public String advanceStatus() {
         if (statusFeedback != StatusFeedback.DONE) {
             String currentStatus = statusFeedback.toString();
             statusFeedback = (StatusFeedback.values()[statusFeedback.ordinal() + 1]);
-            addLogChanges(String.format(STATUS_CHANGE,getId(),currentStatus,statusFeedback));
-            System.out.printf(STATUS_CHANGE,getId(),currentStatus,statusFeedback);
+            addLogChanges(String.format(STATUS_CHANGE, getId(), currentStatus, statusFeedback));
+            return String.format(STATUS_CHANGE, getId(), currentStatus, statusFeedback);
         } else {
             addLogChanges(String.format(STATUS_ERROR, statusFeedback));
-            System.out.printf(STATUS_ERROR, statusFeedback);
+            return String.format(STATUS_ERROR, statusFeedback);
         }
     }
 
     @Override
     public void changeRating(int newRating) {
-           setRating(newRating);
+        setRating(newRating);
     }
 
     @Override
@@ -116,6 +113,6 @@ public class FeedbackImpl extends TaskBase implements Feedback {
     @Override
     public String getAsString() {
         return String.format("%s" +
-                "RATING:%d\n",super.getAsString(),getRating());
+                "RATING:%d\n", super.getAsString(), getRating());
     }
 }

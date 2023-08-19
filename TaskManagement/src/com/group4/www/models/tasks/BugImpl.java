@@ -15,31 +15,28 @@ import java.util.List;
 import java.util.Scanner;
 
 public class BugImpl extends AssignableTaskBase implements Bug {
-    public static final String BUG_CHANGE_PRIORITY_MESS = "The priority of bug with ID:%d was changed from %s to %s.";
+
     public static final String BUG_CHANGE_STATUS_ERR = "Can not change the status of the bug. It is already at %s.";
-    public static final String BUG_CHANGE_STATUS_MESS = "The status of bug with ID:%d was changed from %s to %s.";
+    public static final String BUG_CHANGE_STATUS_MESS = "The status of item with ID:%d switched from %s to %s.";
     public static final String BUG_PARSE_ERROR = "Status of bug can be Active or Fixed!";
-    public static final String BUG_CHANGE_PRIORITY_ERR = "Can not change the priority of the bug. It is already at %s.";
+
     public static final String BUG_CHANGE_SEVERITY_ERR = "Can not change the severity of the bug. It is already at %s.";
     public static final String BUG_CHANGE_SEVERITY_MESS = "The severity of bug with ID:%d was changed from %s to %s. ";
 
     private final List<String> steps;
-    private Priority priority;
+
     private SeverityBug severity;
     private StatusBug status;
 
     public BugImpl(int id,String title, String description,Priority priority,SeverityBug severity, List<String> steps) {
-        super(id,title, description);
-        this.priority = priority;
+        super(id,title, description,priority);
         this.severity = severity;
         this.status = StatusBug.ACTIVE;
         this.steps = new ArrayList<>();
     }
 
-    @Override
-    public Priority getPriority() {
-        return priority;
-    }
+
+
 
     @Override
     public SeverityBug getSeverity() {
@@ -52,16 +49,19 @@ public class BugImpl extends AssignableTaskBase implements Bug {
     }
 
     @Override
-    public void changeStatus( String statusChange) {
+    public String changeStatus( String statusChange) {
         StatusBug statusBug = ParsingHelpers.tryParseEnum(statusChange,StatusBug.class,BUG_PARSE_ERROR);
+        StatusBug currentStatus = status;
+
+
+
         if(statusBug==status) {
             throw new IllegalArgumentException(String.format(BUG_CHANGE_STATUS_ERR, getStatus()));
         }else {
-            System.out.printf(BUG_CHANGE_STATUS_MESS,getId(), getStatus(), statusBug);
             super.addLogChanges(String.format(BUG_CHANGE_STATUS_MESS,getId(),getStatus(),statusBug));
             this.status = statusBug;
         }
-
+        return String.format(BUG_CHANGE_STATUS_MESS,getId(),currentStatus,status);
     }
 
     @Override
@@ -69,25 +69,18 @@ public class BugImpl extends AssignableTaskBase implements Bug {
         return super.getTaskActivity();
     }
 
-    @Override
-    public void setPriority(Priority priorityBug) {
-        if(priorityBug==getPriority()) {
-            throw new IllegalArgumentException(String.format(BUG_CHANGE_PRIORITY_ERR, getPriority()));
-        }else {
-            System.out.printf(BUG_CHANGE_PRIORITY_MESS,getId(), getPriority(), priorityBug);
-            super.addLogChanges(String.format(BUG_CHANGE_PRIORITY_MESS,getId(),getPriority(),priorityBug));
-            this.priority = priorityBug;
-        }
-    }
+
+
 
     @Override
-    public void setSeverity(SeverityBug severityBug) {
+    public String setSeverity(SeverityBug severityBug) {
+        String currentSeverity = this.severity.toString();
         if(severityBug==getSeverity()) {
             throw new IllegalArgumentException(String.format(BUG_CHANGE_SEVERITY_ERR, getSeverity()));
         }else {
-            System.out.printf(BUG_CHANGE_SEVERITY_MESS,getId(), getSeverity(), severityBug);
             addLogChanges(String.format(BUG_CHANGE_SEVERITY_MESS,getId(),getSeverity(),severityBug));
             this.severity = severityBug;
+            return String.format(BUG_CHANGE_SEVERITY_MESS,getId(), currentSeverity, severityBug);
         }
     }
 

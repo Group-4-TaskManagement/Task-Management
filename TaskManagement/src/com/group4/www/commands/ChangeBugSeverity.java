@@ -11,7 +11,7 @@ import java.util.List;
 public class ChangeBugSeverity implements Command {
     public static final int EXPECTED_NUMBER_OF_ARGUMENTS = 2;
     public static final String SEVERITY_PARSE_ERROR = "Severity of bug can be Minor, Major or Critical!";
-    public static final String BUG_SEVERITY_CHANGED = "Severity of bug was changed successfully";
+
     private final Repository repository;
     private int id;
     private SeverityBug severityBug;
@@ -24,8 +24,8 @@ public class ChangeBugSeverity implements Command {
 
         parseParameters(parameters);
 
-        repository.changeBugSeverity(id, severityBug);
-        return BUG_SEVERITY_CHANGED;
+      return   repository.changeBugSeverity(id, severityBug);
+
     }
 
     private void parseParameters(List<String> parameters){

@@ -9,15 +9,15 @@ import java.util.List;
 
 public interface Bug extends AssignableTask {
 
-    public Priority getPriority();
+
 
     public SeverityBug getSeverity();
 
 
 
-    void setPriority(Priority priorityBug);
 
-    void setSeverity(SeverityBug severityBug);
+
+    String setSeverity(SeverityBug severityBug);
 
     public List<String> getSteps();
 

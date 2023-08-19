@@ -17,11 +17,11 @@ public interface Story extends AssignableTask {
 
     public Priority getPriority();
 
-    void setStatus(StatusStory statusStory);
+    String changeStatus(StatusStory statusStory);
 
-    void setPriority(Priority priorityStory);
 
-    void setSize(SizeStory sizeStory);
+
+    String changeSize(SizeStory sizeStory);
 
 
 }

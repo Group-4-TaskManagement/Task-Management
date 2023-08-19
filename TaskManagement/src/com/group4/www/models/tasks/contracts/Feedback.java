@@ -11,9 +11,9 @@ public interface Feedback extends Task {
 
 
 
-    void revertStatusFeedback();
+    String revertStatusFeedback();
 
-    void advanceStatus();
+    String advanceStatus();
 
 
 

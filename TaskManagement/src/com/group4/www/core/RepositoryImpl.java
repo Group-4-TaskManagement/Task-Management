@@ -36,6 +36,7 @@ public class RepositoryImpl implements Repository {
     public static final String BOARDS_HEADER = "boards";
     public static final String BOARD_EXISTS = "Board with this name, already exist.";
     public static final String TEAM_EXISTS = "Team with this name, already exist.";
+
     private static int Id;
     private final List<Team> teams = new ArrayList<>();
     private final List<Member> members = new ArrayList<>();
@@ -202,40 +203,22 @@ public class RepositoryImpl implements Repository {
     }
 
 
-    @Override
-    public void changeStatus(int id,String status) {
-        findElement(getTasks(),(task -> task.getId()==id),TASK_NOT_EXIST)
-                .changeStatus(status);
-    }
+
+
+
 
     @Override
-    public void changeBugPriority(int id, Priority priorityBug) {
-        findElement(bugs,(bug -> bug.getId()==id), TASK_NOT_EXIST)
-                .setPriority(priorityBug);
-    }
-
-    @Override
-    public void changeBugSeverity(int id, SeverityBug severityBug) {
-        findElement(bugs,(bug -> bug.getId()==id), TASK_NOT_EXIST)
+    public String changeBugSeverity(int id, SeverityBug severityBug) {
+      return   findElement(bugs,(bug -> bug.getId()==id), TASK_NOT_EXIST)
                 .setSeverity(severityBug);
     }
 
-    @Override
-    public void changeStoryStatus(int id, StatusStory statusStory) {
-        findElement(stories,(story -> story.getId()==id), TASK_NOT_EXIST)
-                .changeStatus(statusStory.toString());
-    }
+
 
     @Override
-    public void changeStoryPriority(int id, Priority priorityStory) {
-        findElement(stories,(story -> story.getId()==id), TASK_NOT_EXIST)
-                .setPriority(priorityStory);
-    }
-
-    @Override
-    public void changeStorySize(int id, SizeStory sizeStory) {
-        findElement(stories,(story -> story.getId()==id), TASK_NOT_EXIST)
-                .setSize(sizeStory);
+    public String changeStorySize(int id, SizeStory sizeStory) {
+      return   findElement(stories,(story -> story.getId()==id), TASK_NOT_EXIST)
+                .changeSize(sizeStory);
     }
 
     @Override

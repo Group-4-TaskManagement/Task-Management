@@ -11,14 +11,10 @@ import com.group4.www.models.utils.ValidationHelpers;
 
 public class StoryImpl extends AssignableTaskBase implements Story {
 
-    public static final String PRIORITY_CHANGE =
-            "The priority of story with ID:%d was changed from %s to %s.";
-    public static final String PRIORITY_ERROR =
-            "The priority of the story can not be changed, it is already at %s!";
 
-    public static final String STATUS_CHANGE = "The status of story with ID:%d was changed from %s to %s.";
+    public static final String STATUS_CHANGE ="The status of item with ID:%d switched from %s to %s.";
     public static final String STATUS_ERROR = "The status of the story can not be changed, it is already at %s!";
-    public static final String STATUS_PARSE_ERROR = "Status of bug can be Not_Done, Done or InProgress!";
+    public static final String STATUS_PARSE_ERROR = "Status of story can be Not_Done, Done or InProgress!";
 
     public static final String SIZE_CHANGE =
             "The size of story with ID:%d was changed from %s to %s.";
@@ -27,7 +23,7 @@ public class StoryImpl extends AssignableTaskBase implements Story {
 
 
 
-    private Priority priority;
+
 
     private SizeStory size;
 
@@ -36,8 +32,7 @@ public class StoryImpl extends AssignableTaskBase implements Story {
 
 
     public StoryImpl(int id,String title, String description,Priority priority, SizeStory size,StatusStory status) {
-        super(id,title, description);
-        this.priority = priority;
+        super(id,title, description,priority);
         this.size = size;
         this.status = status;
 
@@ -49,17 +44,19 @@ public class StoryImpl extends AssignableTaskBase implements Story {
     }
 
     @Override
-    public void changeStatus(String statusChange) {
+    public String changeStatus(String statusChange) {
         StatusStory statusStory = ParsingHelpers.tryParseEnum(statusChange,StatusStory.class,STATUS_PARSE_ERROR);
+        StatusStory currentstatusStory = status;
 
         if(statusStory==status) {
             throw new IllegalArgumentException(String.format(STATUS_ERROR, getStatus()));
         }else {
 
 
-            super.addLogChanges(String.format(STATUS_CHANGE,getId(),getStatus(),statusStory));
+            super.addLogChanges(String.format(STATUS_CHANGE,getId(),currentstatusStory,statusStory));
             this.status = statusStory;
         }
+        return String.format(STATUS_CHANGE,getId(),currentstatusStory,statusStory);
 
     }
 
@@ -68,41 +65,34 @@ public class StoryImpl extends AssignableTaskBase implements Story {
         return size;
     }
 
-    @Override
-    public Priority getPriority() {
-        return priority;
-    }
+
 
     @Override
-    public void setStatus(StatusStory statusStory) {
+    public String changeStatus(StatusStory statusStory) {
+        String currentStatus = status.toString();
+
         if(statusStory==status) {
             throw new IllegalArgumentException(String.format(STATUS_ERROR, getStatus()));
         }else {
-            System.out.printf(STATUS_CHANGE,getId(), getStatus(), statusStory);
+
             super.addLogChanges(String.format(STATUS_CHANGE,getId(),getStatus(),statusStory));
             this.status = statusStory;
+            return String.format(STATUS_CHANGE,getId(), currentStatus, statusStory);
         }
     }
 
-    @Override
-    public void setPriority(Priority priorityStory) {
-        if(priorityStory==priority) {
-            throw new IllegalArgumentException(String.format(PRIORITY_ERROR, getPriority()));
-        }else {
-            System.out.printf(PRIORITY_CHANGE,getId(), getPriority(), priorityStory);
-            super.addLogChanges(String.format(PRIORITY_CHANGE,getId(),getPriority(),priorityStory));
-            this.priority = priorityStory;
-        }
-    }
+
+
 
     @Override
-    public void setSize(SizeStory sizeStory) {
+    public String changeSize(SizeStory sizeStory) {
+        String currentSize  = size.toString();
         if(sizeStory==size) {
             throw new IllegalArgumentException(String.format(SIZE_ERROR, getSize()));
         }else {
-            System.out.printf(SIZE_CHANGE, getId(), getSize(), sizeStory);
             super.addLogChanges(String.format(SIZE_CHANGE,getId(),getSize(),sizeStory));
             this.size = sizeStory;
+            return String.format(SIZE_CHANGE, getId(), currentSize, sizeStory);
         }
     }
 

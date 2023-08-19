@@ -10,7 +10,7 @@ import java.util.List;
 
 public class ChangeStorySize implements Command {
     public static final String PARSE_STORY_SIZE_ERROR = "Size for story can be Small, Medium or Large!";
-    public static final String STORY_SIZE_CHANGE = " Size of story was changed successfully.";
+
     private final Repository repository;
     private int id;
     private SizeStory sizeStory;
@@ -27,9 +27,9 @@ public class ChangeStorySize implements Command {
 
         parseParameters(parameters);
 
-        repository.changeStorySize(id, sizeStory);
+      return   repository.changeStorySize(id, sizeStory);
 
-        return STORY_SIZE_CHANGE;
+
     }
 
     private void parseParameters(List<String> parameters){
