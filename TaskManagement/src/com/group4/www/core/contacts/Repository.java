@@ -62,15 +62,7 @@ public interface Repository {
 
     <T> T findElement(List<T> list, Predicate<T> condition, String message);
 
-    String listAssignableTasksByGivenCondition(List<AssignableTask> assignableTasks);
 
-    String listTasksByGivenCondition(List<Task> tasks);
-
-    String listBugsByGivenCondition(List<Bug> bugs);
-
-    String listStoriesByGivenCondition(List<Story> stories);
-
-    String listFeedbackByGivenCondition(List<Feedback> feedbacks);
 
     List<Bug> getBugs();
 

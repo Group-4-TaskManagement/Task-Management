@@ -1,6 +1,8 @@
 package com.group4.www.commands.listings;
 
 import com.group4.www.commands.contracts.Command;
+import com.group4.www.models.tasks.contracts.Bug;
+import com.group4.www.models.utils.FormattingHelpers;
 import com.group4.www.models.utils.ListingHelper;
 import com.group4.www.core.contacts.Repository;
 import com.group4.www.models.contracts.Member;
@@ -11,6 +13,7 @@ import java.util.List;
 public class FilterBugsByAssignee implements Command {
     public static final int EXPECTED_NUMBER_OF_ARGUMENTS = 1;
     public static final String MEMBER_DOES_NOT_EXIST = "Member with name %s does not exist";
+    public static final String BUGS_HEADER = "BUGS";
     private final Repository repository;
     private Member member;
     public FilterBugsByAssignee(Repository repository) {
@@ -23,10 +26,11 @@ public class FilterBugsByAssignee implements Command {
 
         parseParameters(parameters);
 
-
-        return repository.listBugsByGivenCondition(ListingHelper.filterByCondition
+        List<Bug> bugs = ListingHelper.filterByCondition
                 (ListingHelper.listOfTasksWithAssignee(repository.getBugs())
-                        ,bug -> bug.getAssignee().getName().equals(member.getName())));
+                        ,bug -> bug.getAssignee().getName().equals(member.getName()));
+        return FormattingHelpers.listingFormatted(bugs, BUGS_HEADER);
+
     }
 
     private void parseParameters(List<String> parameters){

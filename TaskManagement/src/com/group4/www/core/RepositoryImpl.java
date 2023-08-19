@@ -25,11 +25,7 @@ public class RepositoryImpl implements Repository {
     private static final String MEMBER_NOT_EXIST = "A member with name %s does not exist";
     private static final String BOARD_NOT_EXIST = "This board does not exist";
     private static final String TEAM_NOT_EXIST = "This team does not exist";
-    public static final String TASKS_HEADER = "TASKS";
-    public static final String BUGS_HEADER = "BUGS";
     public static final String TASK_NOT_EXIST = "Task does not exist";
-    public static final String STORIES_HEADER = "STORIES";
-    public static final String FEEDBACKS_HEADER = "FEEDBACKS";
     public static final String TEAMS_HEADER = "teams";
     public static final String ACTIVITY_HEADER = "activity";
     public static final String MEMBERS_HEADER = "members";
@@ -226,30 +222,8 @@ public class RepositoryImpl implements Repository {
         return list.stream().filter(condition).findAny().orElseThrow(() -> new IllegalArgumentException(message));
     }
 
-    @Override
-    public String listAssignableTasksByGivenCondition(List<AssignableTask> assignableTasks) {
-        return FormattingHelpers.listingFormatted(assignableTasks, TASKS_HEADER);
-    }
 
-    @Override
-    public String listTasksByGivenCondition(List<Task> tasks) {
-        return FormattingHelpers.listingFormatted(tasks, TASKS_HEADER);
-    }
 
-    @Override
-    public String listBugsByGivenCondition(List<Bug> bugs) {
-        return FormattingHelpers.listingFormatted(bugs, BUGS_HEADER);
-    }
-
-    @Override
-    public String listStoriesByGivenCondition(List<Story> stories) {
-        return FormattingHelpers.listingFormatted(stories, STORIES_HEADER);
-    }
-
-    @Override
-    public String listFeedbackByGivenCondition(List<Feedback> feedbacks) {
-        return FormattingHelpers.listingFormatted(feedbacks, FEEDBACKS_HEADER);
-    }
 
     @Override
     public List<Bug> getBugs() {

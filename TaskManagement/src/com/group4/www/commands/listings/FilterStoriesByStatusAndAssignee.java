@@ -4,6 +4,8 @@ import com.group4.www.commands.contracts.Command;
 import com.group4.www.core.contacts.Repository;
 import com.group4.www.models.contracts.Member;
 import com.group4.www.models.enums.StatusStory;
+import com.group4.www.models.tasks.contracts.Story;
+import com.group4.www.models.utils.FormattingHelpers;
 import com.group4.www.models.utils.ListingHelper;
 import com.group4.www.models.utils.ParsingHelpers;
 import com.group4.www.models.utils.ValidationHelpers;
@@ -14,6 +16,7 @@ public class FilterStoriesByStatusAndAssignee implements Command {
     public static final int EXPECTED_NUMBER_OF_ARGUMENTS = 2;
     public static final String MEMBER_DOES_NOT_EXIST = "Member with name %s does not exist";
     public static final String PARSE_STORY_STATUS_ERROR = "Status of story can be Not Done, InProgress and Done!";
+    public static final String STORIES_HEADER = "STORIES";
     private Member member;
     private final Repository repository;
     private StatusStory statusStory;
@@ -28,11 +31,12 @@ public class FilterStoriesByStatusAndAssignee implements Command {
 
         parseParameters(parameters);
 
-        return repository.listStoriesByGivenCondition
-                (ListingHelper.filterByCondition
+        List<Story> stories = ListingHelper.filterByCondition
                         (ListingHelper.listOfTasksWithAssignee(repository.getStories())
                                 ,story -> story.getAssignee().getName().equals(parameters.get(1))&&
-                                        story.getStatus().equals(statusStory.toString())));
+                                        story.getStatus().equals(statusStory.toString()));
+
+        return FormattingHelpers.listingFormatted(stories,STORIES_HEADER);
     }
 
     private void parseParameters(List<String> parameters){
