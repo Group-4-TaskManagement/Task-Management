@@ -26,23 +26,9 @@ public interface Repository {
 
     Board createBoardInTeam(String name, String teamName);
 
-    String showAllMembers();
-
-    String showPersonActivity(String memberName);
-
-    String showAllTeams();
-
-    String showTeamActivity(String teamName);
 
     void addMemberToTeam(String personName, String teamName);
 
-    String showAllTeamMembers(String teamName);
-
-    String showAllTeamBoards(String teamName);
-
-    String showBoardActivity(String boardName);
-
-    String showTaskActivity(int id);
 
     void changeFeedbackRating(int newRating, int taskID);
 

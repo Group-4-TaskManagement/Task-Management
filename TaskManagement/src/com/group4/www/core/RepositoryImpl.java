@@ -26,10 +26,6 @@ public class RepositoryImpl implements Repository {
     private static final String BOARD_NOT_EXIST = "This board does not exist";
     private static final String TEAM_NOT_EXIST = "This team does not exist";
     public static final String TASK_NOT_EXIST = "Task does not exist";
-    public static final String TEAMS_HEADER = "teams";
-    public static final String ACTIVITY_HEADER = "activity";
-    public static final String MEMBERS_HEADER = "members";
-    public static final String BOARDS_HEADER = "boards";
     public static final String BOARD_EXISTS = "Board with this name, already exist.";
     public static final String MEMBER_EXISTS = "Member with this name, already exist.";
     public static final String TEAM_EXISTS = "Team with this name, already exist.";
@@ -117,27 +113,7 @@ public class RepositoryImpl implements Repository {
         return board;
     }
 
-    @Override
-    public String showAllMembers() {
-        return FormattingHelpers.showAll(members, MEMBERS_HEADER);
-    }
 
-    @Override
-    public String showPersonActivity(String memberName) {
-        return FormattingHelpers.showAll(findElement(members,
-                (member -> member.getName().equals(memberName)),MEMBER_NOT_EXIST).getMemberActivity(), ACTIVITY_HEADER);
-    }
-
-    @Override
-    public String showAllTeams() {
-        return FormattingHelpers.showAll(teams, TEAMS_HEADER);
-    }
-
-    @Override
-    public String showTeamActivity(String teamName) {
-        return FormattingHelpers.showAll(findElement(teams,
-                (team -> team.getName().equals(teamName)),TEAM_NOT_EXIST).getTeamActivity(), ACTIVITY_HEADER);
-    }
 
 
     @Override
@@ -146,33 +122,7 @@ public class RepositoryImpl implements Repository {
                 .addMember(findElement(members,member -> member.getName().equals(personName), MEMBER_NOT_EXIST));
     }
 
-    @Override
-    public String showAllTeamMembers(String teamName) {
-        return FormattingHelpers.showAll(findElement
-                (teams,(team -> team.getName().equals(teamName)),
-                        TEAM_NOT_EXIST).getMembers(), MEMBERS_HEADER);
-    }
 
-    @Override
-    public String showAllTeamBoards(String teamName) {
-        return FormattingHelpers.showAll((findElement
-                (teams,(team -> team.getName().equals(teamName)),
-                        TEAM_NOT_EXIST).getBoards()), BOARDS_HEADER);
-    }
-
-    @Override
-    public String showBoardActivity(String boardName) {
-        return FormattingHelpers.showAll((findElement
-                (boards,(board -> board.getName().equals(boardName))
-                        ,BOARD_NOT_EXIST).getBoardActivity()), ACTIVITY_HEADER);
-    }
-
-    @Override
-    public String showTaskActivity(int id) {
-        return FormattingHelpers.showAll(findElement
-                (getTasks(),(task -> task.getId()==id)
-                        ,TEAM_NOT_EXIST).getTaskActivity(), ACTIVITY_HEADER);
-    }
 
     @Override
     public void changeFeedbackRating(int newRating, int taskID) {
@@ -181,7 +131,7 @@ public class RepositoryImpl implements Repository {
 
     @Override
     public void assignTaskToMember(int taskID, String memberName) {
-        Member member = findElement(members,(member1 -> member1.getName().equals(memberName)),TEAM_NOT_EXIST);
+        Member member = findElement(members,(member1 -> member1.getName().equals(memberName)),MEMBER_NOT_EXIST);
         AssignableTask task = findElement(getAssignableTasks(),task1 -> task1.getId()==taskID, TASK_NOT_EXIST);
         member.addTask(task);
         task.addAssignee(member);

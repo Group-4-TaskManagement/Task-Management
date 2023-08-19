@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface Task extends Identifiable, Printable {
     String getTitle();
+    List<Comment> getComments();
 
     String getDescription();
 

@@ -98,8 +98,9 @@ abstract class TaskBase implements Task {
                 "STATUS:%s\n",getId(),getTitle(),getStatus());
     }
 
-
-
+    public List<Comment> getComments() {
+        return new ArrayList<>(comments);
+    }
 }
 
 
