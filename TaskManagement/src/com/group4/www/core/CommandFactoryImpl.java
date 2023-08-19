@@ -67,7 +67,6 @@ public class CommandFactoryImpl implements CommandFactory {
                 return new ChangeStoryPriority(repository);
             case CHANGESTORYSIZE:
                 return new ChangeStorySize(repository);
-
             case FILTERTASKSBYTITLE:
                 return new FilterTasksByTitle(repository);
             case SORTTASKSBYTITLE:

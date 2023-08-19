@@ -7,6 +7,7 @@ import com.group4.www.core.contacts.Repository;
 import com.group4.www.models.tasks.contracts.Task;
 import com.group4.www.models.utils.ValidationHelpers;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class SortAssignedTasksByTitle implements Command {
@@ -21,8 +22,9 @@ public class SortAssignedTasksByTitle implements Command {
     public String execute(List<String> parameters) {
         ValidationHelpers.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
 
-        List<AssignableTask> tasks = ListingHelper.listOfTasksWithAssignee(repository.getAssignableTasks());
+        List<AssignableTask> assignableTaskstasks = ListingHelper.listOfTasksWithAssignee(repository.getAssignableTasks());
 
-        return repository.listAssignableTasksByGivenCondition(ListingHelper.sortByTitle(tasks));
+        return repository.listAssignableTasksByGivenCondition(ListingHelper.sortByCondition
+                (assignableTaskstasks, Comparator.comparing(AssignableTask::getTitle)));
     }
 }

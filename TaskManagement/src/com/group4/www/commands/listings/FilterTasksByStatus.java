@@ -12,7 +12,6 @@ import java.util.List;
 public class FilterTasksByStatus implements Command {
     public static final int EXPECTED_NUMBER_OF_ARGUMENTS = 1;
     private final Repository repository;
-    private String status;
 
     public FilterTasksByStatus(Repository repository) {
         this.repository = repository;
@@ -22,9 +21,10 @@ public class FilterTasksByStatus implements Command {
     public String execute(List<String> parameters) {
         ValidationHelpers.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
 
-        List<AssignableTask> tasks = ListingHelper.listOfTasksWithAssignee(repository.getAssignableTasks());
+        List<AssignableTask> assignableTasks = ListingHelper.listOfTasksWithAssignee(repository.getAssignableTasks());
 
-        return repository.listAssignableTasksByGivenCondition(ListingHelper.filterByStatus(tasks, parameters.get(0)));
+        return repository.listAssignableTasksByGivenCondition(ListingHelper.filterByCondition
+                (assignableTasks, assignableTask -> assignableTask.getStatus().equals(parameters.get(0))));
     }
 
 }

@@ -1,10 +1,14 @@
 package com.group4.www.models.tasks;
 
 import com.group4.www.models.contracts.Member;
+import com.group4.www.models.contracts.Printable;
+import com.group4.www.models.enums.Priority;
 import com.group4.www.models.tasks.contracts.AssignableTask;
 
 abstract class AssignableTaskBase extends TaskBase implements AssignableTask {
     private Member assignee;
+
+    private Priority priority;
 
     public AssignableTaskBase(int id, String title, String description) {
         super(id, title, description);

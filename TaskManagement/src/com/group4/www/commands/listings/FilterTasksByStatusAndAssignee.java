@@ -21,11 +21,11 @@ public class FilterTasksByStatusAndAssignee implements Command {
     public String execute(List<String> parameters) {
         ValidationHelpers.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
 
-        List<AssignableTask> tasks = ListingHelper.listOfTasksWithAssignee(repository.getAssignableTasks());
+        List<AssignableTask> assignableTasks = ListingHelper.listOfTasksWithAssignee(repository.getAssignableTasks());
 
-        return repository.listAssignableTasksByGivenCondition(ListingHelper.filterByStatusAndAssignee(
-                tasks,
-                parameters.get(0),
-                parameters.get(1)));
+        return repository.listAssignableTasksByGivenCondition(ListingHelper.filterByCondition
+                (assignableTasks,assignableTask ->
+                        assignableTask.getStatus().equals(parameters.get(0)) &&
+                        assignableTask.getAssignee().getName().equals(parameters.get(1))));
     }
 }

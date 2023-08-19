@@ -13,7 +13,6 @@ import java.util.List;
 public class FilterBugsByStatusAndAssignee implements Command {
 
     public static final int EXPECTED_NUMBER_OF_ARGUMENTS = 2;
-    public static final String BUGS_HEADER = "BUGS";
     private final Repository repository;
 
     private StatusBug statusBug;
@@ -27,10 +26,10 @@ public class FilterBugsByStatusAndAssignee implements Command {
         parseParameters(parameters);
 
 
-      return   FormattingHelpers.listingFormatted( ListingHelper.filterByStatusAndAssignee(
-              repository.getBugs(),
-              parameters.get(0),
-              parameters.get(1)), BUGS_HEADER);
+        return repository.listBugsByGivenCondition(ListingHelper.filterByCondition
+                (ListingHelper.listOfTasksWithAssignee(repository.getBugs())
+                        ,bug -> bug.getAssignee().getName().equals(parameters.get(1))&&
+                        bug.getStatus().equals(statusBug.toString())));
     }
 
     private void parseParameters(List<String> parameters){
