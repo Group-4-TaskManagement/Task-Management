@@ -9,13 +9,7 @@ import java.util.List;
 
 public interface Bug extends AssignableTask {
 
-
-
     public SeverityBug getSeverity();
-
-
-
-
 
     String setSeverity(SeverityBug severityBug);
 

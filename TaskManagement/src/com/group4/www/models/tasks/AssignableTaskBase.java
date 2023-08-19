@@ -11,9 +11,7 @@ abstract class AssignableTaskBase extends TaskBase implements AssignableTask {
     public static final String PRIORITY_ERROR =
             "The priority of the task can not be changed, it is already at %s!";
 
-
     private Member assignee;
-
     private Priority priority;
 
     public AssignableTaskBase(int id, String title, String description,Priority priority) {
@@ -46,7 +44,6 @@ abstract class AssignableTaskBase extends TaskBase implements AssignableTask {
             this.priority = priorityStory;
             return String.format(PRIORITY_CHANGE, getId(), currentPriority, priorityStory);
         }
-
     }
 
     @Override

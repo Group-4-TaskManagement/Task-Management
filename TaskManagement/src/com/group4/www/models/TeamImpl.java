@@ -55,11 +55,6 @@ public class TeamImpl implements Team {
     }
 
     @Override
-    public List<Board> showBoards() {
-        return new ArrayList<>(boards);
-    }
-
-    @Override
     public void addMember(Member member){
         if(members.contains(member)){
             throw new IllegalArgumentException
