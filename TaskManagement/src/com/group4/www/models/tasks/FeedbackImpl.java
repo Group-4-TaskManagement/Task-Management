@@ -7,12 +7,13 @@ import com.group4.www.models.utils.ValidationHelpers;
 public class FeedbackImpl extends TaskBase implements Feedback {
     public static final String STATUS_CHANGE =
             "The status of item with ID:%d switched from %s to %s.";
-    public static final String STATUS_ERROR =
+    public static final String STATUS_SAME_ERROR =
             "The status of the feedback can not be changed, it is already at %s!";
 
     private static final int RATING_MIN = 1;
     private static final int RATING_MAX = 10;
     private static final String RATING_ERROR = "Rating must be between %d and %d";
+    public static final String STATUS_ERROR = "Status of feedback can be New, Unscheduled, Scheduled or Done!";
     private int rating;
     private StatusFeedback statusFeedback;
 
@@ -42,19 +43,22 @@ public class FeedbackImpl extends TaskBase implements Feedback {
     @Override
     public String changeStatus(String command) {
         String currentStatus = statusFeedback.toString();
+        if(currentStatus.equals(command)){
+            return String.format(STATUS_SAME_ERROR,currentStatus);
+        }
         switch (command) {
             case "New":
                 this.statusFeedback = StatusFeedback.NEW;
-                return print(currentStatus);
+                return addLogAndPrintMessage(currentStatus);
             case "Unscheduled":
                 this.statusFeedback = StatusFeedback.UNSCHEDULED;
-                return print(currentStatus);
+                return addLogAndPrintMessage(currentStatus);
             case "Scheduled":
                 this.statusFeedback = StatusFeedback.SCHEDULED;
-                return print(currentStatus);
+                return addLogAndPrintMessage(currentStatus);
             case "Done":
                 this.statusFeedback = StatusFeedback.DONE;
-                return print(currentStatus);
+                return addLogAndPrintMessage(currentStatus);
             case "Advance":
                return advanceStatus();
 
@@ -62,13 +66,12 @@ public class FeedbackImpl extends TaskBase implements Feedback {
                return revertStatusFeedback();
 
             default:
-                throw new IllegalArgumentException("Status of feedback can be New, Unscheduled, Scheduled or Done!");
+                throw new IllegalArgumentException(STATUS_ERROR);
         }
 //        System.out.printf("Feedback status changed to %s!\n",statusFeedback);
     }
 
-    String print(String statusPrint) {
-
+    String addLogAndPrintMessage(String statusPrint) {
         super.addLogChanges(String.format(STATUS_CHANGE, getId(), statusPrint, getStatus()));
         return String.format(STATUS_CHANGE, getId(), statusPrint, getStatus());
     }
@@ -81,8 +84,8 @@ public class FeedbackImpl extends TaskBase implements Feedback {
             addLogChanges(String.format(STATUS_CHANGE, getId(), currentStatus, statusFeedback));
             return String.format(STATUS_CHANGE, getId(), currentStatus, statusFeedback);
         } else {
-            addLogChanges(String.format(STATUS_ERROR, statusFeedback));
-            return String.format(STATUS_ERROR, statusFeedback);
+            addLogChanges(String.format(STATUS_SAME_ERROR, statusFeedback));
+            return String.format(STATUS_SAME_ERROR, statusFeedback);
         }
     }
 
@@ -93,8 +96,8 @@ public class FeedbackImpl extends TaskBase implements Feedback {
             addLogChanges(String.format(STATUS_CHANGE, getId(), currentStatus, statusFeedback));
             return String.format(STATUS_CHANGE, getId(), currentStatus, statusFeedback);
         } else {
-            addLogChanges(String.format(STATUS_ERROR, statusFeedback));
-            return String.format(STATUS_ERROR, statusFeedback);
+            addLogChanges(String.format(STATUS_SAME_ERROR, statusFeedback));
+            return String.format(STATUS_SAME_ERROR, statusFeedback);
         }
     }
 

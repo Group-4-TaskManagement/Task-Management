@@ -2,9 +2,11 @@ package com.group4.www.commands.listings;
 
 import com.group4.www.commands.contracts.Command;
 import com.group4.www.core.contacts.Repository;
+import com.group4.www.models.tasks.contracts.Feedback;
 import com.group4.www.models.utils.ListingHelper;
 import com.group4.www.models.utils.ValidationHelpers;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class SortFeedbackByTitle implements Command {
@@ -18,6 +20,7 @@ public class SortFeedbackByTitle implements Command {
     @Override
     public String execute(List<String> parameters) {
         ValidationHelpers.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
-        return repository.listFeedbackByGivenCondition(ListingHelper.sortByTitle(repository.getFeedbacks()));
+        return repository.listFeedbackByGivenCondition(ListingHelper.sortByCondition
+                (repository.getFeedbacks(), Comparator.comparing(Feedback::getTitle)));
     }
 }

@@ -23,7 +23,8 @@ public class FilterFeedbacksByStatus implements Command {
     public String execute(List<String> parameters) {
         ValidationHelpers.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
         parseParameters(parameters);
-        return repository.listFeedbackByGivenCondition(ListingHelper.filterByStatus(repository.getFeedbacks(), parameters.get(0)));
+        return repository.listFeedbackByGivenCondition(ListingHelper.filterByCondition
+                (repository.getFeedbacks(),feedback -> feedback.getStatus().equals(status.toString())));
     }
     private void parseParameters(List<String> parameters){
         status= ParsingHelpers.tryParseEnum(parameters.get(0), StatusFeedback.class,PARSING_FEEDBACK_STATUS_ERR);
