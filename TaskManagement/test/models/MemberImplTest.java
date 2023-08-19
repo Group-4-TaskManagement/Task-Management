@@ -1,3 +1,5 @@
+package models;
+
 import com.group4.www.models.MemberImpl;
 import com.group4.www.models.contracts.Member;
 import com.group4.www.models.enums.Priority;

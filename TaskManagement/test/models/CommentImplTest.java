@@ -1,3 +1,5 @@
+package models;
+
 import com.group4.www.models.CommentImpl;
 import com.group4.www.models.contracts.Comment;
 import org.junit.jupiter.api.Assertions;

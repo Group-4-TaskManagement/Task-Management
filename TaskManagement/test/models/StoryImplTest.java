@@ -1,3 +1,5 @@
+package models;
+
 import com.group4.www.models.enums.Priority;
 import com.group4.www.models.enums.SizeStory;
 import com.group4.www.models.enums.StatusStory;
