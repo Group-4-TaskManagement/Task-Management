@@ -20,6 +20,7 @@ public class ShowAllTeamBoards implements Command {
     @Override
     public String execute(List<String> parameters) {
         ValidationHelpers.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
+
         return FormattingHelpers.showAll((repository.findElement
                 (repository.getTeams(),(team -> team.getName().equals(parameters.get(0))),
                         TEAM_NOT_EXIST).getBoards()), BOARDS_HEADER);
