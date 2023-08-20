@@ -20,10 +20,10 @@ import java.util.List;
 public class CreateStoryTest {
     public static final String TITLE = "title name";
     public static final String DESCRIPTION = "description name";
-    public static final String BOARD_NAME = "boardName";
+    public static final String BOARD_NAME = "board name";
 
-    public Repository repository;
-    public Command createStory;
+    private Repository repository;
+    private Command createStory;
 
 
     @BeforeEach
