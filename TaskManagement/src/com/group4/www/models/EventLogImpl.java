@@ -7,7 +7,6 @@ import java.time.format.DateTimeFormatter;
 
 public class EventLogImpl implements EventLog {
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMMM-yyyy HH:mm:ss");
-
     private final String description;
     private final LocalDateTime timestamp;
 
@@ -23,6 +22,7 @@ public class EventLogImpl implements EventLog {
         this.description = description;
         this.timestamp = LocalDateTime.now();
     }
+
     @Override
     public String getDescription() {
         return description;

@@ -13,16 +13,10 @@ public class MemberImpl implements Member {
     public static final int NAME_MAX_LENGTH = 15;
     public static final String DESCR_LENGTH_ERROR = String.format(
             "Name must be between %d and %d symbols", NAME_MIN_LENGTH, NAME_MAX_LENGTH);
-
     public static final String TASK_EXIST = "The Task really exist";
     public static final String TASK_NOT_EXIST = "The Task not exist";
-
-
     private static final String TASK_ADD = "Task with ID:%d was assigned to %s.";
     private static final String TASK_REMOVE = "The task was removed";
-
-
-
 
     private String name;
     private final List<Task> tasks;
@@ -33,7 +27,6 @@ public class MemberImpl implements Member {
         this.tasks = new ArrayList<>();
         this.memberActivity = new ArrayList<>();
     }
-
 
     private void setName(String name) {
         ValidationHelpers.validateIntRange(name.length(),NAME_MIN_LENGTH, NAME_MAX_LENGTH,DESCR_LENGTH_ERROR);
@@ -49,8 +42,6 @@ public class MemberImpl implements Member {
         }
         tasks.add(task);
         addActivityHistory(String.format(TASK_ADD,task.getId(),getName()));
-
-
     }
 
     public  void removeTask(Task task) {
@@ -60,7 +51,6 @@ public class MemberImpl implements Member {
                 addActivityHistory(String.format(TASK_REMOVE,task.getId(),getName()));
                 return;
             }
-
         }
         throw  new IllegalArgumentException(TASK_NOT_EXIST);
     }
@@ -68,9 +58,7 @@ public class MemberImpl implements Member {
     public void addActivityHistory(String massage){
         EventLog eventLog = new EventLogImpl(massage);
         memberActivity.add(eventLog);
-
     }
-
 
     @Override
     public String getName() {

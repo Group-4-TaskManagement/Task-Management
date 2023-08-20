@@ -15,6 +15,7 @@ public class BoardImpl implements Board {
     public static final String NAME_LENGTH_ERROR = String.format("Board name must be between %d and %d symbols.", MAX_BOARD_NAME, MAX_BOARD_NAME);
     public static final String TASK_ADDED_TO_BOARD_MESS = "Task with ID:%d was added to board %s";
     public static final String TASK_REMOVED_FROM_BOARD_MESS = "Task with ID:%d was removed from board %s";
+
     private String name;
     private final List<Task> tasks;
     private final List<EventLog> boardActivity;
@@ -29,6 +30,7 @@ public class BoardImpl implements Board {
         ValidationHelpers.validateIntRange(name.length(), MIN_BOARD_NAME, MAX_BOARD_NAME, NAME_LENGTH_ERROR);
         this.name = name;
     }
+
     @Override
     public void addTask(Task task) {
         if (tasks.contains(task)) {
@@ -37,6 +39,7 @@ public class BoardImpl implements Board {
         logEvent(String.format(TASK_ADDED_TO_BOARD_MESS,task.getId(),getName()));
         tasks.add(task);
     }
+
     @Override
     public void removeTask(Task task) {
         if (!tasks.contains(task)) {
@@ -45,6 +48,7 @@ public class BoardImpl implements Board {
         logEvent(String.format(TASK_REMOVED_FROM_BOARD_MESS,task.getId(),getName()));
         tasks.remove(task);
     }
+
     @Override
     public void logEvent(String event) {
         boardActivity.add(new EventLogImpl(event));
@@ -54,10 +58,12 @@ public class BoardImpl implements Board {
     public String getName() {
         return name;
     }
+
     @Override
     public List<Task> getTasks() {
         return new ArrayList<>(tasks);
     }
+
     @Override
     public List<EventLog> getBoardActivity() {
         return new ArrayList<>(boardActivity);

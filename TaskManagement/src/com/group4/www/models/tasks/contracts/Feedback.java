@@ -6,16 +6,10 @@ public interface Feedback extends Task {
 
     int getRating();
 
-
-
-
-
-
     String revertStatusFeedback();
 
     String advanceStatus();
 
-
-
     void changeRating(int newRating);
+
 }

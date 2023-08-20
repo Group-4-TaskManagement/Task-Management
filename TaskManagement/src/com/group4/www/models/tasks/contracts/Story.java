@@ -8,20 +8,14 @@ import com.group4.www.models.enums.StatusStory;
 
 public interface Story extends AssignableTask {
 
-
     void addComment(Comment comment);
 
     void removeComment(Comment comment);
 
-    public SizeStory getSize();
+    SizeStory getSize();
 
-    public Priority getPriority();
-
-
-
-
+    Priority getPriority();
 
     String changeSize(SizeStory sizeStory);
-
 
 }

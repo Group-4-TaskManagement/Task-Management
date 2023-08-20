@@ -5,9 +5,6 @@ public enum StatusStory {
     IN_PROGRESS,
     DONE;
 
-
-
-
     @Override
     public String toString() {
         switch (this){

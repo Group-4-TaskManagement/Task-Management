@@ -17,12 +17,9 @@ abstract class TaskBase implements Task {
     public static final int DESCR_MAX_LENGTH = 500;
     public static final String DESCR_LENGTH_ERROR =
             String.format("Description must be between %d and %d symbols", DESCR_MIN_LENGTH, DESCR_MAX_LENGTH);
-
     private static final String COMMENT_NOT_EXIST = "Comment does not exist";
     private static final String COMMENT_ADD = "A comment was added: \"%s\"";
     private static final String COMMENT_REMOVE = "The comment was removed";
-
-
 
     private int id;
     private String title;
@@ -48,12 +45,10 @@ abstract class TaskBase implements Task {
         this.description = description;
     }
 
-
     public void addComment(Comment comment){
         comments.add(comment);
         addLogChanges(String.format(COMMENT_ADD,comment.getMessage()));
     }
-
 
     public void  removeComment(Comment comment){
         if(comments.contains(comment)){

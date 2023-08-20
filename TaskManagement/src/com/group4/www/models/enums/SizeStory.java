@@ -1,11 +1,10 @@
 package com.group4.www.models.enums;
 
 public enum SizeStory {
-    SMALL,
 
+    SMALL,
     MEDIUM,
     LARGE;
-
 
     @Override
     public String toString() {

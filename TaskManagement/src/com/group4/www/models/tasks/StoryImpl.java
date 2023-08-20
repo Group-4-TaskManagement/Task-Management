@@ -10,23 +10,16 @@ import com.group4.www.models.utils.ParsingHelpers;
 import com.group4.www.models.utils.ValidationHelpers;
 
 public class StoryImpl extends AssignableTaskBase implements Story {
-
-
     public static final String STATUS_CHANGE ="The status of item with ID:%d switched from %s to %s.";
     public static final String STATUS_ERROR = "The status of the story can not be changed, it is already at %s!";
     public static final String STATUS_PARSE_ERROR = "Status of story can be Not_Done, Done or InProgress!";
-
     public static final String SIZE_CHANGE =
             "The size of story with ID:%d was changed from %s to %s.";
     public static final String SIZE_ERROR =
             "The size of the story can not be changed, it is already at %s!";
 
-
     private SizeStory size;
-
     private StatusStory status;
-
-
 
     public StoryImpl(int id,String title, String description,Priority priority, SizeStory size,StatusStory status) {
         super(id,title, description,priority);
@@ -48,20 +41,16 @@ public class StoryImpl extends AssignableTaskBase implements Story {
         if(statusStory==status) {
             throw new IllegalArgumentException(String.format(STATUS_ERROR, getStatus()));
         }else {
-
-
             super.addLogChanges(String.format(STATUS_CHANGE,getId(),currentstatusStory,statusStory));
             this.status = statusStory;
         }
         return String.format(STATUS_CHANGE,getId(),currentstatusStory,statusStory);
-
     }
 
     @Override
     public SizeStory getSize() {
         return size;
     }
-
 
     public String changeSize(SizeStory sizeStory) {
         String currentSize  = size.toString();

@@ -1,10 +1,10 @@
 package com.group4.www.models.enums;
 
 public enum Priority {
+
     LOW,
     MEDIUM,
     HIGH;
-
 
     @Override
     public String toString() {

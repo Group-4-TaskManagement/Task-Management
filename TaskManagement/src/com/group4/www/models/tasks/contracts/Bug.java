@@ -9,10 +9,10 @@ import java.util.List;
 
 public interface Bug extends AssignableTask {
 
-    public SeverityBug getSeverity();
+    SeverityBug getSeverity();
 
     String setSeverity(SeverityBug severityBug);
 
-    public List<String> getSteps();
+    List<String> getSteps();
 
 }

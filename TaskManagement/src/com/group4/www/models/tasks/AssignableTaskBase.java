@@ -5,7 +5,6 @@ import com.group4.www.models.enums.Priority;
 import com.group4.www.models.tasks.contracts.AssignableTask;
 
 abstract class AssignableTaskBase extends TaskBase implements AssignableTask {
-
     public static final String PRIORITY_CHANGE =
             "The priority of task with ID:%d was changed from %s to %s.";
     public static final String PRIORITY_ERROR =

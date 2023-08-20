@@ -9,11 +9,11 @@ public class FeedbackImpl extends TaskBase implements Feedback {
             "The status of item with ID:%d switched from %s to %s.";
     public static final String STATUS_SAME_ERROR =
             "The status of the feedback can not be changed, it is already at %s!";
-
     private static final int RATING_MIN = 1;
     private static final int RATING_MAX = 10;
     private static final String RATING_ERROR = "Rating must be between %d and %d";
     public static final String STATUS_ERROR = "Status of feedback can be New, Unscheduled, Scheduled or Done!";
+
     private int rating;
     private StatusFeedback statusFeedback;
 
@@ -23,22 +23,16 @@ public class FeedbackImpl extends TaskBase implements Feedback {
         this.statusFeedback = StatusFeedback.NEW;
     }
 
-
     private void setRating(int rating) {
         ValidationHelpers.validateIntRange(rating,
                 RATING_MIN, RATING_MAX, String.format(RATING_ERROR, RATING_MIN, RATING_MAX));
         this.rating = rating;
     }
-//    @Override
-//    public void statusFeedback(StatusFeedback statusFeedback) {
-//        this.statusFeedback = statusFeedback;
-//    }
 
     @Override
     public String getStatus() {
         return statusFeedback.toString();
     }
-
 
     @Override
     public String changeStatus(String command) {
@@ -69,14 +63,12 @@ public class FeedbackImpl extends TaskBase implements Feedback {
             default:
                 throw new IllegalArgumentException(STATUS_ERROR);
         }
-//        System.out.printf("Feedback status changed to %s!\n",statusFeedback);
     }
 
     String addLogAndPrintMessage(String statusPrint) {
         super.addLogChanges(String.format(STATUS_CHANGE, getId(), statusPrint, getStatus()));
         return String.format(STATUS_CHANGE, getId(), statusPrint, getStatus());
     }
-
 
     public String revertStatusFeedback() {
         if (statusFeedback != StatusFeedback.NEW) {
@@ -112,7 +104,6 @@ public class FeedbackImpl extends TaskBase implements Feedback {
 
         return rating;
     }
-
 
     @Override
     public String getAsString() {

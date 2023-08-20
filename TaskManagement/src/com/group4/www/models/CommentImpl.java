@@ -7,18 +7,16 @@ import com.group4.www.models.contracts.Member;
 import java.util.Objects;
 
 public class CommentImpl implements Comment {
-
     public static final String MESSAGE_ERROR = "Тhe message can not be empty";
     public static final String AUTHOR_ERROR = "Тhe author can not be empty";
+
     private String author;
     private String message;
-
 
     public CommentImpl(String author, String message) {
         setAuthor(author);
         setMessage(message);
     }
-
 
     public String getAuthor() {
         return author;
@@ -27,8 +25,6 @@ public class CommentImpl implements Comment {
     public String getMessage() {
         return message;
     }
-
-
 
     private void setAuthor(String author) {
         if(author.trim().isEmpty()){

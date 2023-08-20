@@ -63,6 +63,7 @@ public class TeamImpl implements Team {
         members.add(member);
         addActivityHistory(String.format(MEMBER_ADDED_TO_TEAM_MESS,member.getName(),getName()));
     }
+
     @Override
     public void removeMember(Member member){
         if(!members.contains(member)){
@@ -91,6 +92,7 @@ public class TeamImpl implements Team {
         boards.remove(board);
         addActivityHistory(String.format(BOARD_REMOVED_FROM_TEAM_MESS,board.getName(),getName()));
     }
+
     @Override
     public void addActivityHistory(String massage){
         EventLog eventLog = new EventLogImpl(massage);
@@ -106,7 +108,6 @@ public class TeamImpl implements Team {
     public List<EventLog> getTeamActivity() {
         return new ArrayList<>(teamActivity);
     }
-
 
     @Override
     public String getAsString() {

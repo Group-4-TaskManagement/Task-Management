@@ -5,7 +5,9 @@ import com.group4.www.models.contracts.*;
 import java.util.List;
 
 public interface Task extends Identifiable, Printable {
+
     String getTitle();
+
     List<Comment> getComments();
 
     String getDescription();
@@ -20,6 +22,6 @@ public interface Task extends Identifiable, Printable {
 
     String changeStatus(String Status);
 
-    public List<EventLog> getTaskActivity();
+    List<EventLog> getTaskActivity();
 
 }
