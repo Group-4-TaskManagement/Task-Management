@@ -44,7 +44,8 @@ public class FeedbackImpl extends TaskBase implements Feedback {
     public String changeStatus(String command) {
         String currentStatus = statusFeedback.toString();
         if(currentStatus.equals(command)){
-            return String.format(STATUS_SAME_ERROR,currentStatus);
+            throw new IllegalArgumentException
+                    (String.format(STATUS_SAME_ERROR,currentStatus));
         }
         switch (command) {
             case "New":
