@@ -37,6 +37,5 @@ public class FilterBugsByAssignee implements Command {
         member = repository.findElement(repository.getMembers()
                 ,member1 -> member1.getName().equals(parameters.get(0)),
                 String.format(MEMBER_DOES_NOT_EXIST,parameters.get(0)));
-
     }
 }

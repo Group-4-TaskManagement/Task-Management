@@ -13,25 +13,11 @@ public class ValidationHelpers {
         }
     }
 
-    public static void validateDecimalRange(double value, double min, double max, String message) {
-        if (value < min || value > max) {
-            throw new IllegalArgumentException(message);
-        }
-    }
-
     public static void validateArgumentsCount(List<String> list, int expectedNumberOfParameters) {
-        if (list.size() < expectedNumberOfParameters) {
+        if (list.size() < expectedNumberOfParameters || list.size()>expectedNumberOfParameters) {
             throw new IllegalArgumentException(
                     String.format(INVALID_NUMBER_OF_ARGUMENTS, expectedNumberOfParameters, list.size())
             );
-        }
-    }
-
-    public static void validatePattern(String value, String pattern, String message) {
-        Pattern patternToMatch = Pattern.compile(pattern, Pattern.CASE_INSENSITIVE);
-        Matcher matcher = patternToMatch.matcher(value);
-        if (!matcher.matches()) {
-            throw new IllegalArgumentException(message);
         }
     }
 }

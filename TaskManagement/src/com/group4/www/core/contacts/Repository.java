@@ -26,7 +26,9 @@ public interface Repository {
 
     Board createBoardInTeam(String name, String teamName);
 
+
     void addMemberToTeam(String personName, String teamName);
+
 
     void changeFeedbackRating(int newRating, int taskID);
 
@@ -35,6 +37,9 @@ public interface Repository {
     void unAssignTaskToMember(int taskID, String memberName);
 
     void addCommentToTask(Comment comment, int taskID);
+
+
+
 
     String changeBugSeverity(int id, SeverityBug severityBug);
 

@@ -91,9 +91,9 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
-    public Story createStoryInBoard(String title, String description, Priority priority, SizeStory size, StatusStory status, String boardname) {
+    public Story createStoryInBoard(String title, String description, Priority priority, SizeStory size, StatusStory status, String boardName) {
         Story story = new StoryImpl(++Id, title, description, priority, size, status);
-        findElement(boards,(board -> board.getName().equals(boardname)),BOARD_NOT_EXIST).addTask(story);
+        findElement(boards,(board -> board.getName().equals(boardName)),BOARD_NOT_EXIST).addTask(story);
         this.stories.add(story);
         return story;
     }
@@ -149,15 +149,11 @@ public class RepositoryImpl implements Repository {
                 .addComment(comment);
     }
 
-
-
-
     @Override
     public String changeBugSeverity(int id, SeverityBug severityBug) {
       return   findElement(bugs,(bug -> bug.getId()==id), TASK_NOT_EXIST)
                 .setSeverity(severityBug);
     }
-
 
     @Override
     public String changeStorySize(int id, SizeStory sizeStory) {
@@ -169,8 +165,6 @@ public class RepositoryImpl implements Repository {
     public <T> T findElement(List<T> list, Predicate<T> condition, String message){
         return list.stream().filter(condition).findAny().orElseThrow(() -> new IllegalArgumentException(message));
     }
-
-
 
     @Override
     public List<Bug> getBugs() {
@@ -192,6 +186,7 @@ public class RepositoryImpl implements Repository {
         List<Task> tasks = Stream.of(bugs, stories).flatMap(task -> task.stream()).collect(Collectors.toList());
         return Stream.of(tasks, feedbacks).flatMap(task -> task.stream()).collect(Collectors.toList());
     }
+
     @Override
     public List<AssignableTask> getAssignableTasks(){
         return Stream.of(bugs,stories).flatMap(assignableTasks -> assignableTasks.stream()).collect(Collectors.toList());
@@ -200,10 +195,12 @@ public class RepositoryImpl implements Repository {
     @Override
     public List<Member> getMembers() {return new ArrayList<>(members);}
 
+    @Override
     public List<Team> getTeams() {
         return teams;
     }
 
+    @Override
     public List<Board> getBoards() {
         return boards;
     }
