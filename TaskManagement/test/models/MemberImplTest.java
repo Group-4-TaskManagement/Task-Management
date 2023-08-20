@@ -13,9 +13,14 @@ import org.junit.jupiter.api.Test;
 
 public class MemberImplTest {
 
+    public static final String TITLE = "title name";
+    public static final String DESCRIPTION = "description name";
+    public  static final String MEMBER_NAME = "memberName";
+    public static  int id = 0;
+
     @Test
     public  void constructor_CreateNewMember_When_ArgumentIsValid(){
-        Member member = new MemberImpl("Member");
+        Member member = new MemberImpl(MEMBER_NAME);
         Assertions.assertNotNull(member);
     }
 
@@ -27,10 +32,8 @@ public class MemberImplTest {
 
     @Test
     public  void addTask(){
-        Member member = new MemberImpl("Member");
-        Task task = new StoryImpl(1, "storyTitle",
-                "storyDescription", Priority.LOW, SizeStory.SMALL, StatusStory.NOT_DONE);
-
+        Member member = new MemberImpl(MEMBER_NAME);
+        Task task = createStory();
         member.addTask(task);
 
         Assertions.assertEquals(1,member.getTasks().size());
@@ -38,13 +41,9 @@ public class MemberImplTest {
 
     @Test
     public  void addTask_Throw_Exception_WhenTaskExist(){
-        Member member = new MemberImpl("Member");
-        Task task = new StoryImpl(1, "storyTitle",
-                "storyDescription", Priority.LOW, SizeStory.SMALL, StatusStory.NOT_DONE);
-
-        Task task1 = new StoryImpl(2, "storyTitle",
-                "storyDescription", Priority.LOW, SizeStory.SMALL, StatusStory.NOT_DONE);
-
+        Member member = new MemberImpl(MEMBER_NAME);
+        Task task = createStory();
+        Task task1 = createStory();
         member.addTask(task);
         member.addTask(task1);
 
@@ -53,9 +52,8 @@ public class MemberImplTest {
 
     @Test
     public  void removeTask(){
-        Member member = new MemberImpl("Member");
-        Task task = new StoryImpl(1, "storyTitle",
-                "storyDescription", Priority.LOW, SizeStory.SMALL, StatusStory.NOT_DONE);
+        Member member = new MemberImpl(MEMBER_NAME);
+        Task task = createStory();
         member.addTask(task);
         member.removeTask(task);
 
@@ -64,11 +62,9 @@ public class MemberImplTest {
 
     @Test
     public  void removeTask_Throw_Exception_WhenTaskNotExist(){
-        Member member = new MemberImpl("Member");
-        Task task = new StoryImpl(1, "storyTitle",
-                "storyDescription", Priority.LOW, SizeStory.SMALL, StatusStory.NOT_DONE);
-        Task task1 = new StoryImpl(2, "storyTitle",
-                "storyDescription", Priority.LOW, SizeStory.SMALL, StatusStory.NOT_DONE);
+        Member member = new MemberImpl(MEMBER_NAME);
+        Task task = createStory();
+        Task task1 = createStory();
         member.addTask(task);
 
         Assertions.assertThrows(IllegalArgumentException.class,()-> member.removeTask(task1));
@@ -76,9 +72,15 @@ public class MemberImplTest {
 
     @Test
     public  void addActivityHistory(){
-        Member member = new MemberImpl("Member");
+        Member member = new MemberImpl(MEMBER_NAME);
         member.addActivityHistory("ActivityHistory");
-
         Assertions.assertEquals(1,member.getMemberActivity().size());
+    }
+
+
+    private  Story createStory(){
+
+        return   new StoryImpl(++id, TITLE,
+                DESCRIPTION, Priority.LOW, SizeStory.SMALL, StatusStory.NOT_DONE);
     }
 }

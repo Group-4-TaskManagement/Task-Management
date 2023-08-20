@@ -10,14 +10,15 @@ import org.junit.jupiter.api.Test;
 
 public class StoryImplTest {
 
+    public static final String TITLE = "title name";
+    public static final String DESCRIPTION = "description name";
+    private static int id = 0;
+
 
 
     @Test
     public  void constructor_CreateNewStory_When_ArgumentsIsValid(){
-        Story story =
-                new StoryImpl(1, "storyTitle",
-                        "storyDescription", Priority.LOW, SizeStory.SMALL, StatusStory.NOT_DONE);
-
+        Story story = createStory();
         Assertions.assertNotNull(story);
     }
 
@@ -28,7 +29,7 @@ public class StoryImplTest {
 
         Assertions.assertThrows(IllegalArgumentException.class, () ->  new StoryImpl(1
                 , ""
-                , "storyDescription"
+                , DESCRIPTION
                 , Priority.LOW
                 , SizeStory.SMALL
                 , StatusStory.NOT_DONE));
@@ -39,7 +40,7 @@ public class StoryImplTest {
 
 
         Assertions.assertThrows(IllegalArgumentException.class, () ->  new StoryImpl(1
-                , "storyTitle"
+                , TITLE
                 , ""
                 , Priority.LOW
                 , SizeStory.SMALL
@@ -48,9 +49,7 @@ public class StoryImplTest {
 
     @Test
     public void changeStatus_When_StatusIsValid(){
-        Story story =
-                new StoryImpl(1, "storyTitle",
-                        "storyDescription", Priority.LOW, SizeStory.SMALL, StatusStory.NOT_DONE);
+        Story story = createStory();
         story.changeStatus("IN_PROGRESS");
         Assertions.assertEquals(StatusStory.IN_PROGRESS.toString(),story.getStatus());
 
@@ -58,25 +57,19 @@ public class StoryImplTest {
 
     @Test
     public void changeStatus_Throw_Exception_StatusNotValid(){
-        Story story =
-                new StoryImpl(1, "storyTitle",
-                        "storyDescription", Priority.LOW, SizeStory.SMALL, StatusStory.NOT_DONE);
+        Story story = createStory();
         Assertions.assertThrows(IllegalArgumentException.class,()-> story.changeStatus("In progress") );
     }
 
     @Test
     public void changeStatus_Throw_Exception_StatusIsTheSame(){
-        Story story =
-                new StoryImpl(1, "storyTitle",
-                        "storyDescription", Priority.LOW, SizeStory.SMALL, StatusStory.NOT_DONE);
+        Story story = createStory();
         Assertions.assertThrows(IllegalArgumentException.class,()-> story.changeStatus("NOT_DONE") );
     }
 
     @Test
     public void changeSize_When_SizeIsValid(){
-        Story story =
-                new StoryImpl(1, "storyTitle",
-                        "storyDescription", Priority.LOW, SizeStory.SMALL, StatusStory.NOT_DONE);
+        Story story = createStory();
         story.changeSize(SizeStory.MEDIUM);
         Assertions.assertEquals(SizeStory.MEDIUM,story.getSize());
 
@@ -84,12 +77,15 @@ public class StoryImplTest {
 
     @Test
     public void changeSize_Throw_Exception_When_SizeIsTheSame(){
-        Story story =
-                new StoryImpl(1, "storyTitle",
-                        "storyDescription", Priority.LOW, SizeStory.SMALL, StatusStory.NOT_DONE);
-
+        Story story = createStory();
         Assertions.assertThrows(IllegalArgumentException.class,()-> story.changeSize(SizeStory.SMALL) );
 
+    }
+
+    private  Story createStory(){
+
+        return   new StoryImpl(++id, TITLE,
+                DESCRIPTION, Priority.LOW, SizeStory.SMALL, StatusStory.NOT_DONE);
     }
 
 

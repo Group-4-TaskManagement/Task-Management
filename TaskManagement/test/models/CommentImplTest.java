@@ -7,33 +7,36 @@ import org.junit.jupiter.api.Test;
 
 public class CommentImplTest {
 
+    public  static final String AUTHOR_NAME = "author";
+    public  static final String MESSAGE = "message";
+
     @Test
     public  void constructor_CreateNewComment_When_ArgumentsIsValid(){
-        Comment comment = new CommentImpl("author", "message");
+        Comment comment = new CommentImpl(AUTHOR_NAME, MESSAGE);
         Assertions.assertNotNull(comment);
     }
 
     @Test
     public  void constructor_CreateNewComment_Throw_Exception_When_AuthorNotValid(){
-        Assertions.assertThrows(IllegalArgumentException.class,()-> new CommentImpl("", "message"));
+        Assertions.assertThrows(IllegalArgumentException.class,()-> new CommentImpl("", MESSAGE));
     }
 
 
 
     @Test
     public  void constructor_CreateNewComment_Throw_Exception_When_MessageNotValid(){
-        Assertions.assertThrows(IllegalArgumentException.class,()-> new CommentImpl("author", ""));
+        Assertions.assertThrows(IllegalArgumentException.class,()-> new CommentImpl(AUTHOR_NAME, ""));
     }
 
     @Test
     public void getMessage(){
-        Comment comment = new CommentImpl("author", "message");
-        Assertions.assertEquals("message",comment.getMessage());
+        Comment comment = new CommentImpl(AUTHOR_NAME, MESSAGE);
+        Assertions.assertEquals(MESSAGE,comment.getMessage());
     }
 
     @Test
     public void getAuthor(){
-        Comment comment = new CommentImpl("author", "message");
-        Assertions.assertEquals("author",comment.getAuthor());
+        Comment comment = new CommentImpl(AUTHOR_NAME, MESSAGE);
+        Assertions.assertEquals(AUTHOR_NAME,comment.getAuthor());
     }
 }

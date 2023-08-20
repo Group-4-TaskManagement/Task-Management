@@ -22,9 +22,6 @@ public class StoryImpl extends AssignableTaskBase implements Story {
             "The size of the story can not be changed, it is already at %s!";
 
 
-
-
-
     private SizeStory size;
 
     private StatusStory status;

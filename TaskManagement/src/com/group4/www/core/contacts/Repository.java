@@ -18,17 +18,15 @@ public interface Repository {
 
     Board createBoard(String name);
 
-    Bug createBugInBoard(String title, String description,Priority priority, SeverityBug severity,List<String> steps,String boardName);
+    Bug createBugInBoard(String title, String description, Priority priority, SeverityBug severity, List<String> steps, String boardName);
 
-    Story createStoryInBoard(String title, String description,Priority priority, SizeStory size, StatusStory status,String boardName);
+    Story createStoryInBoard(String title, String description, Priority priority, SizeStory size, StatusStory status, String boardName);
 
-    Feedback createFeedbackInBoard(String title, String description,int rating,String boardName);
+    Feedback createFeedbackInBoard(String title, String description, int rating, String boardName);
 
     Board createBoardInTeam(String name, String teamName);
 
-
     void addMemberToTeam(String personName, String teamName);
-
 
     void changeFeedbackRating(int newRating, int taskID);
 
@@ -38,9 +36,6 @@ public interface Repository {
 
     void addCommentToTask(Comment comment, int taskID);
 
-
-
-
     String changeBugSeverity(int id, SeverityBug severityBug);
 
 
@@ -48,16 +43,15 @@ public interface Repository {
 
     <T> T findElement(List<T> list, Predicate<T> condition, String message);
 
-
-
     List<Bug> getBugs();
 
     List<Story> getStories();
 
     List<Task> getTasks();
-    public List<Team> getTeams();
 
-    public List<Board> getBoards();
+    List<Team> getTeams();
+
+    List<Board> getBoards();
 
     List<AssignableTask> getAssignableTasks();
 

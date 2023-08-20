@@ -152,14 +152,11 @@ public class RepositoryImpl implements Repository {
 
 
 
-
-
     @Override
     public String changeBugSeverity(int id, SeverityBug severityBug) {
       return   findElement(bugs,(bug -> bug.getId()==id), TASK_NOT_EXIST)
                 .setSeverity(severityBug);
     }
-
 
 
     @Override
@@ -172,7 +169,6 @@ public class RepositoryImpl implements Repository {
     public <T> T findElement(List<T> list, Predicate<T> condition, String message){
         return list.stream().filter(condition).findAny().orElseThrow(() -> new IllegalArgumentException(message));
     }
-
 
 
 
