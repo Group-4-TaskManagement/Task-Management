@@ -99,17 +99,6 @@ public class BoardTests {
 
     }
     @Test
-    public void logEvent_Should_AddTo_Activity(){
-        //Arrange
-        BoardImpl board=new BoardImpl(VALID_NAME);
-
-
-        // Act
-        board.addTask(initializeTestTask());
-        // Assert
-        Assertions.assertEquals(1, board.getBoardActivity().size());
-    }
-    @Test
     public void getBoardActivity_Should_Return_Copy(){
         //Arrange
         BoardImpl board=new BoardImpl(VALID_NAME);
@@ -120,6 +109,17 @@ public class BoardTests {
         // Assert
         Assertions.assertEquals(0, board.getBoardActivity().size());
 
+    }
+    @Test
+    public void logEvent_Should_AddTo_Activity(){
+        //Arrange
+        BoardImpl board=new BoardImpl(VALID_NAME);
+
+
+        // Act
+        board.addTask(initializeTestTask());
+        // Assert
+        Assertions.assertEquals(1, board.getBoardActivity().size());
     }
 
     public static FeedbackImpl initializeTestTask(){
